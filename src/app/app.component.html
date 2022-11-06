@@ -1,10 +1,8 @@
 <div>
   <h1>{{ title }}</h1>
   <div class="container">
-    <div>
-      <input type="text" [(ngModel)]="newTask" />
-      <button (click)="add()">Add New Task</button>
-    </div>
+    <app-add-task (emitTask)="add($event)"></app-add-task>
+    <!--above it recive event "emitTask" and handle it with 'add()' method to capture '$event' -->
   </div>
   <div class="container">
     <div>
