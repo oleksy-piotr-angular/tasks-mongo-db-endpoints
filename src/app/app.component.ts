@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Tasks-list-example';
+  title = 'Tasks-list-example1';
   newTask: string = '';
   tasksList: Array<string> = [];
   tasksDone: Array<string> = [];
