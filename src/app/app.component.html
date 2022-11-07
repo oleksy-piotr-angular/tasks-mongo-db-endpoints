@@ -12,19 +12,14 @@
         (emitRemove)="remove($event)"
       ></app-todo-task>
       <!--above:
-         property [tasksList] receive 'tasksList' and assign 'tasksList from AppComponent(Parent)
+         property [tasksList] receive 'tasksList' and assign 'tasksList' variable from AppComponent(Parent) and send to ChildComponent
          if we receive event "emitDone" and "emitRemove" from ChildComponent then we execute method "done()" and "remove()" in AppComponent|both of them capturing $event from webBrowser
 
        -->
     </div>
     <div>
-      <p>Taks Done {{ tasksDone.length }}:</p>
-      <ol>
-        <li *ngFor="let task of tasksDone">
-          <!-- show tasks which was added to new Array 'tasksDone' with methods in this component -->
-          {{ task }}
-        </li>
-      </ol>
+      <app-done-task [tasksDone]="tasksDone"></app-done-task>
+      <!-- property [tasksDone] receive 'tasksList' and assign 'tasksDone' variable from AppComponent(Parent) and send to ChildComponent -->
     </div>
   </div>
 </div>
