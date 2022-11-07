@@ -1,0 +1,16 @@
+<p>Taks List:</p>
+<ng-container *ngIf="tasksList.length > 0; else noTask">
+  <ol>
+    <li *ngFor="let task of tasksList">
+      <!-- we declared 'task' variable in *ngFor directive so we can use it in interpolation and as a paramater in methods -->
+      {{ task }}
+      <button (click)="remove(task)">Remove</button
+      ><!-- remove()) method emit data to Parent Component -->
+      <button (click)="done(task)">Done</button
+      ><!-- done()) method emit data to Parent Component -->
+    </li>
+  </ol>
+</ng-container>
+<ng-template #noTask>
+  <p>No tasks... You have free time now...</p>
+</ng-template>
