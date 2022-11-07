@@ -1,36 +1,25 @@
 <div>
   <h1>{{ title }}</h1>
   <div class="container">
-    <div>
-      <input type="text" [(ngModel)]="newTask" />
-      <button (click)="add()">Add New Task</button>
-    </div>
+    <app-add-task (emitTask)="add($event)"></app-add-task>
+    <!--above it recive event "emitTask" and handle it with 'add()' method to capture '$event' -->
   </div>
   <div class="container">
     <div>
-      <p>Taks List:</p>
-      <ng-container *ngIf="tasksList.length > 0; else noTask">
-        <ol>
-          <li *ngFor="let task of tasksList">
-            <!-- we declared 'task' variable in *ngFor directive so we can use it in interpolation and as a paramater in methods -->
-            {{ task }}
-            <button (click)="remove(task)">Remove</button>
-            <button (click)="done(task)">Done</button>
-          </li>
-        </ol>
-      </ng-container>
-      <ng-template #noTask>
-        <p>No tasks... You have free time now...</p>
-      </ng-template>
+      <app-todo-task
+        [tasksList]="tasksList"
+        (emitDone)="done($event)"
+        (emitRemove)="remove($event)"
+      ></app-todo-task>
+      <!--above:
+         property [tasksList] receive 'tasksList' and assign 'tasksList' variable from AppComponent(Parent) and send to ChildComponent
+         if we receive event "emitDone" and "emitRemove" from ChildComponent then we execute method "done()" and "remove()" in AppComponent|both of them capturing $event from webBrowser
+
+       -->
     </div>
     <div>
-      <p>Taks Done {{ tasksDone.length }}:</p>
-      <ol>
-        <li *ngFor="let task of tasksDone">
-          <!-- show tasks which was added to new Array 'tasksDone' with methods in this component -->
-          {{ task }}
-        </li>
-      </ol>
+      <app-done-task [tasksDone]="tasksDone"></app-done-task>
+      <!-- property [tasksDone] receive 'tasksList' and assign 'tasksDone' variable from AppComponent(Parent) and send to ChildComponent -->
     </div>
   </div>
 </div>

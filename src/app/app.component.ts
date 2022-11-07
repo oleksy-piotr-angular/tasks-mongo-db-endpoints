@@ -6,14 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Tasks-list-example1';
-  newTask: string = '';
+  // this component has variables/fields/Arrays below and execute all operations on them but all events receives from child-components|child component deal with the display of data and receiveing tasks but not execute any operations
+  title = 'Tasks-list-example2';
   tasksList: Array<string> = [];
   tasksDone: Array<string> = [];
 
-  add() {
-    this.tasksList.push(this.newTask); //Two-Way-binded 'newTask' add to tasksList
-    this.newTask = ''; //remove added content of 'newTask'
+  add(task: string): void {
+    this.tasksList.push(task); //This method add task which received from 'task' parameter
   }
   remove(task: string) {
     /* when we declare a method we need to remember to set apropriate type in parameters*/
