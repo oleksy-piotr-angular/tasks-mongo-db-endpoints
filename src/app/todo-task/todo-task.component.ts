@@ -24,4 +24,8 @@ export class TodoTaskComponent implements OnInit {
     //we 'emit/send' the data to be done from the todo-task.component to the method from Parent by executing this method(look at todo-task.component.html)
     this.emitDone.emit(task); //emit up to Parent AppComponent
   }
+
+  getColor(): string {
+    return this.tasksList.length >= 5 ? 'red' : 'green'; // 'ternary conditional operator' to return color
+  }
 }
