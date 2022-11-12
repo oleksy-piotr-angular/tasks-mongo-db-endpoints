@@ -12,9 +12,11 @@
         |we can also add method here like in [ngStyle] property|-->
       <!-- we declared 'task' variable in *ngFor directive so we can use it in interpolation and as a paramater in methods -->
       {{ task }}
-      <button (click)="remove(task)">Remove</button
+      <button type="button" class="btn btn-danger" (click)="remove(task)">
+        Remove</button
       ><!-- remove()) method emit data to Parent Component -->
-      <button (click)="done(task)">Done</button
+      <button type="button" class="btn btn-success" (click)="done(task)">
+        Done</button
       ><!-- done()) method emit data to Parent Component -->
     </li>
   </ol>
