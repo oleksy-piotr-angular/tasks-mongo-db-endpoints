@@ -1,4 +1,5 @@
-<p>Taks List:</p>
+<p [ngStyle]="{ color: getColor() }">TO-DO List: {{ tasksList.length }}</p>
+<!-- above "ngStyle" property sets color returned [string] from getColor() method  -->
 <ng-container *ngIf="tasksList.length > 0; else noTask">
   <ol>
     <li *ngFor="let task of tasksList">

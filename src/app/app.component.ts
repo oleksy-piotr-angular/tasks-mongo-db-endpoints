@@ -1,15 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   // this component has variables/fields/Arrays below and execute all operations on them but all events receives from child-components|child component deal with the display of data and receiveing tasks but not execute any operations
   title = 'Tasks-list-example2';
   tasksList: Array<string> = [];
   tasksDone: Array<string> = [];
+
+  ngOnInit(): void {
+    this.tasksList = [
+      'wash the dishes',
+      'vacuuming the floor',
+      'cook a meal',
+      'water the flowers',
+    ]; //Initiate list when Application starts running
+  }
 
   add(task: string): void {
     this.tasksList.push(task); //This method add task which received from 'task' parameter
