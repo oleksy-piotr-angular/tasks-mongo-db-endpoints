@@ -1,25 +1,23 @@
 <div>
   <h1>{{ title }}</h1>
   <div class="container">
-    <app-add-task (emitTask)="add($event)"></app-add-task>
-    <!--above it recive event "emitTask" and handle it with 'add()' method to capture '$event' -->
+    <app-add-task></app-add-task>
+    <!--above we don't need to recive event "emitTask" and handle it with 'add()' method to capture '$event' | we do all methods after Injecting 'TasksService' to 'AddTaskComponent' -->
   </div>
   <div class="container">
     <div>
-      <app-todo-task
-        [tasksList]="tasksList"
-        (emitDone)="done($event)"
-        (emitRemove)="remove($event)"
-      ></app-todo-task>
-      <!--above:
+      <app-todo-task></app-todo-task>
+      <!--above we don't need to use property and use events ass below | we do all methods after Injecting 'TasksService' to 'AddTaskComponent'| :
          property [tasksList] receive 'tasksList' and assign 'tasksList' variable from AppComponent(Parent) and send to ChildComponent
          if we receive event "emitDone" and "emitRemove" from ChildComponent then we execute method "done()" and "remove()" in AppComponent|both of them capturing $event from webBrowser
 
        -->
     </div>
     <div>
-      <app-done-task [tasksDone]="tasksDone"></app-done-task>
-      <!-- property [tasksDone] receive 'tasksList' and assign 'tasksDone' variable from AppComponent(Parent) and send to ChildComponent -->
+      <app-done-task></app-done-task>
+      <!--we don't need to use property [tasksDone] receive 'tasksList' and assign 'tasksDone' variable from AppComponent(Parent) and send to ChildComponent |tasksDone is subscribed and emiting from Service 'TasksService' to DoneTaskComponent -->
     </div>
   </div>
 </div>
+
+<!-- All Child Commponents Are communicating with TasksService Now. No with AppComponent(Parent) -->
