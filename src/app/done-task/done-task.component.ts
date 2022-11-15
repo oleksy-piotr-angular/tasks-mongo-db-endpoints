@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Task } from '../models/task';
 import { TasksService } from '../services/tasks.service';
 
 @Component({
@@ -7,15 +8,15 @@ import { TasksService } from '../services/tasks.service';
   styleUrls: ['./done-task.component.css'],
 })
 export class DoneTaskComponent implements OnInit {
-  tasksDone: Array<string> = [];
+  tasksDone: Array<Task> = [];
   constructor(private tasksService: TasksService) {
-    this.tasksService.getTaskDoneObs().subscribe((tasks: Array<string>) => {
+    this.tasksService.getTaskDoneObs().subscribe((tasks: Array<Task>) => {
       this.tasksDone = tasks; //after subsribing actual state of 'tasksDone' Array<string> from TasksService we assign it to internal variable 'taksDone' intead Using @Input() (property-binding) as below(we don't neeed to pass data from Parent because Everything is in 'TasksService'):
     });
   }
 
   /* /*  @Input()
-  tasksDone: Array<string> = []; */
+  tasksDone: Array<Task> = []; */
 
   ngOnInit(): void {}
 }
