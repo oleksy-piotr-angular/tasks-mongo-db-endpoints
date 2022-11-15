@@ -8,10 +8,10 @@ export class TasksService {
   private tasksList: Array<string> = []; // access to this Component only
   private tasksDone: Array<string> = []; // access to this Component only
   private tasksListObs = new BehaviorSubject<Array<string>>(
-    this.tasksList
+    []
   ); /*  Here BehaviorSubject was created to prepare to observe changes in TasksList[] */
   private tasksDoneObs = new BehaviorSubject<Array<string>>(
-    this.tasksDone
+    []
   ); /*  Here BehaviorSubject was created to prepare to observe changes in TasksDone[] */
   /* The BehaviorSubject has the characteristic that it stores the “current” value. This means that you can always directly get the last emitted value from the BehaviorSubject. */
 
