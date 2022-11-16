@@ -1,7 +1,7 @@
 <p>Taks Done {{ tasksDone.length }}:</p>
 <ol>
-  <!-- below was set appChecked directive from 'shared' folder to control its appearance -->
-  <li appChecked *ngFor="let task of tasksDone">
+  <!-- below was set appChecked and appDate directive from 'shared' folder to control its appearance and behaviour with @HostListener-->
+  <li appChecked appDate *ngFor="let task of tasksDone">
     <!-- show tasks which was added to new Array 'tasksDone' with TasksService methods in this component -->
     {{ task.name }}
     <!--above beacause we replace string into interface we need to invoke 'name' from object -->
