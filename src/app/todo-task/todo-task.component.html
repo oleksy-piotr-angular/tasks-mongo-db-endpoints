@@ -2,6 +2,7 @@
 <!-- above "ngStyle" property sets color returned [string] from getColor() method  -->
 <ng-container *ngIf="tasksList.length > 0; else noTask">
   <ol>
+    <!-- below we add appDate Directive with [date] Property-Binding to send and Show {{task.created}} info when Event will happen -->
     <li
       appDate
       [date]="task.created"
