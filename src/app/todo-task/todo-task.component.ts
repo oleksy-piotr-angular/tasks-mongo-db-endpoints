@@ -28,6 +28,7 @@ export class TodoTaskComponent implements OnInit {
     this.emitRemove.emit(task); //emit up to Parent AppComponent */
   }
   done(task: Task) {
+    task.end = new Date(); //we have to set Date 'end' before we pass this 'task' variable to method below
     this.tasksService.done(task); //we used Service method instead EventEmiter-emitDone(event-binding) below:
     /* //we 'emit/send' the data to be done from the todo-task.component to the method from Parent by executing this method(look at todo-task.component.html)
     this.emitDone.emit(task); //emit up to Parent AppComponent */

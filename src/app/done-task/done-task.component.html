@@ -1,9 +1,16 @@
 <p>Taks Done {{ tasksDone.length }}:</p>
 <ol>
-  <!-- below was set appChecked and appDate directive from 'shared' folder to control its appearance and behaviour with @HostListener-->
-  <li appChecked appDate *ngFor="let task of tasksDone">
+  <!-- below was set appChecked directive from 'shared' folder to control its appearance-->
+  <li appChecked *ngFor="let task of tasksDone">
     <!-- show tasks which was added to new Array 'tasksDone' with TasksService methods in this component -->
-    {{ task.name }}
-    <!--above beacause we replace string into interface we need to invoke 'name' from object -->
+    <!-- below was set appDate directive with its [date] property from 'shared' folder to control its behaviour with @HostListener and Show 'end' date property from <Task> type-->
+    <div *ngIf="task.end != null" appDate [date]="task.end">
+      <!-- We must to set [date] property-binding from directive here in this way
+      with *ngIf beacause in <Tasks> we have optional property 'end?''
+        |REMEMBER {{ task.name }} MUST BE NESTED INSIDE THIS "<div>"" |
+        Angular cannot send 'undefined' or 'null' value to Property-Binding [date] from Date Directive "appDate"  -->
+      {{ task.name }}
+      <!--above beacause we replace string into interface we need to invoke 'name' from object -->
+    </div>
   </li>
 </ol>
