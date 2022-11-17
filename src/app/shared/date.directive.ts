@@ -25,7 +25,7 @@ export class DateDirective {
     this.renderer.setProperty(
       this.paragraph,
       'innerHTML',
-      this.date.toLocaleDateString()
+      `Date: ${this.date.toLocaleDateString()} Time: ${this.date.getHours()}:${this.date.getMinutes()}`
     ); //we cannot use 'innnerHTML on 'renderer' so we do content replacement to 'this.date' with setProperty() method we change format also with 'localeDateString()' method
     this.renderer.appendChild(this.el.nativeElement, this.paragraph); //we append child with this 'paragraph' to element where this directive is assigned
   }
