@@ -3,6 +3,8 @@
 <ng-container *ngIf="tasksList.length > 0; else noTask">
   <ol>
     <li
+      appDate
+      [date]="task.created"
       *ngFor="let task of tasksList; let odd = odd"
       [ngClass]="{ 'odd-li': odd, 'last-list': tasksList.length === 1 }"
     >
