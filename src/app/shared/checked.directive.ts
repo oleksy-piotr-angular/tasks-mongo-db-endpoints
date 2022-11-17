@@ -17,6 +17,6 @@ export class CheckedDirective implements OnInit {
       'background',
       'url(/assets/checked.png) 10px center no-repeat'
     ); //above we use 'renderer' object to manipulate <li> element style but we used here this solution("background" not "listy-style-image") because we want to have checked.png aligned vertically center and 10px from left border|in this solution we had to add styles into DoneTask-Component|
-    this.renderer.setStyle(li, 'background-color', '#9ACD32');
+    this.renderer.setStyle(li, 'background-color', '#c3fd89');
   }
 }
