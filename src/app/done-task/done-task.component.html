@@ -9,7 +9,7 @@
       with *ngIf beacause in <Tasks> we have optional property 'end?''
         |REMEMBER {{ task.name }} MUST BE NESTED INSIDE THIS "<div>"" |
         Angular cannot send 'undefined' or 'null' value to Property-Binding [date] from Date Directive "appDate"  -->
-      {{ task.name }}
+      {{ task.name | transformTask }}
       <!--above beacause we replace string into interface we need to invoke 'name' from object -->
     </div>
   </li>
