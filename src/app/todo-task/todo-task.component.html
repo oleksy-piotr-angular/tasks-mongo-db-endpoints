@@ -14,7 +14,8 @@
       2. we set another class for <li> tag whith condition in [ngClass](special ngClass construction) when tasksList has last element
         |we can also add method here like in [ngStyle] property|-->
       <!-- we declared 'task' variable in *ngFor directive so we can use it in interpolation and as a paramater in methods -->
-      {{ task.name | transformTask }}
+      {{ task.name | transformTask: "!" }}
+      <!-- above We can add arguments to pipe after colon ":" -->
       <!--above beacause we replace string into interface we need to invoke 'name' from object -->
       <button type="button" class="btn btn-danger" (click)="remove(task)">
         Remove</button
