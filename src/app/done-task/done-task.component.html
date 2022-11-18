@@ -1,8 +1,9 @@
 <p>Taks Done {{ tasksDone.length }}:</p>
 <ol>
   <!-- below was set appChecked directive from 'shared' folder to control its appearance-->
-  <li appChecked *ngFor="let task of tasksDone">
-    <!-- show tasks which was added to new Array 'tasksDone' with TasksService methods in this component -->
+  <li appChecked *ngFor="let task of tasksDone | sortName">
+    <!--1. show tasks which was added to new Array 'tasksDone' with TasksService methods in this component
+     3. we add to tasksList | sortName Pipe to sort this Array by "Task.name" to display it  with alphabeticalcal order-->
     <!-- below was set appDate directive with its [date] property from 'shared' folder to control its behaviour with @HostListener and Show 'end' date property from <Task> type-->
     <div *ngIf="task.end != null" appDate [date]="task.end">
       <!-- We must to set [date] property-binding from directive here in this way
