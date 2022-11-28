@@ -11,7 +11,7 @@ import {
 })
 export class DateDirective {
   @Input()
-  date: Date = new Date(); //must initiate all new properties...
+  date: string = ''; //must initiate all new properties...
   private paragraph: Renderer2; //<p>//this property is prepared to initiate in constructor and use it inside this 'DateDirective'
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
@@ -25,7 +25,7 @@ export class DateDirective {
     this.renderer.setProperty(
       this.paragraph,
       'innerHTML',
-      `Date: ${this.date.toLocaleDateString()} Time: ${this.date.getHours()}:${this.date.getMinutes()}`
+      `Date: ${this.date}` /** remove previous Code because we recieve String value only */
     ); //we cannot use 'innnerHTML on 'renderer' so we do content replacement to 'this.date' with setProperty() method we change format also with 'localeDateString()' method
     this.renderer.appendChild(this.el.nativeElement, this.paragraph); //we append child with this 'paragraph' to element where this directive is assigned
   }

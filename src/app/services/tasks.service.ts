@@ -20,10 +20,27 @@ export class TasksService {
     //above <= changed from "ngOnInit(): void" after move from "app.component.ts"
     this.tasksList = [
       //below replace <string> data with <Task> data(object JS)
-      { name: 'wash the dishes', created: new Date() },
-      { name: 'vacuuming the floor', created: new Date() },
-      { name: 'cook a meal', created: new Date() },
-      { name: 'water the flowers', created: new Date() },
+      {
+        name: 'wash the dishes',
+        created: new Date().toLocaleString(),
+        isDone: false,
+      },
+      {
+        name: 'vacuuming the floor',
+        created: new Date().toLocaleString(),
+        isDone: false,
+      },
+      {
+        name: 'cook a meal',
+        created: new Date().toLocaleString(),
+        isDone: false,
+      },
+      {
+        name: 'water the flowers',
+        created: new Date().toLocaleString(),
+        isDone: false,
+      },
+      /** above we change Date() into string and add property "isDOne" to send data to MongoDB Data Storage */
     ];
     this.tasksListObs.next(this.tasksList); // 'this.tasksList' will be emited to subsribers
   }
