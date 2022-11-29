@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+#MongoDB Api-key INFO
+/src/app/shared/mongo-api-key.txt
