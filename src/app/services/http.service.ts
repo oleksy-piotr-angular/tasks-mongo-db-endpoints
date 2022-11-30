@@ -7,23 +7,26 @@ import { Injectable } from '@angular/core';
 })
 export class HttpService {
   atlasApi: AtlasDataAPI = new AtlasDataAPI();
-  url: string =
-    'https://data.mongodb-api.com/app/data-dqnco/endpoint/data/v1/action/find';
+
   dataAPI: string = this.atlasApi.dataAPI;
-  apiKey: string = this.atlasApi.apiKey;
-  headers = new HttpHeaders()
-    .set('content-type', 'application/json')
-    .set(
-      'api-key',
-      'b192gNI1rmVXNUI41xBxSDmY88zOBpe2TVFdP3k2WQ2aHNI0Jtr1XhPmmCtp9zMN'
-    );
-  /* .set('Access-Control-Allow-Origin', '*') */
+  url: string =
+    `https://data.mongodb-api.com/app/` +
+    this.dataAPI +
+    `/endpoint/data/v1/action/find`;
+
   constructor(private http: HttpClient) {
     this.getTasks();
   }
 
   getTasks() {
-    this.http.get(this.url, { headers: this.headers }).subscribe((tasks) => {
+    const getTasksBody = {
+      dataSource: 'tasks-example',
+      database: 'AngularPractice',
+      collection: 'tasks',
+    };
+    const httpHeader = new HttpHeaders();
+    httpHeader.set('Content-Type', 'application/json');
+    this.http.post(this.url, getTasksBody).subscribe((tasks) => {
       console.log(tasks);
     });
   }
