@@ -43,3 +43,4 @@ Thumbs.db
 
 #MongoDB Api-key INFO
 /src/app/shared/mongo-api-key.txt
+/src/app/shared/atlas-data-api.ts

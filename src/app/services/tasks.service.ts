@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Task } from '../models/task'; // it must be if we use Interface <Task>
+import { HttpService } from './http.service';
 
 @Injectable()
 export class TasksService {
@@ -14,7 +15,7 @@ export class TasksService {
   /* The BehaviorSubject has the characteristic that it stores the “current” value. This means that you can always directly get the last emitted value from the BehaviorSubject. */
   /** After Refactoring we could delete "tasksDone"  above because we add BOOLEAN type 'isDone' */
 
-  constructor() {
+  constructor(private httpService: HttpService) {
     //above <= changed from "ngOnInit(): void" after move from "app.component.ts"
     const tasksList = [
       /** above we change 'this' variable to local 'taskList' variable*/
