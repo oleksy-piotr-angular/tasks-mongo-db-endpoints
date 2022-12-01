@@ -1,6 +1,6 @@
-import { AtlasDataAPI } from './../shared/atlas-data-api';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AtlasDataAPI } from '../shared/atlas-data-api';
 /** This service was created to Implement Request to Atlas Data Api with - Api Key */
 @Injectable({
   providedIn: 'root',

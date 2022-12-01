@@ -41,6 +41,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-#MongoDB Api-key INFO
-/src/app/shared/mongo-api-key.txt
-/src/app/shared/atlas-data-api.ts
+#MongoDB Api-key INFO[Repository is Private!!!]
+#/src/app/shared/mongo-api-key.txt
+#/src/app/shared/atlas-data-api.ts
