@@ -17,10 +17,10 @@ export class TasksService {
 
   constructor(private httpService: HttpService) {
     //above <= changed from "ngOnInit(): void" after move from "app.component.ts"
-    const tasksList = [
+    /*  const tasksList: Task[] = [
       /** above we change 'this' variable to local 'taskList' variable*/
-      //below replace <string> data with <Task> data(object JS)
-      {
+    //below replace <string> data with <Task> data(object JS) | and after handle HttpService to comunicate with Mongo DB, we do not need to initiliaze whole TasksList |
+    /* {
         name: 'wash the dishes',
         created: new Date().toLocaleString(),
         isDone: false,
@@ -45,10 +45,11 @@ export class TasksService {
         created: new Date().toLocaleString(),
         end: new Date().toLocaleString(),
         isDone: true,
-      },
-      /** above we change Date() into string and add property "isDOne" to send data to MongoDB Data Storage */
-    ];
-    this.tasksListObs.next(tasksList); // 'tasksList' will be emited to subsribers/we propagate through 'BehaviourSubject'
+      }, */
+    /** above we change Date() into string and add property "isDOne" to send data to MongoDB Data Storage
+    ]; */
+    //this.tasksListObs.next(tasksList); // 'tasksList' will be emited to subsribers/we propagate through 'BehaviourSubject'
+    this.getTasksFromDB();
   }
 
   add(task: Task): void {
@@ -88,5 +89,23 @@ export class TasksService {
     return this.tasksListObs.asObservable(); /* After Invoke this method we Create 'Observable' with the subject */
   }
 
-  /** we could remove method 'getTaskDoneObs()' which recieve 'Observable' data from 'tasksDoneObs' */
+  /** we can remove method 'getTaskDoneObs()' which recieve 'Observable' data from 'tasksDoneObs' because we use filter 'isDone' when we display each list
+   */
+
+  saveTaskInDB() {
+    console.log('tasksService');
+    this.httpService.saveTasks(this.tasksListObs.getValue()); //we take all values which tasksListObs contains and we pass it to 'saveTasks()' from 'HttpService' as an array
+  }
+  clearTasksDoneInDB() {
+    console.log('clear Task');
+    this.httpService.removeDoneTasksFromDB();
+    this.getTasksFromDB();
+  }
+  getTasksFromDB() {
+    this.httpService.getTasks().subscribe((tasks) => {
+      const requestToArray = Object.values(tasks); // because after request we receive object as an answer, we need to change values into Array
+      const listOfTasks: Task[] = Object.values(requestToArray[0]); // this Array element keeps nested Array with tasksList[] of Type 'Task' | need to change to another array by 'Object.values()' -> Task[]
+      this.tasksListObs.next(listOfTasks); // we send this 'Task[]' to observable to display it in App window
+    });
+  }
 }

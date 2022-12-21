@@ -7,3 +7,9 @@ li {
   background-position-x: 10px;
   background-position-y: center;
 }
+li > div p {
+  /* to not moving whole element we show Data info above it */
+  z-index: 100;
+  position: absolute;
+  background-color: yellow;
+}

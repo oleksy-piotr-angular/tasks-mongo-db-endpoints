@@ -6,3 +6,10 @@
   background: pink;
   margin: 5px;
 }
+
+li > p {
+  /* to not moving whole element we show Data info above it */
+  z-index: 100;
+  position: absolute;
+  background-color: yellow;
+}
