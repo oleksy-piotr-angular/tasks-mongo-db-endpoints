@@ -1,5 +1,8 @@
 <div>
   <h1>{{ title }}</h1>
+  <!-- // Below this button we do not need because all changes are saving when something changed in App -->
+  <!-- <button (click)="save()">Save Tasks in DB</button> -->
+  <button (click)="clear()">Clear Tasks Done</button>
   <div class="container">
     <app-add-task></app-add-task>
     <!--above we don't need to recive event "emitTask" and handle it with 'add()' method to capture '$event' | we do all methods after Injecting 'TasksService' to 'AddTaskComponent' -->
