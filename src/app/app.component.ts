@@ -7,14 +7,16 @@ import { TasksService } from './services/tasks.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Tasks-list-example3';
+  title = 'Tasks-list-example: Atlas Data API Endpoints(MongoDB) ';
 
   constructor(private taskService: TasksService) {}
 
-  save() {
+  // Below this method we do not need because all changes are saving when something changed in App
+  /*  save() {
     this.taskService.saveTaskInDB();
-  }
+  } */
   clear() {
-    this.taskService.clearTasksDoneInDB();
+    // we use this method to clear all Tasks which was done from DB
+    this.taskService.clearDoneTasksInDB();
   }
 }

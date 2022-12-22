@@ -9,9 +9,8 @@ import { Task } from './../models/task';
   providedIn: 'root',
 })
 export class HttpService {
-  private readonly atlasApi: AtlasDataAPI = new AtlasDataAPI();
-
-  private readonly dataAPI: string = new AtlasDataAPI().dataAPI; // this is unsafe data to send a request
+  // private readonly atlasApi: AtlasDataAPI = new AtlasDataAPI();
+  private readonly dataAPI: string = new AtlasDataAPI().dataAPI; // this is a fragment of unsafe data to send a request - must be secret
   private readonly urlDB: string =
     `https://data.mongodb-api.com/app/` +
     this.dataAPI +
@@ -26,24 +25,25 @@ export class HttpService {
       collection: 'tasks',
     }; // prepare request Body for MongoDB_Atlas to recieve data from noSQL storage
     const myHttpHeader = new HttpHeaders();
-    myHttpHeader.set('Content-Type', 'application/xml');
+    myHttpHeader.set('Content-Type', 'application/json');
     myHttpHeader.set('Access-Control-Request-Headers', '*');
     //above we prepare Header to recieve JSON in Object from MongoDB
     const action = 'find';
-    this.http
-      .post<Array<Task>>(this.urlDB + action, getTasksBody, {
-        headers: myHttpHeader,
-        responseType: 'json',
-      }) //
-      .subscribe((tasks) => {
-        // above is constructed correct Request to MongoDB Atlas with body to make specific action | Receive answer as an Object with Array of stored values
+    //below: now we do not need to subscribe this method because we se it as 'Observable'
+    /*  this.http.post<Array<Task>>(this.urlDB + action, getTasksBody, {
+      headers: myHttpHeader,
+      responseType: 'json',
+    }); and subscribe in TasksService
+    /* .subscribe((tasks) => {
+        // above was constructed correct Request to MongoDB Atlas with body to make specific action | Receive answer as an Object with Array of stored values
         //const requestToArray = Object.values(tasks); // because after request we receive object as an answer, we need to change values into Array
         //const tasksList: Task[] = Object.values(requestToArray[0]); // this Array element keeps nested Array with tasksList
-      });
+      }); */
+    //below: now we need to have a return to suscribe this method in TasksService
     return this.http.post<Array<Task>>(this.urlDB + action, getTasksBody, {
       headers: myHttpHeader,
       responseType: 'json',
-    }); //below we do not need to subsribe this method here | because we return this method as Observable
+    }); //below we do not need to subsribe this method here | because we return this method as Observable and handle in 'TasksService'
     /* .subscribe((tasks) => {
         // above is constructed correct Request to MongoDB Atlas with body to make specific action | Receive answer as an Object with Array of stored values
         const requestToArray = Object.values(tasks); // because after request we receive object as an answer, we need to change values into Array
@@ -55,7 +55,23 @@ export class HttpService {
       }); */
   }
 
-  saveTasks(list: Array<Task> = []) {
+  saveOneTask(task: Task) {
+    //this Method/Request only Sending Task to Save after add in 'TasksSevice'
+    const saveTasksBody = {
+      collection: 'tasks',
+      database: 'AngularPractice',
+      dataSource: 'tasks-example',
+      document: task,
+    }; // prepare request Body for MongoDB_Atlas to recieve data from noSQL data storage
+    const action = 'insertOne';
+
+    this.http.post(this.urlDB + action, saveTasksBody).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  // Below this method we do not need because all changes are saving when something is changed in App
+  /* saveTasks(list: Array<Task> = []) {
     const listToSave = list.filter((t) => {
       return t._id === undefined;
     });
@@ -73,7 +89,7 @@ export class HttpService {
       });
     }
     this.updateTasksToDone(list);
-  }
+  } */
 
   removeDoneTasksFromDB() {
     /** This method remove all Tasks which has changed status 'isDone = true' from DB */
@@ -86,12 +102,12 @@ export class HttpService {
     const action = 'deleteMany';
     this.http.post(this.urlDB + action, saveTasksBody).subscribe((data) => {
       console.log(data);
-    });
+    }); //call 'post' Request
   }
 
-  updateTasksToDone(list: Array<Task> = []) {
-    /** TODO: correct to do this only once not every time */
-    /* This method update whole list of tasks which chenged status isDone to 'true' */
+  // Below this method we do not need because all changes are saving when something is changed in App
+  /* updateTasksToDone(list: Array<Task> = []) {
+    // This method update whole list of tasks which chenged status isDone to 'true'
     const tasksSavedInDB: Task[] = list.filter((t) => {
       return t._id !== undefined;
     });
@@ -123,5 +139,41 @@ export class HttpService {
         console.log(data);
       });
     }
+  } */
+
+  updateOneTaskToDone(task: Task) {
+    // This method Insert One Task from App into DB
+    const saveTasksBody = {
+      collection: 'tasks',
+      database: 'AngularPractice',
+      dataSource: 'tasks-example',
+      filter: { _id: { $oid: task._id } },
+      update: {
+        $set: {
+          isDone: true,
+          end: task.end,
+        },
+      },
+    }; // prepare request Body for MongoDB_Atlas to recieve data from noSQL data storage
+    const action = 'updateOne';
+
+    this.http.post(this.urlDB + action, saveTasksBody).subscribe((data) => {
+      console.log(data);
+    }); //call 'post' Request
+  }
+
+  removeOneTask(task: Task) {
+    // This method Remove One Task from DB when Task will be removed in App
+    const saveTasksBody = {
+      collection: 'tasks',
+      database: 'AngularPractice',
+      dataSource: 'tasks-example',
+      filter: { _id: { $oid: task._id } },
+    }; // prepare request Body for MongoDB_Atlas to remove document in noSQL data storage
+    const action = 'deleteOne';
+
+    this.http.post(this.urlDB + action, saveTasksBody).subscribe((data) => {
+      console.log(data);
+    }); //call 'post' Request
   }
 }

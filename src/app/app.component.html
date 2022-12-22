@@ -1,6 +1,7 @@
 <div>
   <h1>{{ title }}</h1>
-  <button (click)="save()">Save Tasks in DB</button>
+  <!-- // Below this button we do not need because all changes are saving when something changed in App -->
+  <!-- <button (click)="save()">Save Tasks in DB</button> -->
   <button (click)="clear()">Clear Tasks Done</button>
   <div class="container">
     <app-add-task></app-add-task>
