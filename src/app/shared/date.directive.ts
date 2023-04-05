@@ -10,8 +10,7 @@ import {
   selector: '[appDate]',
 })
 export class DateDirective {
-  @Input()
-  date: string = ''; //must initiate all new properties...
+  @Input() date: string = ''; //must initiate all new properties...
   private paragraph: Renderer2; //<p>//this property is prepared to initiate in constructor and use it inside this 'DateDirective'
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
