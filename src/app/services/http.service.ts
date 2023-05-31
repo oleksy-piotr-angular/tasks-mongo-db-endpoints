@@ -23,11 +23,11 @@ export class HttpService {
       dataSource: 'tasks-example',
       database: 'AngularPractice',
       collection: 'tasks',
-    }; // prepare request Body for MongoDB_Atlas to recieve data from noSQL storage
+    }; // prepare request Body for MongoDB_Atlas to receive data from noSQL storage
     const myHttpHeader = new HttpHeaders();
     myHttpHeader.set('Content-Type', 'application/json');
     myHttpHeader.set('Access-Control-Request-Headers', '*');
-    //above we prepare Header to recieve JSON in Object from MongoDB
+    //above we prepare Header to receive JSON in Object from MongoDB
     const action = 'find';
     //below: now we do not need to subscribe this method because we se it as 'Observable'
     /*  this.http.post<Array<Task>>(this.urlDB + action, getTasksBody, {
@@ -39,11 +39,11 @@ export class HttpService {
         //const requestToArray = Object.values(tasks); // because after request we receive object as an answer, we need to change values into Array
         //const tasksList: Task[] = Object.values(requestToArray[0]); // this Array element keeps nested Array with tasksList
       }); */
-    //below: now we need to have a return to suscribe this method in TasksService
-    return this.http.post<Array<Task>>(this.urlDB + action, getTasksBody, {
+    //below: now we need to have a return to subscribe this method in TasksService
+    return this.http.post<Task[]>(this.urlDB + action, getTasksBody, {
       headers: myHttpHeader,
       responseType: 'json',
-    }); //below we do not need to subsribe this method here | because we return this method as Observable and handle in 'TasksService'
+    }); //below we do not need to subscribe this method here | because we return this method as Observable and handle in 'TasksService'
     /* .subscribe((tasks) => {
         // above is constructed correct Request to MongoDB Atlas with body to make specific action | Receive answer as an Object with Array of stored values
         const requestToArray = Object.values(tasks); // because after request we receive object as an answer, we need to change values into Array

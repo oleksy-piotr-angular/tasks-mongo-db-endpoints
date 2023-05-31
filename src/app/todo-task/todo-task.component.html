@@ -1,5 +1,5 @@
 <p [ngStyle]="{ color: getColor() }">TO-DO List: {{ tasksList.length }}</p>
-<!-- above "ngStyle" property sets color returned [string] from getColor() method  -->
+<!-- above "ngStyle" {attribute property} sets color returned [string] from getColor() method  -->
 <ng-container *ngIf="tasksList.length > 0; else noTask">
   <ol>
     <!-- below we add appDate Directive with [date] Property-Binding to send and Show {{task.created}} info when Event will happen -->
@@ -15,7 +15,7 @@
         |we can also add method here like in [ngStyle] property|
       3. we add to tasksList | sortName Pipe to sort this Array by "Task.name" to display it  with alphabeticalcal order -->
       <!-- we declared 'task' variable in *ngFor directive so we can use it in interpolation and as a paramater in methods -->
-      {{ task.name | transformTask: "!" }}
+      {{ task.name | transformTask : "!" }}
       <!-- above We can add arguments to pipe after colon ":" -->
       <!--above beacause we replace string into interface we need to invoke 'name' from object -->
       <button type="button" class="btn btn-danger" (click)="remove(task)">

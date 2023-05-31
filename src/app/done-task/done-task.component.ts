@@ -11,7 +11,7 @@ export class DoneTaskComponent implements OnInit {
   tasksDone: Array<Task> = [];
   constructor(private tasksService: TasksService) {
     this.tasksService
-      .getTaskListObs() /** we recieve another list here because we remove 'getTasksDoneObs' and add flag 'isDone' into 'Tasks' class/interface to filter list below and show only 'tasksDone' */
+      .getTaskListObs() /** we receive another list here because we remove 'getTasksDoneObs' and add flag 'isDone' into 'Tasks' class/interface to filter list below and show only 'tasksDone' */
       .subscribe((tasks: Array<Task>) => {
         this.tasksDone = tasks
           .filter(

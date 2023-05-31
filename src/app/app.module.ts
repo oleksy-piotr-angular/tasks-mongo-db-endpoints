@@ -1,5 +1,4 @@
 import { HttpClientModule } from '@angular/common/http';
-import { TasksService } from './services/tasks.service';
 import { FormsModule } from '@angular/forms' /* //FormsModule-TwoWayBinding and Bootstrap Working*/;
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +12,7 @@ import { DateDirective } from './shared/date.directive';
 import { TransformTaskPipe } from './shared/transform-task.pipe';
 import { SortNamePipe } from './shared/sort-name.pipe';
 import { HttpService } from './services/http.service';
+import { TasksService } from './services/tasks.service';
 
 @NgModule({
   declarations: [
@@ -33,8 +33,8 @@ import { HttpService } from './services/http.service';
   ],
   providers: [
     TasksService,
-    HttpService /** Remmber to set above 'HttpClientModule' if we want to use it in this app with created 'HttpService' (without we cannot properly handle 'HttpClient' requests in 'services/http.service.ts'*/,
-  ] /* We need to Inform all Components here about Communication with this Sevice through this table in metadata|we could do that also in AppComponent because all Child Components belongs to Parent| */,
+    HttpService /** Remember to set above 'HttpClientModule' if we want to use it in this app with created 'HttpService' (without we cannot properly handle 'HttpClient' requests in 'services/http.service.ts'*/,
+  ] /* We need to Inform all Components here about Communication with this Service through this table in metadata|we could do that also in AppComponent because all Child Components belongs to Parent| */,
   bootstrap: [AppComponent],
 })
 export class AppModule {}

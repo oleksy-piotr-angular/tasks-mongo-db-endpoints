@@ -27,7 +27,7 @@ DOCUMENTATION
 -------------
 https://www.mongodb.com/docs/atlas/app-services/data-api/generated-endpoints/#delete-multiple-documents
 
-Some Terminal Comands
+Some Terminal Commands
 ---------------------
 
 curl https://data.mongodb-api.com/app/data-dqnco/endpoint/data/v1/action/insertOne \

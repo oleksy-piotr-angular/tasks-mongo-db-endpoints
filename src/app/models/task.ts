@@ -5,5 +5,5 @@ export interface Task {
   created: string;
   end?: string;
   isDone: boolean;
-  /** Above change properties to send data into MongoDB noSQL data store */
+  /** Above was changed some properties to send data into MongoDB noSQL data store */
 }

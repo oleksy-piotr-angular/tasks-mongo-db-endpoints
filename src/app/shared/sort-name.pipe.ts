@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'sortName',
 })
 export class SortNamePipe implements PipeTransform {
-  //below we change what kind of value type this Pipe receives<Array<Task>> and what type he return <Array<Task>>
+  ///below we change what kind of value type this Pipe receives<Array<Task>> and what type he return <Array<Task>>
   transform(value: Array<Task>, args?: any): Array<Task> {
     return value.sort((a, b) => {
       /* inside standard implementation off sort method with 'a','b' arguments in Array */
