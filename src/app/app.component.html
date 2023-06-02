@@ -1,26 +1,17 @@
 <div>
   <h1>{{ title }}</h1>
-  <!-- // Below this button we do not need because all changes are saving when something changed in App -->
-  <!-- <button (click)="save()">Save Tasks in DB</button> -->
   <button (click)="clear()">Clear Tasks Done</button>
   <div class="container">
     <app-add-task></app-add-task>
-    <!--above we don't need to receive event "emitTask" and handle it with 'add()' method to capture '$event' | we do all methods after Injecting 'TasksService' to 'AddTaskComponent' -->
   </div>
   <div class="container">
     <div>
       <app-todo-task></app-todo-task>
-      <!--above we don't need to use property and use events ass below | we do all methods after Injecting 'TasksService' to 'AddTaskComponent'| :
-         property [tasksList] receive 'tasksList' and assign 'tasksList' variable from AppComponent(Parent) and send to ChildComponent
-         if we receive event "emitDone" and "emitRemove" from ChildComponent then we execute method "done()" and "remove()" in AppComponent|both of them capturing $event from webBrowser
-
-       -->
     </div>
     <div>
       <app-done-task></app-done-task>
-      <!--we don't need to use property [tasksDone] receive 'tasksList' and assign 'tasksDone' variable from AppComponent(Parent) and send to ChildComponent |tasksDone is subscribed and emitting from Service 'TasksService' to DoneTaskComponent -->
     </div>
   </div>
 </div>
 
-<!-- All Child Components Are communicating with TasksService Now. No with AppComponent(Parent) -->
+<!-- All Child Components Are communicating with TasksService Now.They no need to communicate with with AppComponent(Parent) through data binding -->

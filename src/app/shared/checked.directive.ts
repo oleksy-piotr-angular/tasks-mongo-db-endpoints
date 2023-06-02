@@ -4,19 +4,15 @@ import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
   selector: '[appChecked]',
 })
 export class CheckedDirective implements OnInit {
-  /* good habit to modify HTML elements in ngOnInit lifecycle hook method. */
-
-  constructor(private el: ElementRef, private renderer: Renderer2) {
-    /*above was injected two properties from imported class */
-  }
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit(): void {
-    let li = this.el.nativeElement; //we assign this element <li> where this directive was implemented thanks 'ElementRef'
+    //we take element where this directive was implemented - thanks 'ElementRef'
+    let li = this.el.nativeElement;
     this.renderer.setStyle(
       li,
       'background',
-      'url(/assets/checked.png) 10px center no-repeat'
-    ); //above we use 'renderer' object to manipulate <li> element style but we used here this solution("background" not "list-style-image") because we want to have checked.png aligned vertically center and 10px from left border|in this solution we had to add styles into DoneTask-Component|
-    this.renderer.setStyle(li, 'background-color', '#c3fd89');
+      'url(/assets/checked.png) 10px center no-repeat  rgb(195, 253, 137)'
+    );
   }
 }
