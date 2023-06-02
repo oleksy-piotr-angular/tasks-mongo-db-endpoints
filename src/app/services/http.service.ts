@@ -84,7 +84,6 @@ export class HttpService {
     };
 
     const action = 'updateOne';
-    //TODO Try to pass Update Info from Data Api from here to actual Task which was saved
     return this.http.post<{ matchedCount: number; modifiedCount: number }>(
       this.urlDB + action,
       saveTasksBody
