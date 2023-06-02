@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms' /* //FormsModule-TwoWayBinding and Bootstrap Working*/;
+//FormsModule-TwoWayBinding and Bootstrap Working;
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 //We need to import all created app Elements here to use them
@@ -16,7 +17,7 @@ import { TasksService } from './services/tasks.service';
 
 @NgModule({
   declarations: [
-    //we need to Declarate all created elements here for all components
+    //we need to declare all created elements here for all components
     AppComponent,
     AddTaskComponent,
     TodoTaskComponent,
@@ -31,10 +32,7 @@ import { TasksService } from './services/tasks.service';
     FormsModule /* FormsModule-TwoWayBinding */,
     HttpClientModule /**if we want to use HTTP request we must Import this module  */,
   ],
-  providers: [
-    TasksService,
-    HttpService /** Remember to set above 'HttpClientModule' if we want to use it in this app with created 'HttpService' (without we cannot properly handle 'HttpClient' requests in 'services/http.service.ts'*/,
-  ] /* We need to Inform all Components here about Communication with this Service through this table in metadata|we could do that also in AppComponent because all Child Components belongs to Parent| */,
+  providers: [TasksService, HttpService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

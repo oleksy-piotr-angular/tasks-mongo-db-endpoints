@@ -1,3 +1,3 @@
 export class AtlasDataAPI {
-  dataAPI: string = '';
+  dataAPI: string = 'data-dqnco';
 }

@@ -11,12 +11,8 @@ export class AppComponent {
 
   constructor(private taskService: TasksService) {}
 
-  // Below this method we do not need because all changes are saving when something changed in App
-  /*  save() {
-    this.taskService.saveTaskInDB();
-  } */
   clear() {
-    // we use this method to clear all Tasks which was done from DB
+    // we use this method to remove from DB all Tasks which was done
     this.taskService.clearDoneTasksInDB();
   }
 }

@@ -1,13 +1,1 @@
-/* You can add global styles to this file, and also import other style files */
-/* li {
-  background: lightgray;
-  margin: 2px;
-  padding: 8px;
-} */
-/* above CSS style was removed */
 
-/* Style above is not encapsulated but all styles like in 'todo-tasks.components.css' are encapsulated and applied only to its component
-If we would like to turn off Encapsulation in some component and infect all components with styles from for example 'todo-tasks.components.css' we need to add 'encapsulation: ViewEncapsulation.None' below "@Component" decorator (metadata place) and add 'ViewEncapsulation' import from '@angular/core' */
-
-/* To properly install Bootstrap CSS to Angular 14 App I read this website to "Step 4"
-https://efficientcoder.net/add-bootstrap-angular-14/ */
