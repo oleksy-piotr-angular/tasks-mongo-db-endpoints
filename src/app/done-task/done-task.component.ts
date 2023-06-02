@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Task } from '../models/task';
 import { TasksService } from '../services/tasks.service';
 
@@ -8,10 +8,10 @@ import { TasksService } from '../services/tasks.service';
   styleUrls: ['./done-task.component.css'],
 })
 export class DoneTaskComponent {
-  tasksDone: Array<Task> = [];
+  tasksDone: Task[] = [];
   constructor(private tasksService: TasksService) {
-    this.tasksService.getTaskListObs().subscribe((tasks: Array<Task>) => {
-      this.tasksDone = tasks.filter((t) => t.isDone === true).slice();
+    this.tasksService.getTaskListObs().subscribe((tasks: Task[]) => {
+      this.tasksDone = tasks.filter((t) => t.isDone === true);
     });
   }
 }

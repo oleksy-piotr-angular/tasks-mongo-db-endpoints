@@ -5,14 +5,15 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'sortName',
 })
 export class SortNamePipe implements PipeTransform {
-  transform(value: Array<Task>, args?: any): Array<Task> {
+  transform(value: Task[], args?: any): Task[] {
     return value.sort((a, b) => {
       /* inside standard implementation off sort method with 'a','b' arguments in Array */
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1;
-      } else {
-        return -1;
-      }
+      // if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      //   return 1;
+      // } else {
+      //   return -1;
+      // }
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
     });
   }
 }

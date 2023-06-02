@@ -15,7 +15,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) {}
 
-  getTasks(): Observable<Array<Task>> {
+  getTasks(): Observable<Task[]> {
     // prepare request Body for MongoDB_Atlas to receive data from noSQL storage
     const getTasksBody = {
       dataSource: 'tasks-example',
@@ -36,7 +36,9 @@ export class HttpService {
     });
   }
 
-  saveOneTask(task: Task) {
+  saveOneTask(
+    task: Omit<Task, '_id'>
+  ): Observable<{ insertedId: { $oid: string } }> {
     const saveTasksBody = {
       collection: 'tasks',
       database: 'AngularPractice',
@@ -45,13 +47,13 @@ export class HttpService {
     };
 
     const action = 'insertOne';
-
-    this.http.post(this.urlDB + action, saveTasksBody).subscribe((data) => {
-      console.log(data);
-    });
+    return this.http.post<{ insertedId: { $oid: string } }>(
+      this.urlDB + action,
+      saveTasksBody
+    );
   }
 
-  removeDoneTasksFromDB() {
+  removeDoneTasksFromDB(): Observable<{ deletedCount: number }> {
     const saveTasksBody = {
       collection: 'tasks',
       database: 'AngularPractice',
@@ -59,12 +61,15 @@ export class HttpService {
       filter: { isDone: true },
     };
     const action = 'deleteMany';
-    this.http.post(this.urlDB + action, saveTasksBody).subscribe((data) => {
-      console.log(data);
-    });
+    return this.http.post<{ deletedCount: number }>(
+      this.urlDB + action,
+      saveTasksBody
+    );
   }
 
-  updateOneTaskToDone(task: Task) {
+  updateOneTaskToDone(
+    task: Task
+  ): Observable<{ matchedCount: number; modifiedCount: number }> {
     const saveTasksBody = {
       collection: 'tasks',
       database: 'AngularPractice',
@@ -79,13 +84,14 @@ export class HttpService {
     };
 
     const action = 'updateOne';
-
-    this.http.post(this.urlDB + action, saveTasksBody).subscribe((data) => {
-      console.log(data);
-    });
+    //TODO Try to pass Update Info from Data Api from here to actual Task which was saved
+    return this.http.post<{ matchedCount: number; modifiedCount: number }>(
+      this.urlDB + action,
+      saveTasksBody
+    );
   }
 
-  removeOneTask(task: Task) {
+  removeOneTask(task: Task): Observable<{ deletedCount: number }> {
     const saveTasksBody = {
       collection: 'tasks',
       database: 'AngularPractice',
@@ -93,9 +99,9 @@ export class HttpService {
       filter: { _id: { $oid: task._id } },
     };
     const action = 'deleteOne';
-
-    this.http.post(this.urlDB + action, saveTasksBody).subscribe((data) => {
-      console.log(data);
-    });
+    return this.http.post<{ deletedCount: number }>(
+      this.urlDB + action,
+      saveTasksBody
+    );
   }
 }

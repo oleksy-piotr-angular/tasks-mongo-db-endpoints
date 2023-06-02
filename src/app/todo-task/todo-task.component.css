@@ -8,7 +8,7 @@
 }
 
 li > p {
-  /* to not moving whole element we show Data info above it */
+  /* to not moving whole element we show date info above it */
   z-index: 100;
   position: absolute;
   background-color: yellow;
