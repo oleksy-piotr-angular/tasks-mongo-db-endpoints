@@ -12,7 +12,6 @@ export class AppComponent {
   constructor(private taskService: TasksService) {}
 
   clear() {
-    // we use this method to remove from DB all Tasks which was done
     this.taskService.clearDoneTasksInDB();
   }
 }

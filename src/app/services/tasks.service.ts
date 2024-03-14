@@ -12,7 +12,6 @@ export class TasksService {
   }
 
   add(task: Task): void {
-    //this method saving changes in MongoDB data Storage and set new Id from MOngoDB
     this.httpService.saveOneTask(task).subscribe((data) => {
       task._id = data.insertedId;
       const list: Task[] = [...this.tasksList$.getValue()];
@@ -48,15 +47,12 @@ export class TasksService {
   }
 
   getTaskListObs(): Observable<Array<Task>> {
-    /* After Invoke this method we Create 'Observable' with the 'Subject' */
     return this.tasksList$.asObservable();
   }
 
   private getTasksFromDB() {
     this.httpService.getTasks().subscribe((tasks) => {
-      // because after request we receive object as an answer, we need to change values into Array
       const requestToArray = Object.values(tasks);
-      // this Array element is an object which keeps nested Array with tasksList[] of Type 'Task' | need to change to another array by 'Object.values()' -> Task[]
       const listOfTasks: Task[] = Object.values(requestToArray[0]);
       this.tasksList$.next(listOfTasks);
     });

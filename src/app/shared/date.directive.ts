@@ -13,7 +13,6 @@ export class DateDirective {
   private paragraph: Renderer2;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
-    //create a HTML DOM element <p> tag
     this.paragraph = this.renderer.createElement('p');
   }
 
