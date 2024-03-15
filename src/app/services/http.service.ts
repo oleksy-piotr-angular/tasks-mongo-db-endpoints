@@ -6,11 +6,7 @@ import { Task } from './../models/task';
 
 @Injectable()
 export class HttpService {
-  private readonly dataAPI: string = new AtlasDataAPI().dataAPI;
-  private readonly urlDB: string =
-    `https://data.mongodb-api.com/app/` +
-    this.dataAPI +
-    `/endpoint/data/v1/action/`;
+  private readonly apIUrl = new AtlasDataAPI().apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -23,9 +19,9 @@ export class HttpService {
     const myHttpHeader = new HttpHeaders();
     myHttpHeader.set('Content-Type', 'application/json');
     myHttpHeader.set('Access-Control-Request-Headers', '*');
-    const action = 'find';
+    const action = '/action/find';
 
-    return this.http.post<Task[]>(this.urlDB + action, body, {
+    return this.http.post<Task[]>(this.apIUrl + action, body, {
       headers: myHttpHeader,
       responseType: 'json',
     });
@@ -40,10 +36,10 @@ export class HttpService {
       dataSource: 'tasks-example',
       document: task,
     };
-    const action = 'insertOne';
+    const action = '/action/insertOne';
 
     return this.http.post<{ insertedId: { $oid: string } }>(
-      this.urlDB + action,
+      this.apIUrl + action,
       body
     );
   }
@@ -55,9 +51,9 @@ export class HttpService {
       dataSource: 'tasks-example',
       filter: { isDone: true },
     };
-    const action = 'deleteMany';
+    const action = '/action/deleteMany';
 
-    return this.http.post<{ deletedCount: number }>(this.urlDB + action, body);
+    return this.http.post<{ deletedCount: number }>(this.apIUrl + action, body);
   }
 
   updateOneTaskToDone(
@@ -75,10 +71,10 @@ export class HttpService {
         },
       },
     };
-    const action = 'updateOne';
+    const action = '/action/updateOne';
 
     return this.http.post<{ matchedCount: number; modifiedCount: number }>(
-      this.urlDB + action,
+      this.apIUrl + action,
       body
     );
   }
@@ -90,8 +86,8 @@ export class HttpService {
       dataSource: 'tasks-example',
       filter: { _id: { $oid: task._id } },
     };
-    const action = 'deleteOne';
+    const action = '/action/deleteOne';
 
-    return this.http.post<{ deletedCount: number }>(this.urlDB + action, body);
+    return this.http.post<{ deletedCount: number }>(this.apIUrl + action, body);
   }
 }
