@@ -9,7 +9,7 @@ import {
   selector: '[appDate]',
 })
 export class DateDirective {
-  @Input() date: string = '';
+  @Input() appDate: string = '';
   private paragraph: Renderer2;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
@@ -21,7 +21,7 @@ export class DateDirective {
     this.renderer.setProperty(
       this.paragraph,
       'innerHTML',
-      `Date: ${this.date}`
+      `Date: ${this.appDate}`
     );
     this.renderer.appendChild(this.el.nativeElement, this.paragraph);
   }
