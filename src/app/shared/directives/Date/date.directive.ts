@@ -17,7 +17,7 @@ export class DateDirective {
   }
 
   @HostListener('mouseenter')
-  mouseEnter(eventDate: Event): void {
+  mouseEnter(): void {
     this.renderer.setProperty(
       this.paragraph,
       'innerHTML',
@@ -26,7 +26,7 @@ export class DateDirective {
     this.renderer.appendChild(this.el.nativeElement, this.paragraph);
   }
   @HostListener('mouseleave')
-  mouseLeave(eventDate: Event): void {
+  mouseLeave(): void {
     this.renderer.removeChild(this.el.nativeElement, this.paragraph);
   }
 }
