@@ -7,9 +7,10 @@ import { TasksService } from '../services/tasks.service';
   templateUrl: './todo-task.component.html',
   styleUrls: ['./todo-task.component.css'],
 })
-export class TodoTaskComponent {
+export class TodoTaskComponent implements OnInit {
   tasksList: Task[] = [];
-  constructor(private tasksService: TasksService) {
+  constructor(private tasksService: TasksService) {}
+  ngOnInit(): void {
     this.tasksService.getTaskListObs().subscribe((tasks: Array<Task>) => {
       this.tasksList = tasks.filter((t) => t.isDone === false);
     });
