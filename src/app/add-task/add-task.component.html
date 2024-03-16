@@ -1,4 +1,6 @@
 <div>
+  <ng-content></ng-content>
   <input type="text" [(ngModel)]="newTask" />
-  <button (click)="add()">Add New Task</button>
+  <button (click)="add()">Add</button>
+  <ng-content select="#tip2"></ng-content>
 </div>

@@ -9,9 +9,11 @@ import { TasksService } from '../services/tasks.service';
 })
 export class DoneTaskComponent {
   tasksDone: Task[] = [];
+  tasksExists = false;
   constructor(private tasksService: TasksService) {
     this.tasksService.getTaskListObs().subscribe((tasks: Task[]) => {
       this.tasksDone = tasks.filter((t) => t.isDone === true);
+      this.tasksExists = tasks.length > 0 ? true : false;
     });
   }
 }
