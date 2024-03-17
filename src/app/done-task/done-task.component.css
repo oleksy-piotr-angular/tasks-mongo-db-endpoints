@@ -6,8 +6,3 @@ li {
   background-position-x: 10px;
   background-position-y: center;
 }
-li > div p {
-  z-index: 100;
-  position: absolute;
-  background-color: yellow;
-}

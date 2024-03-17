@@ -6,9 +6,3 @@
   background: pink;
   margin: 5px;
 }
-
-li > p {
-  z-index: 100;
-  position: absolute;
-  background-color: yellow;
-}
