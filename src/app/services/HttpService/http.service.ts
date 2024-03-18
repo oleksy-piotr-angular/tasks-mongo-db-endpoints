@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Task } from './../models/task';
+import { Task } from '../../models/task';
 import { environment } from 'src/environments/environment';
 
 @Injectable()

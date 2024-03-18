@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateDirective } from './date.directive';
 import { DoneTaskComponent } from 'src/app/done-task/done-task.component';
 import { By } from '@angular/platform-browser';
-import { TasksService } from 'src/app/services/tasks.service';
+import { TasksService } from 'src/app/services/TaskService/tasks.service';
 import { SortNamePipe } from '../../pipes/SortName/sort-name.pipe';
 import { of } from 'rxjs';
 import { TransformTaskPipe } from '../../pipes/TransformTask/transform-task.pipe';

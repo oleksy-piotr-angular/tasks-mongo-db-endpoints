@@ -10,8 +10,8 @@ import { CheckedDirective } from './shared/directives/Checked/checked.directive'
 import { DateDirective } from './shared/directives/Date/date.directive';
 import { TransformTaskPipe } from './shared/pipes/TransformTask/transform-task.pipe';
 import { SortNamePipe } from './shared/pipes/SortName/sort-name.pipe';
-import { HttpService } from './services/http.service';
-import { TasksService } from './services/tasks.service';
+import { HttpService } from './services/HttpService/http.service';
+import { TasksService } from './services/TaskService/tasks.service';
 
 @NgModule({
   declarations: [
