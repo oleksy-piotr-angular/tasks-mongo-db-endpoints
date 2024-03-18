@@ -23,7 +23,7 @@ describe('DateDirective', () => {
       },
     ];
     mockTaskService = jasmine.createSpyObj(['getTaskListObs']);
-    TestBed.configureTestingModule({
+    fixture = TestBed.configureTestingModule({
       declarations: [
         DateDirective,
         DoneTaskComponent,
@@ -31,9 +31,8 @@ describe('DateDirective', () => {
         TransformTaskPipe,
       ],
       providers: [{ provide: TasksService, useValue: mockTaskService }],
-    });
+    }).createComponent(DoneTaskComponent);
 
-    fixture = TestBed.createComponent(DoneTaskComponent);
     mockTaskService.getTaskListObs.and.returnValue(of(TASKS));
     fixture.detectChanges();
     divDE = fixture.debugElement.query(By.css('li>div'));
