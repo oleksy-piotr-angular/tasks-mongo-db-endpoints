@@ -20,13 +20,9 @@ export class HttpService {
       database: this.database,
       collection: this.collection,
     };
-    const myHttpHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
     const action = '/action/find';
 
     return this.http.post<API_response>(this.apiUrl + action, body, {
-      headers: myHttpHeader,
       responseType: 'json',
     });
   }
