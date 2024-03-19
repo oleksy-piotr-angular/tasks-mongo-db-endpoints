@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../../models/task';
 import { environment } from 'src/environments/environment';
+import { API_response } from 'src/app/models/api_response';
 
 @Injectable()
 export class HttpService {
@@ -13,7 +14,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) {}
 
-  getTasks(): Observable<Task[]> {
+  getTasks(): Observable<API_response> {
     const body = {
       dataSource: this.data_source,
       database: this.database,
@@ -24,15 +25,13 @@ export class HttpService {
     myHttpHeader.set('Access-Control-Request-Headers', '*');
     const action = '/action/find';
 
-    return this.http.post<Task[]>(this.apiUrl + action, body, {
+    return this.http.post<API_response>(this.apiUrl + action, body, {
       headers: myHttpHeader,
       responseType: 'json',
     });
   }
 
-  saveOneTask(
-    task: Omit<Task, '_id'>
-  ): Observable<{ insertedId: { $oid: string } }> {
+  saveOneTask(task: Omit<Task, '_id'>): Observable<{ insertedId: string }> {
     const body = {
       dataSource: this.data_source,
       database: this.database,
@@ -42,10 +41,7 @@ export class HttpService {
     };
     const action = '/action/insertOne';
 
-    return this.http.post<{ insertedId: { $oid: string } }>(
-      this.apiUrl + action,
-      body
-    );
+    return this.http.post<{ insertedId: string }>(this.apiUrl + action, body);
   }
 
   removeDoneTasksFromDB(): Observable<{ deletedCount: number }> {

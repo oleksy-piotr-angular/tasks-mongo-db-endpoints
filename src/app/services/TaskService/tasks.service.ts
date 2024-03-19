@@ -52,9 +52,7 @@ export class TasksService {
 
   private getTasksFromDB() {
     this.httpService.getTasks().subscribe((tasks) => {
-      const requestToArray = Object.values(tasks);
-      const listOfTasks: Task[] = Object.values(requestToArray[0]);
-      this.tasksList$.next(listOfTasks);
+      this.tasksList$.next(tasks.documents);
     });
   }
 }
