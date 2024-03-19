@@ -20,9 +20,9 @@ export class HttpService {
       database: this.database,
       collection: this.collection,
     };
-    const myHttpHeader = new HttpHeaders();
-    myHttpHeader.set('Content-Type', 'application/json');
-    myHttpHeader.set('Access-Control-Request-Headers', '*');
+    const myHttpHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
     const action = '/action/find';
 
     return this.http.post<API_response>(this.apiUrl + action, body, {
@@ -31,7 +31,7 @@ export class HttpService {
     });
   }
 
-  saveOneTask(task: Omit<Task, '_id'>): Observable<{ insertedId: string }> {
+  saveOneTask(task: Omit<Task, '_id'>): Observable<Pick<Task, '_id'>> {
     const body = {
       dataSource: this.data_source,
       database: this.database,
@@ -41,7 +41,7 @@ export class HttpService {
     };
     const action = '/action/insertOne';
 
-    return this.http.post<{ insertedId: string }>(this.apiUrl + action, body);
+    return this.http.post<Pick<Task, '_id'>>(this.apiUrl + action, body);
   }
 
   removeDoneTasksFromDB(): Observable<{ deletedCount: number }> {

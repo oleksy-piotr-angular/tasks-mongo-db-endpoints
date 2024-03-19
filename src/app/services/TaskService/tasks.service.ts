@@ -13,7 +13,7 @@ export class TasksService {
 
   add(task: Task): void {
     this.httpService.saveOneTask(task).subscribe((data) => {
-      task._id = data.insertedId;
+      task._id = data._id;
       const list: Task[] = [...this.tasksList$.getValue()];
       list.push(task);
       this.tasksList$.next(list);
@@ -32,7 +32,7 @@ export class TasksService {
       const list = this.tasksList$.getValue().filter((t) => t.isDone === false);
       this.tasksList$.next(list);
       console.log('Number of completed tasks which was removed: ');
-      console.log(response.deletedCount);
+      console.log(response);
     });
   }
   done(task: Task) {
@@ -42,7 +42,7 @@ export class TasksService {
       const list = [...this.tasksList$.getValue()];
       this.tasksList$.next(list);
       console.log('Number of updated tasks: ');
-      console.log(response.modifiedCount);
+      console.log(response);
     });
   }
 
