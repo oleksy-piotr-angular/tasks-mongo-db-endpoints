@@ -24,15 +24,14 @@ export class TasksService {
     this.httpService.removeOneTask(task).subscribe((response) => {
       const list: Task[] = this.tasksList$.getValue().filter((e) => e != task);
       this.tasksList$.next(list);
-      console.log(response);
+      console.log('Task has been removed!');
     });
   }
   clearDoneTasksInDB() {
     this.httpService.removeDoneTasksFromDB().subscribe((response) => {
       const list = this.tasksList$.getValue().filter((t) => t.isDone === false);
       this.tasksList$.next(list);
-      console.log('Number of completed tasks which was removed: ');
-      console.log(response);
+      console.log('All completed Tasks have been removed');
     });
   }
   done(task: Task) {
@@ -41,8 +40,7 @@ export class TasksService {
     this.httpService.updateOneTaskToDone(task).subscribe((response) => {
       const list = [...this.tasksList$.getValue()];
       this.tasksList$.next(list);
-      console.log('Number of updated tasks: ');
-      console.log(response);
+      console.log('Status task has been changed');
     });
   }
 

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../../models/task';
 import { environment } from 'src/environments/environment';
@@ -32,7 +32,6 @@ export class HttpService {
       dataSource: this.data_source,
       database: this.database,
       collection: this.collection,
-
       document: task,
     };
     const action = '/action/insertOne';
@@ -45,7 +44,6 @@ export class HttpService {
       dataSource: this.data_source,
       database: this.database,
       collection: this.collection,
-
       filter: { isDone: true },
     };
     const action = '/action/deleteMany';
@@ -60,7 +58,6 @@ export class HttpService {
       dataSource: this.data_source,
       database: this.database,
       collection: this.collection,
-
       filter: { _id: { $oid: task._id } },
       update: {
         $set: {
@@ -82,7 +79,6 @@ export class HttpService {
       dataSource: this.data_source,
       database: this.database,
       collection: this.collection,
-
       filter: { _id: { $oid: task._id } },
     };
     const action = '/action/deleteOne';
