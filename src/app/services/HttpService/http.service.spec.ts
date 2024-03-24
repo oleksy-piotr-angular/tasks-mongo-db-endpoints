@@ -11,43 +11,7 @@ describe('HttpService', () => {
   let httpService: HttpService;
   let httpTestingController: HttpTestingController;
   let SAMPLE: API_response;
-  let newTask: Task;
   beforeEach(() => {
-    newTask = {
-      name: 'newTask',
-      created: '17.03.2024, 21:10:07',
-      isDone: false,
-    };
-    SAMPLE = {
-      documents: [
-        {
-          _id: '65f9dc230e9a741b2f839172',
-          name: '1',
-          created: '19.03.2024, 19:40:35',
-          isDone: true,
-          end: '19.03.2024, 19:56:13',
-        },
-        {
-          _id: '65f61f445de588ed3759fc68',
-          name: 'sss',
-          created: '16.03.2024, 23:37:56',
-          isDone: true,
-          end: '17.03.2024, 00:01:27',
-        },
-        {
-          _id: '65f752947d19b8ac9ed778e6',
-          name: 'new1',
-          created: '17.03.2024, 21:29:07',
-          isDone: false,
-        },
-        {
-          _id: '65f9c5d95ce004f4077cd60f',
-          name: 'New2',
-          created: '19.03.2024, 18:05:29',
-          isDone: false,
-        },
-      ],
-    };
     TestBed.configureTestingModule({
       providers: [HttpService],
       imports: [HttpClientTestingModule],
@@ -56,7 +20,37 @@ describe('HttpService', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
   });
   describe('getTasks()', () => {
-    it('should return expected Response when "getTasks()" is called', (done) => {
+    it('should  send expected body to get expected response from API when "getTasks()" is called', (done: DoneFn) => {
+      SAMPLE = {
+        documents: [
+          {
+            _id: '65f9dc230e9a741b2f839172',
+            name: 'HttpServiceSpec1',
+            created: '19.03.2024, 19:40:35',
+            isDone: true,
+            end: '19.03.2024, 19:56:13',
+          },
+          {
+            _id: '65f61f445de588ed3759fc68',
+            name: 'HttpServiceSpec2',
+            created: '16.03.2024, 23:37:56',
+            isDone: true,
+            end: '17.03.2024, 00:01:27',
+          },
+          {
+            _id: '65f752947d19b8ac9ed778e6',
+            name: 'HttpServiceSpec3',
+            created: '17.03.2024, 21:29:07',
+            isDone: false,
+          },
+          {
+            _id: '65f9c5d95ce004f4077cd60f',
+            name: 'HttpServiceSpec4',
+            created: '19.03.2024, 18:05:29',
+            isDone: false,
+          },
+        ],
+      };
       const expectedBody = {
         dataSource: 'test-tasks-mongo-db-endpoints',
         database: 'AngularPractice',
@@ -78,18 +72,23 @@ describe('HttpService', () => {
     });
   });
   describe('saveOneTask()', () => {
-    it('should send the task without "_id" and receive "_id" for that task', (done) => {
+    it('should  send expected body with the task to API to save it and receive "_id" value for it', (done: DoneFn) => {
+      const NEW_TASK = {
+        name: 'newTask',
+        created: '17.03.2024, 21:10:07',
+        isDone: false,
+      };
       const expectedBody = {
         dataSource: 'test-tasks-mongo-db-endpoints',
         database: 'AngularPractice',
         collection: 'tasks',
-        document: newTask,
+        document: NEW_TASK,
       };
       const expectedResponse = {
         _id: '65f61f445de588ed3759fc68',
       };
 
-      httpService.saveOneTask(newTask).subscribe((_data) => {
+      httpService.saveOneTask(NEW_TASK).subscribe((_data) => {
         expect(_data).toBe(expectedResponse);
         done();
       });
@@ -104,7 +103,7 @@ describe('HttpService', () => {
     });
   });
   describe(' removeDoneTasksFromDB()', () => {
-    it('should send Request to remove all Completed Tasks', (done) => {
+    it('should send expected body to remove all Completed Tasks in API', (done: DoneFn) => {
       const expectedBody = {
         dataSource: 'test-tasks-mongo-db-endpoints',
         database: 'AngularPractice',
@@ -128,7 +127,7 @@ describe('HttpService', () => {
     });
   });
   describe('updateOneTaskToDone()', () => {
-    it('should change the status of the "isDone" property to true for the task in params', (done) => {
+    it('should send expected body with the task marking it as completed in API', (done: DoneFn) => {
       const expectedBody = {
         dataSource: 'test-tasks-mongo-db-endpoints',
         database: 'AngularPractice',
@@ -160,7 +159,7 @@ describe('HttpService', () => {
     });
   });
   describe('removeOneTask()', () => {
-    it('should send Request to remove one task that was passed in params', (done) => {
+    it('should send expected body to remove one task from API', (done: DoneFn) => {
       const expectedBody = {
         dataSource: 'test-tasks-mongo-db-endpoints',
         database: 'AngularPractice',

@@ -21,7 +21,6 @@ export class HttpService {
       collection: this.collection,
     };
     const action = '/action/find';
-
     return this.http.post<API_response>(this.apiUrl + action, body, {
       responseType: 'json',
     });
@@ -35,7 +34,6 @@ export class HttpService {
       document: task,
     };
     const action = '/action/insertOne';
-
     return this.http.post<Pick<Task, '_id'>>(this.apiUrl + action, body);
   }
 
@@ -67,7 +65,6 @@ export class HttpService {
       },
     };
     const action = '/action/updateOne';
-
     return this.http.post<{ matchedCount: number; modifiedCount: number }>(
       this.apiUrl + action,
       body
@@ -82,7 +79,6 @@ export class HttpService {
       filter: { _id: { $oid: task._id } },
     };
     const action = '/action/deleteOne';
-
     return this.http.post<{ deletedCount: number }>(this.apiUrl + action, body);
   }
 }
