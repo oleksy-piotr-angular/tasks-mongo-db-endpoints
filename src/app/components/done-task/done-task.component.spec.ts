@@ -1,13 +1,13 @@
-import { SortNamePipe } from './../shared/pipes/SortName/sort-name.pipe';
+import { SortNamePipe } from '../../shared/pipes/SortName/sort-name.pipe';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DoneTaskComponent } from './done-task.component';
-import { TasksService } from '../services/TaskService/tasks.service';
-import { HttpService } from '../services/HttpService/http.service';
+import { TasksService } from '../../services/TaskService/tasks.service';
+import { HttpService } from '../../services/HttpService/http.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TransformTaskPipe } from '../shared/pipes/TransformTask/transform-task.pipe';
-import { DateDirective } from '../shared/directives/Date/date.directive';
-import { CheckedDirective } from '../shared/directives/Checked/checked.directive';
+import { TransformTaskPipe } from '../../shared/pipes/TransformTask/transform-task.pipe';
+import { DateDirective } from '../../shared/directives/Date/date.directive';
+import { CheckedDirective } from '../../shared/directives/Checked/checked.directive';
 
 describe('DoneTaskComponent', () => {
   let component: DoneTaskComponent;

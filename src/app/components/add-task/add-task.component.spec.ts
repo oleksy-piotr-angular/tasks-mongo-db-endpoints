@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTaskComponent } from './add-task.component';
-import { TasksService } from '../services/TaskService/tasks.service';
-import { HttpService } from '../services/HttpService/http.service';
+import { TasksService } from '../../services/TaskService/tasks.service';
+import { HttpService } from '../../services/HttpService/http.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 
