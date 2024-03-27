@@ -8,34 +8,7 @@ import {
 } from '@angular/common/http/testing';
 import { TasksService } from './tasks.service';
 import { of } from 'rxjs';
-
-function validateDateType(tasks: Task[]): void {
-  const dateStr = tasks[3].end?.split(', ');
-  expect(dateStr?.length).toBe(2);
-  const dateParts = dateStr ? dateStr[0].split('.') : [];
-  expect(dateParts.length).toBe(3);
-  const timeParts = dateStr ? dateStr[1].split(':') : [];
-  expect(timeParts.length).toBe(3);
-  for (let el of dateParts) {
-    expect(typeof +el).toBe('number');
-  }
-  for (let el of timeParts) {
-    expect(typeof +el).toBe('number');
-  }
-  const date = new Date(
-    +dateParts[2],
-    +dateParts[1] - 1,
-    +dateParts[0],
-    +timeParts[0],
-    +timeParts[1],
-    +timeParts[2]
-  );
-  expect(
-    Object.prototype.toString.call(date) === '[object Date]' &&
-      !isNaN(date.getTime())
-  ).toBeTrue();
-  expect(date.toLocaleString()).toEqual(tasks[3].end!);
-}
+import { CustomMatchers } from '../../shared/customMatchers';
 
 describe('TasksService', () => {
   let NEW_TASK: Task;
@@ -176,7 +149,8 @@ describe('TasksService', () => {
       });
       it('string date should be created from Date type using "toLocaleString()" method', () => {
         taskService.getTaskListObs().subscribe((tasks) => {
-          validateDateType(tasks);
+          jasmine.addMatchers(CustomMatchers);
+          expect(tasks[3].end).toBeDateToLocaleString();
         });
       });
     });
@@ -310,7 +284,8 @@ describe('TasksService', () => {
       });
       it('string date should be created from Date type using "toLocaleString()" method', () => {
         taskService.getTaskListObs().subscribe((tasks) => {
-          validateDateType(tasks);
+          jasmine.addMatchers(CustomMatchers);
+          expect(tasks[3].end).toBeDateToLocaleString();
         });
       });
     });
