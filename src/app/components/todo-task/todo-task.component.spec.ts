@@ -11,25 +11,28 @@ import { DateDirective } from '../../shared/directives/Date/date.directive';
 describe('TodoTaskComponent', () => {
   let component: TodoTaskComponent;
   let fixture: ComponentFixture<TodoTaskComponent>;
+  describe('Isolated Unit Testing', () => {
+    //TODO
+    //!Add Mocks
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        declarations: [
+          TodoTaskComponent,
+          SortNamePipe,
+          TransformTaskPipe,
+          DateDirective,
+        ],
+        providers: [TasksService, HttpService],
+        imports: [HttpClientTestingModule],
+      }).compileComponents();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        TodoTaskComponent,
-        SortNamePipe,
-        TransformTaskPipe,
-        DateDirective,
-      ],
-      providers: [TasksService, HttpService],
-      imports: [HttpClientTestingModule],
-    }).compileComponents();
+      fixture = TestBed.createComponent(TodoTaskComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
 
-    fixture = TestBed.createComponent(TodoTaskComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
   });
 });

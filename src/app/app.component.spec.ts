@@ -3,49 +3,90 @@ import { AppComponent } from './app.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TasksService } from './services/TaskService/tasks.service';
 import { HttpService } from './services/HttpService/http.service';
-import { AddTaskComponent } from './components/add-task/add-task.component';
-import { TodoTaskComponent } from './components/todo-task/todo-task.component';
-import { DoneTaskComponent } from './components/done-task/done-task.component';
-import { CheckedDirective } from './shared/directives/Checked/checked.directive';
-import { DateDirective } from './shared/directives/Date/date.directive';
-import { TransformTaskPipe } from './shared/pipes/TransformTask/transform-task.pipe';
-import { SortNamePipe } from './shared/pipes/SortName/sort-name.pipe';
 import { FormsModule } from '@angular/forms';
+import {
+  Component,
+  Directive,
+  Input,
+  Pipe,
+  PipeTransform,
+} from '@angular/core';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        AddTaskComponent,
-        TodoTaskComponent,
-        DoneTaskComponent,
-        CheckedDirective,
-        DateDirective,
-        TransformTaskPipe,
-        SortNamePipe,
-      ],
-      providers: [TasksService, HttpService],
-      imports: [HttpClientTestingModule, FormsModule],
-    }).compileComponents();
-  });
+  describe('Isolated Unit Testing', () => {
+    @Pipe({ name: 'transformTask' })
+    class MockTransformTaskPipe implements PipeTransform {
+      transform(value: number): number {
+        return value;
+      }
+    }
+    @Pipe({ name: 'sortName' })
+    class MockSortNamePipe implements PipeTransform {
+      transform(value: number): number {
+        return value;
+      }
+    }
+    @Directive({
+      selector: '[appDate]',
+    })
+    class MockDateDirective {
+      @Input() appDate: string = '';
+    }
+    @Directive({
+      selector: '[appChecked]',
+    })
+    class MockCheckedDirective {}
+    @Component({
+      selector: 'app-add-task',
+      template: '<div>></div>',
+    })
+    class MockAddTaskComponent {}
+    @Component({
+      selector: 'app-done-task',
+      template: '<div>></div>',
+    })
+    class MockDoneTaskComponent {}
+    @Component({
+      selector: 'app-todo-task',
+      template: '<div>></div>',
+    })
+    class MockTodoTaskComponent {}
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        declarations: [
+          AppComponent,
+          MockAddTaskComponent,
+          MockTodoTaskComponent,
+          MockDoneTaskComponent,
+          MockCheckedDirective,
+          MockDateDirective,
+          MockTransformTaskPipe,
+          MockSortNamePipe,
+        ],
+        //TODO
+        //!Add Service Mocks
+        providers: [TasksService, HttpService],
+        imports: [HttpClientTestingModule, FormsModule],
+      }).compileComponents();
+    });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    it('should create the app', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.componentInstance;
+      expect(app).toBeTruthy();
+    });
 
-  it(`should have as title 'tasks-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    //expect(app.title).toEqual('tasks-app');
-  });
+    it(`should have as title 'tasks-app'`, () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.componentInstance;
+      //expect(app.title).toEqual('tasks-app');
+    });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    //expect(compiled.querySelector('.content span')?.textContent).toContain('tasks-app app is running!');
+    it('should render title', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      fixture.detectChanges();
+      const compiled = fixture.nativeElement as HTMLElement;
+      //expect(compiled.querySelector('.content span')?.textContent).toContain('tasks-app app is running!');
+    });
   });
 });
