@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Task } from './../../models/task';
+import { MockHttpService } from 'src/app/shared/testKit/mockDependencies';
+import { environment } from 'src/environments/environment';
 
 @Component({
   template: `
@@ -26,8 +28,6 @@ describe('AddTaskComponent', () => {
   let fixture: ComponentFixture<AddTaskComponent>;
   let divDE: DebugElement;
   describe('Isolated Unit Testing', () => {
-    class MockHttpService {}
-
     let mockTaskService: jasmine.SpyObj<TasksService>;
 
     beforeEach(async () => {
@@ -159,11 +159,11 @@ describe('AddTaskComponent', () => {
         component.add();
 
         const testRequest = httpTestingController.expectOne(
-          'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/insertOne'
+          environment.URL_ENDPOINT + '/action/insertOne'
         );
         testRequest.flush(expectedResponse);
 
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           const filteredTasks = tasks.filter((el) => el._id === expected_id);
           expect(filteredTasks.length).toBe(1);
           expect(filteredTasks[0]).toEqual(

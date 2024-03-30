@@ -12,7 +12,7 @@ export class DoneTaskComponent implements OnInit {
   tasksExists = false;
   constructor(private tasksService: TasksService) {}
   ngOnInit(): void {
-    this.tasksService.getTaskListObs().subscribe((tasks: Task[]) => {
+    this.tasksService.getTaskList$().subscribe((tasks: Task[]) => {
       this.tasksDone = tasks.filter((t) => t.isDone === true);
       this.tasksExists = tasks.length > 0 ? true : false;
     });

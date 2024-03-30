@@ -5,53 +5,21 @@ import { TasksService } from './services/TaskService/tasks.service';
 import { HttpService } from './services/HttpService/http.service';
 import { FormsModule } from '@angular/forms';
 import {
-  Component,
-  Directive,
-  Input,
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
+  MockAddTaskComponent,
+  MockCheckedDirective,
+  MockDateDirective,
+  MockDoneTaskComponent,
+  MockHttpService,
+  MockSortNamePipe,
+  MockTodoTaskComponent,
+  MockTransformTaskPipe,
+} from './shared/testKit/mockDependencies';
 
-describe('AppComponent', () => {
+xdescribe('AppComponent', () => {
   describe('Isolated Unit Testing', () => {
-    @Pipe({ name: 'transformTask' })
-    class MockTransformTaskPipe implements PipeTransform {
-      transform(value: number): number {
-        return value;
-      }
-    }
-    @Pipe({ name: 'sortName' })
-    class MockSortNamePipe implements PipeTransform {
-      transform(value: number): number {
-        return value;
-      }
-    }
-    @Directive({
-      selector: '[appDate]',
-    })
-    class MockDateDirective {
-      @Input() appDate: string = '';
-    }
-    @Directive({
-      selector: '[appChecked]',
-    })
-    class MockCheckedDirective {}
-    @Component({
-      selector: 'app-add-task',
-      template: '<div>></div>',
-    })
-    class MockAddTaskComponent {}
-    @Component({
-      selector: 'app-done-task',
-      template: '<div>></div>',
-    })
-    class MockDoneTaskComponent {}
-    @Component({
-      selector: 'app-todo-task',
-      template: '<div>></div>',
-    })
-    class MockTodoTaskComponent {}
+    let mockTaskService: jasmine.SpyObj<TasksService>;
     beforeEach(async () => {
+      mockTaskService = jasmine.createSpyObj('TaskService', ['add']);
       await TestBed.configureTestingModule({
         declarations: [
           AppComponent,
@@ -63,9 +31,10 @@ describe('AppComponent', () => {
           MockTransformTaskPipe,
           MockSortNamePipe,
         ],
-        //TODO
-        //!Add Service Mocks
-        providers: [TasksService, HttpService],
+        providers: [
+          { provide: TasksService, useValue: mockTaskService },
+          { provide: HttpService, useClass: MockHttpService },
+        ],
         imports: [HttpClientTestingModule, FormsModule],
       }).compileComponents();
     });

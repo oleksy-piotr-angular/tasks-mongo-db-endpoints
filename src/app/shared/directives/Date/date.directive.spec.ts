@@ -1,44 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateDirective } from './date.directive';
-import { DoneTaskComponent } from 'src/app/components/done-task/done-task.component';
 import { By } from '@angular/platform-browser';
-import { TasksService } from 'src/app/services/TaskService/tasks.service';
-import { SortNamePipe } from '../../pipes/SortName/sort-name.pipe';
-import { of } from 'rxjs';
-import { TransformTaskPipe } from '../../pipes/TransformTask/transform-task.pipe';
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { Task } from 'src/app/models/task';
-
+@Component({
+  selector: 'app-dummy',
+  template: `
+    <ol>
+      <li *ngFor="let task of tasksDone">
+        <div id="testEl" *ngIf="task.end != null" [appDate]="task.end">
+          TEST DESCRIPTION...
+        </div>
+      </li>
+    </ol>
+  `,
+})
+class DummyComponent {
+  tasksDone: Task[] = [
+    {
+      name: 'K',
+      created: 'someCreatedDate',
+      isDone: true,
+      end: 'someEndDate',
+    },
+  ];
+}
 describe('DateDirective', () => {
-  let fixture: ComponentFixture<DoneTaskComponent>;
+  let fixture: ComponentFixture<DummyComponent>;
   let divDE: DebugElement;
-  let mockTaskService: jasmine.SpyObj<TasksService>;
   describe('Isolated Unit Testing', () => {
-    //TODO
-    //!Add Mocks
     beforeEach(() => {
-      const TASKS: Task[] = [
-        {
-          name: 'K',
-          created: 'someCreatedDate',
-          isDone: true,
-          end: 'someEndDate',
-        },
-      ];
-      mockTaskService = jasmine.createSpyObj(['getTaskListObs']);
       fixture = TestBed.configureTestingModule({
-        declarations: [
-          DateDirective,
-          DoneTaskComponent,
-          SortNamePipe,
-          TransformTaskPipe,
-        ],
-        providers: [{ provide: TasksService, useValue: mockTaskService }],
-      }).createComponent(DoneTaskComponent);
+        declarations: [DummyComponent, DateDirective],
+      }).createComponent(DummyComponent);
 
-      mockTaskService.getTaskListObs.and.returnValue(of(TASKS));
       fixture.detectChanges();
-      divDE = fixture.debugElement.query(By.css('li>div'));
+      divDE = fixture.debugElement.query(By.css('#testEl'));
     });
 
     it('Should not append the "Paragraph" if element was initialized', () => {

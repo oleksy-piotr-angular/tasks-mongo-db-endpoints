@@ -1,7 +1,5 @@
-import MatchersUtil = jasmine.MatchersUtil;
 import CustomMatcher = jasmine.CustomMatcher;
 import CustomMatcherResult = jasmine.CustomMatcherResult;
-import { Task } from '../../models/task';
 
 declare global {
   namespace jasmine {

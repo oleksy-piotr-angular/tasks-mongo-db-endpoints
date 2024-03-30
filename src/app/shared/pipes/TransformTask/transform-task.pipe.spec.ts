@@ -1,6 +1,6 @@
 import { TransformTaskPipe } from './transform-task.pipe';
 
-xdescribe('TransformTaskPipe', () => {
+describe('TransformTaskPipe', () => {
   let pipe: TransformTaskPipe;
   beforeEach(() => {
     pipe = new TransformTaskPipe();

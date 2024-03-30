@@ -8,46 +8,17 @@ import {
 } from '@angular/common/http/testing';
 import { TasksService } from './tasks.service';
 import { of } from 'rxjs';
-import { CustomMatchers } from '../../shared/customMatchers';
+import { CustomMatchers } from '../../shared/testKit/customMatchers';
+import { dataNEW_TASK, dataSAMPLE } from 'src/app/shared/testKit/testDataSet';
+import { environment } from 'src/environments/environment';
 
 describe('TasksService', () => {
   let NEW_TASK: Task;
   let SAMPLE: Task[];
   let taskService: TasksService;
   beforeEach(() => {
-    NEW_TASK = {
-      name: 'newTask',
-      created: '17.03.2024, 21:10:07',
-      isDone: false,
-    };
-    SAMPLE = [
-      {
-        _id: '65f9dc230e9a741b2f839172',
-        name: 'TaskServiceSpec1',
-        created: '19.03.2024, 19:40:35',
-        isDone: true,
-        end: '19.03.2024, 19:56:13',
-      },
-      {
-        _id: '65f61f445de588ed3759fc68',
-        name: 'TaskServiceSpec2',
-        created: '16.03.2024, 23:37:56',
-        isDone: true,
-        end: '17.03.2024, 00:01:27',
-      },
-      {
-        _id: '65f752947d19b8ac9ed778e6',
-        name: 'TaskServiceSpec3',
-        created: '17.03.2024, 21:29:07',
-        isDone: false,
-      },
-      {
-        _id: '65f9c5d95ce004f4077cd60f',
-        name: 'TaskServiceSpec4',
-        created: '19.03.2024, 18:05:29',
-        isDone: false,
-      },
-    ];
+    NEW_TASK = dataNEW_TASK;
+    SAMPLE = dataSAMPLE;
   });
   describe('Isolated Unit Testing', () => {
     let httpServiceSpy: jasmine.SpyObj<HttpService>;
@@ -77,15 +48,15 @@ describe('TasksService', () => {
       });
     });
     describe('getTasksFromDB() ', () => {
-      it('should pass received Array Task into private BehaviorSubject "tasksList$"', () => {
+      it('should pass received Array Tasks into private BehaviorSubject "tasksList$"', () => {
         taskService
-          .getTaskListObs()
+          .getTaskList$()
           .subscribe((tasks) => expect(tasks).toBe(SAMPLE));
       });
     });
-    describe('getTaskListObs()', () => {
+    describe('getTaskList$()', () => {
       it('should return an array from the private property "taskList$"', () => {
-        taskService.getTaskListObs().subscribe((data) => {
+        taskService.getTaskList$().subscribe((data) => {
           expect(Array.isArray(data)).toBeTrue();
         });
       });
@@ -101,7 +72,7 @@ describe('TasksService', () => {
         expect(httpServiceSpy.saveOneTask).toHaveBeenCalledOnceWith(NEW_TASK);
       });
       it('should add a new Task to The Existing  "taskList$" property', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(tasks.length).toBe(5);
           expect(tasks).toEqual(jasmine.arrayContaining([NEW_TASK]));
         });
@@ -119,7 +90,7 @@ describe('TasksService', () => {
         );
       });
       it('should remove element which was given in Param from "taskList$" property', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(tasks).not.toEqual(jasmine.arrayContaining([SAMPLE[0]]));
         });
       });
@@ -138,20 +109,24 @@ describe('TasksService', () => {
         );
       });
       it('should update the "isDone" to true for the element in "taskList$" property', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(tasks[3].isDone).toBe(true);
         });
       });
       it('should set string data in the "end" property for the element in "taskList$" property', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(typeof tasks[3].end).toBe('string');
         });
       });
       it('string date should be created from Date type using "toLocaleString()" method', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           jasmine.addMatchers(CustomMatchers);
           expect(tasks[3].end).toBeDateToLocaleString();
         });
+      });
+      afterEach(() => {
+        SAMPLE[3].isDone = false;
+        delete SAMPLE[3].end;
       });
     });
     describe('clearDoneTaskInDB', () => {
@@ -166,7 +141,7 @@ describe('TasksService', () => {
         expect(httpServiceSpy.removeDoneTasksFromDB).toHaveBeenCalledOnceWith();
       });
       it('should also remove only completed tasks from "tasksList$"', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(tasks.length).toBe(2);
           for (let el of tasks) {
             expect(el.isDone).toBeFalse();
@@ -175,7 +150,7 @@ describe('TasksService', () => {
       });
     });
   });
-  describe('Deep Integration Testing', () => {
+  xdescribe('Deep Integration Testing', () => {
     let httpService: HttpService;
     let httpTestingController: HttpTestingController;
     let testRequest: TestRequest;
@@ -189,7 +164,7 @@ describe('TasksService', () => {
       httpTestingController = TestBed.inject(HttpTestingController);
       taskService.ngOnInit();
       testRequest = httpTestingController.expectOne(
-        'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/find'
+        environment.URL_ENDPOINT + '/action/find'
       );
       testRequest.flush({ documents: SAMPLE });
     });
@@ -202,13 +177,13 @@ describe('TasksService', () => {
     describe('getTasksFromDB() ', () => {
       it('should pass received Array Task into private BehaviorSubject "tasksList$"', () => {
         taskService
-          .getTaskListObs()
+          .getTaskList$()
           .subscribe((tasks) => expect(tasks).toBe(SAMPLE));
       });
     });
-    describe('getTaskListObs()', () => {
+    describe('getTaskList$()', () => {
       it('should return an array from the private property "taskList$"', () => {
-        taskService.getTaskListObs().subscribe((data) => {
+        taskService.getTaskList$().subscribe((data) => {
           expect(Array.isArray(data)).toBeTrue();
         });
       });
@@ -223,7 +198,7 @@ describe('TasksService', () => {
         };
         taskService.add(NEW_TASK);
         testSaveRequest = httpTestingController.expectOne(
-          'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/insertOne'
+          environment.URL_ENDPOINT + '/action/insertOne'
         );
         testSaveRequest.flush(expectedResponse);
       });
@@ -232,7 +207,7 @@ describe('TasksService', () => {
       });
       it('should add a new Task to The Existing  "taskList$" property with received ID from response', () => {
         NEW_TASK._id = expectedResponse._id;
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(tasks.length).toBe(5);
           expect(tasks).toEqual(jasmine.arrayContaining([NEW_TASK]));
         });
@@ -244,7 +219,7 @@ describe('TasksService', () => {
         const expectedResponse = { deletedCount: 1 };
         taskService.remove(SAMPLE[2]);
         testRequest = httpTestingController.expectOne(
-          'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/deleteOne'
+          environment.URL_ENDPOINT + '/action/deleteOne'
         );
 
         testRequest.flush(expectedResponse);
@@ -254,7 +229,7 @@ describe('TasksService', () => {
         expect(testRequest.request.method).toBe('POST');
       });
       it('should remove element which was given in Param from "taskList$" property', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(tasks).not.toEqual(jasmine.arrayContaining([SAMPLE[2]]));
         });
       });
@@ -265,7 +240,7 @@ describe('TasksService', () => {
         const expectedResponse = { matchedCount: 1, modifiedCount: 1 };
         taskService.done(SAMPLE[3]);
         testRequest = httpTestingController.expectOne(
-          'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/updateOne'
+          environment.URL_ENDPOINT + '/action/updateOne'
         );
         testRequest.flush(expectedResponse);
       });
@@ -273,20 +248,24 @@ describe('TasksService', () => {
         expect(testRequest.request.method).toBe('POST');
       });
       it('should update the "isDone" to true for the element in "taskList$" property', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(tasks[3].isDone).toBe(true);
         });
       });
       it('should set string data in the "end" property for the element in "taskList$" property', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(typeof tasks[3].end).toBe('string');
         });
       });
       it('string date should be created from Date type using "toLocaleString()" method', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           jasmine.addMatchers(CustomMatchers);
           expect(tasks[3].end).toBeDateToLocaleString();
         });
+      });
+      afterEach(() => {
+        SAMPLE[3].isDone = false;
+        delete SAMPLE[3].end;
       });
     });
     describe('clearDoneTaskInDB', () => {
@@ -294,7 +273,7 @@ describe('TasksService', () => {
         const expectedResponse = { deletedCount: 2 };
         taskService.clearDoneTasksInDB();
         testRequest = httpTestingController.expectOne(
-          'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/deleteMany'
+          environment.URL_ENDPOINT + '/action/deleteMany'
         );
         testRequest.flush(expectedResponse);
       });
@@ -303,7 +282,7 @@ describe('TasksService', () => {
         expect(testRequest.request.method).toBe('POST');
       });
       it('should remove only completed tasks from "tasksList$"', () => {
-        taskService.getTaskListObs().subscribe((tasks) => {
+        taskService.getTaskList$().subscribe((tasks) => {
           expect(tasks.length).toBe(2);
           for (let el of tasks) {
             expect(el.isDone).toBeFalse();

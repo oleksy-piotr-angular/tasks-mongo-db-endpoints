@@ -35,7 +35,7 @@ export class TasksService implements OnInit {
     });
   }
 
-  getTaskListObs(): Observable<Array<Task>> {
+  getTaskList$(): Observable<Array<Task>> {
     return this.tasksList$.asObservable();
   }
 

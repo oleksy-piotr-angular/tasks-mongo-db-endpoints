@@ -1,8 +1,10 @@
-<p *ngIf="tasksExists">Tasks Done {{ tasksDone.length }}:</p>
-<ol>
-  <li appChecked *ngFor="let task of tasksDone | sortName">
-    <div *ngIf="task.end != null" [appDate]="task.end">
-      {{ task.name | transformTask : " - well done!" }}
-    </div>
-  </li>
-</ol>
+<div id="tasksDoneElId" *ngIf="tasksExists">
+  <p>Tasks Done {{ tasksDone.length }}:</p>
+  <ol>
+    <li appChecked *ngFor="let task of tasksDone | sortName">
+      <div *ngIf="task.end != null" [appDate]="task.end">
+        {{ task.name | transformTask : " - well done!" }}
+      </div>
+    </li>
+  </ol>
+</div>

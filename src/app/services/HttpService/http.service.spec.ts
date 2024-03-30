@@ -1,4 +1,3 @@
-import { Task } from './../../models/task';
 import { API_response } from './../../models/api_response';
 import { TestBed } from '@angular/core/testing';
 import {
@@ -6,6 +5,8 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { HttpService } from './http.service';
+import { environment } from 'src/environments/environment';
+import { dataNEW_TASK, dataSAMPLE } from 'src/app/shared/testKit/testDataSet';
 
 describe('HttpService', () => {
   let httpService: HttpService;
@@ -22,34 +23,7 @@ describe('HttpService', () => {
   describe('getTasks()', () => {
     it('should  send expected body to get expected response from API when "getTasks()" is called', (done: DoneFn) => {
       SAMPLE = {
-        documents: [
-          {
-            _id: '65f9dc230e9a741b2f839172',
-            name: 'HttpServiceSpec1',
-            created: '19.03.2024, 19:40:35',
-            isDone: true,
-            end: '19.03.2024, 19:56:13',
-          },
-          {
-            _id: '65f61f445de588ed3759fc68',
-            name: 'HttpServiceSpec2',
-            created: '16.03.2024, 23:37:56',
-            isDone: true,
-            end: '17.03.2024, 00:01:27',
-          },
-          {
-            _id: '65f752947d19b8ac9ed778e6',
-            name: 'HttpServiceSpec3',
-            created: '17.03.2024, 21:29:07',
-            isDone: false,
-          },
-          {
-            _id: '65f9c5d95ce004f4077cd60f',
-            name: 'HttpServiceSpec4',
-            created: '19.03.2024, 18:05:29',
-            isDone: false,
-          },
-        ],
+        documents: dataSAMPLE,
       };
       const expectedBody = {
         dataSource: 'test-tasks-mongo-db-endpoints',
@@ -63,7 +37,7 @@ describe('HttpService', () => {
       });
 
       const testRequest = httpTestingController.expectOne(
-        'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/find'
+        `${environment.URL_ENDPOINT}/action/find`
       );
 
       testRequest.flush(SAMPLE);
@@ -73,11 +47,7 @@ describe('HttpService', () => {
   });
   describe('saveOneTask()', () => {
     it('should  send expected body with the task to API to save it and receive "_id" value for it', (done: DoneFn) => {
-      const NEW_TASK = {
-        name: 'newTask',
-        created: '17.03.2024, 21:10:07',
-        isDone: false,
-      };
+      const NEW_TASK = dataNEW_TASK;
       const expectedBody = {
         dataSource: 'test-tasks-mongo-db-endpoints',
         database: 'AngularPractice',
@@ -94,7 +64,7 @@ describe('HttpService', () => {
       });
 
       const testRequest = httpTestingController.expectOne(
-        'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/insertOne'
+        `${environment.URL_ENDPOINT}/action/insertOne`
       );
 
       testRequest.flush(expectedResponse);
@@ -118,7 +88,7 @@ describe('HttpService', () => {
       });
 
       const testRequest = httpTestingController.expectOne(
-        'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/deleteMany'
+        `${environment.URL_ENDPOINT}/action/deleteMany`
       );
 
       testRequest.flush(expectedResponse);
@@ -150,7 +120,7 @@ describe('HttpService', () => {
         });
 
       const testRequest = httpTestingController.expectOne(
-        'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/updateOne'
+        `${environment.URL_ENDPOINT}/action/updateOne`
       );
 
       testRequest.flush(expectedResponse);
@@ -174,7 +144,7 @@ describe('HttpService', () => {
       });
 
       const testRequest = httpTestingController.expectOne(
-        'https://eu-central-1.aws.data.mongodb-api.com/app/data-dopou/endpoint/data/v1/action/deleteOne'
+        `${environment.URL_ENDPOINT}/action/deleteOne`
       );
 
       testRequest.flush(expectedResponse);

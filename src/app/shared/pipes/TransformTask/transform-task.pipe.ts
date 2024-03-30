@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TransformTaskPipe implements PipeTransform {
   transform(value: string, args: string = ''): string {
-    console.log('Trans');
     return value.charAt(0).toUpperCase() + value.slice(1) + args;
   }
 }

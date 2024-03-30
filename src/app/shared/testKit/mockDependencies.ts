@@ -36,28 +36,9 @@ export class MockCheckedDirective {}
 export class MockAddTaskComponent {}
 @Component({
   selector: 'app-done-task',
-  template: `
-    <div id="tasksDoneElId" *ngIf="tasksExists">
-      <p>Tasks Done {{ tasksDone.length }}:</p>
-      <ol>
-        <li appChecked *ngFor="let task of tasksDone">
-          <div *ngIf="task.end != null">TEST DESCRIPTION...</div>
-        </li>
-      </ol>
-    </div>
-  `,
+  template: ` <div></div> `,
 })
-export class MockDoneTaskComponent {
-  tasksDone: Task[] = [
-    {
-      name: 'K',
-      created: 'someCreatedDate',
-      isDone: true,
-      end: 'someEndDate',
-    },
-  ];
-  tasksExists = true;
-}
+export class MockDoneTaskComponent {}
 @Component({
   selector: 'app-todo-task',
   template: ``,

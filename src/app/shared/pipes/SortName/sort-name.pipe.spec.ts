@@ -1,7 +1,7 @@
 import { Task } from './../../../models/task';
 import { SortNamePipe } from './sort-name.pipe';
 
-xdescribe('SortNamePipe', () => {
+describe('SortNamePipe', () => {
   let pipe: SortNamePipe;
   beforeEach(() => {
     pipe = new SortNamePipe();
