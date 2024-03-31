@@ -1,14 +1,13 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Task } from '../../models/task';
 import { HttpService } from '../HttpService/http.service';
 
 @Injectable()
-export class TasksService implements OnInit {
+export class TasksService {
   private tasksList$: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
-  constructor(private httpService: HttpService) {}
 
-  ngOnInit(): void {
+  constructor(private httpService: HttpService) {
     this.getTasksFromDB();
   }
 

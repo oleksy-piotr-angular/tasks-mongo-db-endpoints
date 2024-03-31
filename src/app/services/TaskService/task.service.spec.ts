@@ -37,12 +37,11 @@ describe('TasksService', () => {
         ],
         imports: [HttpClientTestingModule],
       });
-      taskService = TestBed.inject(TasksService);
       httpServiceSpy = <jasmine.SpyObj<HttpService>>TestBed.inject(HttpService);
       httpServiceSpy.getTasks.and.returnValue(of({ documents: SAMPLE }));
-      taskService.ngOnInit();
+      taskService = TestBed.inject(TasksService);
     });
-    describe('ngOnInit()', () => {
+    describe('constructor()', () => {
       it('should call private method "getTasksFromDB()" when is initialized', () => {
         expect(httpServiceSpy.getTasks).toHaveBeenCalledOnceWith();
       });
@@ -162,14 +161,13 @@ describe('TasksService', () => {
       taskService = TestBed.inject(TasksService);
       httpService = TestBed.inject(HttpService);
       httpTestingController = TestBed.inject(HttpTestingController);
-      taskService.ngOnInit();
       testRequest = httpTestingController.expectOne(
         environment.URL_ENDPOINT + '/action/find'
       );
       testRequest.flush({ documents: SAMPLE });
     });
 
-    describe('ngOnInit()', () => {
+    describe('constructor()', () => {
       it('should call private method "getTasksFromDB()" when is initialized to send "POST" method', () => {
         expect(testRequest.request.method).toBe('POST');
       });
