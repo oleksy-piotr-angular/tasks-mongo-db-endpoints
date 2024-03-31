@@ -51,7 +51,7 @@ describe('AddTaskComponent', () => {
       expect(component).toBeTruthy();
       expect(divDE).toBeTruthy();
     });
-    describe('Template', () => {
+    describe('Template/ShallowUnitTest', () => {
       it('should render multiple slots with <ng-content>', () => {
         const testFixture = TestBed.createComponent(TestHostComponent);
 
@@ -126,7 +126,7 @@ describe('AddTaskComponent', () => {
     });
   });
 
-  describe('Deep Integration Unit Tasting', () => {
+  describe('Integration Unit Tasting', () => {
     let taskService: TasksService;
     let httpTestingController: HttpTestingController;
     beforeEach(async () => {

@@ -56,7 +56,7 @@ describe('DoneTaskComponent', () => {
     it('should create Component Instance', () => {
       expect(component).toBeTruthy();
     });
-    describe('Template', () => {
+    describe('Template/ShallowUnitTest', () => {
       describe('Tasks Not Exist', () => {
         it('should not render div "#tasksDoneElId" if Tasks Behavior Subject has no Elements', () => {
           taskServiceSpy.getTaskList$.and.returnValue(of([]));
