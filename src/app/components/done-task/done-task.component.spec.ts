@@ -56,6 +56,19 @@ describe('DoneTaskComponent', () => {
     it('should create Component Instance', () => {
       expect(component).toBeTruthy();
     });
+    it('should be init with empty Array of "tasksDone" property', () => {
+      expect(component.tasksDone).toEqual([]);
+    });
+    it('should be init with false value for "tasksExist" property', () => {
+      expect(component.tasksExists).toBeFalse();
+    });
+    describe('ngOnInit()', () => {
+      it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskListObs()"', () => {
+        taskServiceSpy.getTaskList$.and.returnValue(of(SAMPLE));
+        component.ngOnInit();
+        expect(component.tasksDone.length).toBe(2);
+      });
+    });
     describe('Template/ShallowUnitTest', () => {
       describe('Tasks Not Exist', () => {
         it('should not render div "#tasksDoneElId" if Tasks Behavior Subject has no Elements', () => {
@@ -116,13 +129,7 @@ describe('DoneTaskComponent', () => {
         });
       });
     });
-    describe('ngOnInit()', () => {
-      it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskListObs()"', () => {
-        taskServiceSpy.getTaskList$.and.returnValue(of(SAMPLE));
-        component.ngOnInit();
-        expect(component.tasksDone.length).toBe(2);
-      });
-    });
+
     afterEach(() => {
       taskServiceSpy.getTaskList$.and.returnValue(of([]));
     });
