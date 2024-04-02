@@ -76,13 +76,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "tasks-list-example:build:production"
+              "buildTarget": "tasks-list-example:build:production"
             },
             "development": {
-              "browserTarget": "tasks-list-example:build:development"
+              "buildTarget": "tasks-list-example:build:development"
             },
             "staging": {
-              "browserTarget": "tasks-list-example:build:staging"
+              "buildTarget": "tasks-list-example:build:staging"
             }
           },
           "defaultConfiguration": "development"
@@ -90,7 +90,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "tasks-list-example:build"
+            "buildTarget": "tasks-list-example:build"
           }
         },
         "test": {
