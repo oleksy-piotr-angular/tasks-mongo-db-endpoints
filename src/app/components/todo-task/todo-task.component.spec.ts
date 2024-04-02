@@ -186,9 +186,9 @@ describe('TodoTaskComponent', () => {
             expect(component.tasksList.length >= 5).toBeTrue();
             expect(pToDoEl.getAttribute('style')).toContain(definedStyleR);
           });
-          // afterAll(() => {
-          //   component.tasksList = [];
-          // });
+          afterAll(() => {
+            component.tasksList = [];
+          });
         });
         describe('TaskList ToDo', () => {
           let taskToDoList: DebugElement;

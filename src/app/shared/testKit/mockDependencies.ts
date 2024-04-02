@@ -5,7 +5,6 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import { Task } from 'src/app/models/task';
 
 @Pipe({ name: 'transformTask' })
 export class MockTransformTaskPipe implements PipeTransform {

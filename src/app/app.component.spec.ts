@@ -1,6 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TasksService } from './services/TaskService/tasks.service';
 import { HttpService } from './services/HttpService/http.service';
 import { FormsModule } from '@angular/forms';
