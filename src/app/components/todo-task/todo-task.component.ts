@@ -9,10 +9,12 @@ import { TasksService } from '../../services/TaskService/tasks.service';
 })
 export class TodoTaskComponent implements OnInit {
   tasksList: Task[] = [];
+  tasksExists = false;
   constructor(private tasksService: TasksService) {}
   ngOnInit(): void {
     this.tasksService.getTaskList$().subscribe((tasks: Array<Task>) => {
       this.tasksList = tasks.filter((t) => t.isDone === false);
+      this.tasksExists = tasks.length > 0 ? true : false;
     });
   }
   remove(task: Task) {
@@ -22,7 +24,7 @@ export class TodoTaskComponent implements OnInit {
     this.tasksService.done(task);
   }
 
-  getColor(): string {
+  setColor(): string {
     return this.tasksList.length >= 5 ? 'red' : 'green';
   }
 }
