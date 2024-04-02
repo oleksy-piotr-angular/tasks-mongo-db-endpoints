@@ -3,16 +3,18 @@ import { By } from '@angular/platform-browser';
 import { CheckedDirective } from './checked.directive';
 import { Task } from 'src/app/models/task';
 import { Component } from '@angular/core';
+import { NgFor } from '@angular/common';
 @Component({
-    selector: 'app-test-host',
-    template: `
+  selector: 'app-test-host',
+  template: `
     <ol>
       <li id="testEl" appChecked *ngFor="let task of tasksDone">
         {{ task.name }}
       </li>
     </ol>
   `,
-    standalone: true,
+  standalone: true,
+  imports: [NgFor, CheckedDirective],
 })
 export class TestHostComponent {
   tasksDone: Task[] = [
@@ -30,8 +32,8 @@ describe('CheckedDirective', () => {
   describe('Isolated Unit Testing', () => {
     beforeEach(() => {
       const fixture = TestBed.configureTestingModule({
-    imports: [TestHostComponent, CheckedDirective],
-}).createComponent(TestHostComponent);
+        imports: [TestHostComponent, CheckedDirective, NgFor],
+      }).createComponent(TestHostComponent);
 
       fixture.detectChanges();
       liEl = fixture.debugElement.query(By.css('#testEl')).nativeElement;

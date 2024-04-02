@@ -1,14 +1,6 @@
 import { TasksService } from 'src/app/services/TaskService/tasks.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TodoTaskComponent } from './todo-task.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpService } from '../../services/HttpService/http.service';
-import {
-  MockDateDirective,
-  MockHttpService,
-  MockSortNamePipe,
-  MockTransformTaskPipe,
-} from 'src/app/shared/testKit/mockDependencies';
 import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -17,6 +9,14 @@ import {
   dataSAMPLE_done,
 } from 'src/app/shared/testKit/testDataSet';
 import { Task } from 'src/app/models/task';
+import { DateDirective } from 'src/app/shared/directives/Date/date.directive';
+import { TransformTaskPipe } from 'src/app/shared/pipes/TransformTask/transform-task.pipe';
+import { SortNamePipe } from 'src/app/shared/pipes/SortName/sort-name.pipe';
+import {
+  MockDateDirective,
+  MockSortNamePipe,
+  MockTransformTaskPipe,
+} from 'src/app/shared/testKit/mockDependencies';
 describe('TodoTaskComponent', () => {
   let fixture: ComponentFixture<TodoTaskComponent>;
   let component: TodoTaskComponent;
@@ -35,15 +35,22 @@ describe('TodoTaskComponent', () => {
     ]);
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-    declarations: [MockSortNamePipe,
-        MockTransformTaskPipe,
-        MockDateDirective,],
-    providers: [
-        { provide: TasksService, useValue: taskServiceSpyObj },
-        { provide: HttpService, useClass: MockHttpService },
-    ],
-    imports: [HttpClientTestingModule, TodoTaskComponent],
-}).compileComponents();
+        providers: [{ provide: TasksService, useValue: taskServiceSpyObj }],
+        imports: [TodoTaskComponent],
+      })
+        .overrideComponent(TodoTaskComponent, {
+          remove: {
+            imports: [DateDirective, TransformTaskPipe, SortNamePipe],
+          },
+          add: {
+            imports: [
+              MockDateDirective,
+              MockTransformTaskPipe,
+              MockSortNamePipe,
+            ],
+          },
+        })
+        .compileComponents();
 
       fixture = TestBed.createComponent(TodoTaskComponent);
       component = fixture.componentInstance;
@@ -91,12 +98,13 @@ describe('TodoTaskComponent', () => {
           expect(taskServiceSpy.done).toHaveBeenCalledOnceWith(taskToDone);
         });
       });
-      xdescribe('setSelector()', () => {
-        it('should return "green" or "red" if the number of "tasksList" elements is equal or greater than 5 or less', () => {});
-        const defColorLess = 'green';
-        const defColorGreaterOrEq = 'red';
-        fixture.detectChanges();
-        expect(component.setColor()).toBe(defColorLess);
+      describe('setSelector()', () => {
+        it('should return "green" or "red" if the number of "tasksList" elements is equal or greater than 5 or less', () => {
+          fixture.detectChanges();
+          const defColorLess = 'green';
+          const defColorGreaterOrEq = 'red';
+          expect(component.setColor()).toBe(defColorLess);
+        });
       });
     });
 

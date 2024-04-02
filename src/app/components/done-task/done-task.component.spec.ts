@@ -1,20 +1,22 @@
+import {
+  MockDateDirective,
+  MockSortNamePipe,
+  MockTransformTaskPipe,
+} from './../../shared/testKit/mockDependencies';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DoneTaskComponent } from './done-task.component';
 import { TasksService } from '../../services/TaskService/tasks.service';
-import { HttpService } from '../../services/HttpService/http.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Task } from 'src/app/models/task';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import {
-  MockCheckedDirective,
-  MockDateDirective,
-  MockHttpService,
-  MockSortNamePipe,
-  MockTransformTaskPipe,
-} from 'src/app/shared/testKit/mockDependencies';
 import { dataSAMPLE } from 'src/app/shared/testKit/testDataSet';
+import { CheckedDirective } from 'src/app/shared/directives/Checked/checked.directive';
+import { DateDirective } from 'src/app/shared/directives/Date/date.directive';
+import { TransformTaskPipe } from 'src/app/shared/pipes/TransformTask/transform-task.pipe';
+import { SortNamePipe } from 'src/app/shared/pipes/SortName/sort-name.pipe';
+import { MockCheckedDirective } from 'src/app/shared/testKit/mockDependencies';
 describe('DoneTaskComponent', () => {
   let fixture: ComponentFixture<DoneTaskComponent>;
   let component: DoneTaskComponent;
@@ -32,16 +34,28 @@ describe('DoneTaskComponent', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-    declarations: [MockSortNamePipe,
-        MockTransformTaskPipe,
-        MockDateDirective,
-        MockCheckedDirective,],
-    providers: [
-        { provide: TasksService, useValue: taskServiceSpyObj },
-        { provide: HttpService, useClass: MockHttpService },
-    ],
-    imports: [HttpClientTestingModule, DoneTaskComponent],
-}).compileComponents();
+        providers: [{ provide: TasksService, useValue: taskServiceSpyObj }],
+        imports: [HttpClientTestingModule, DoneTaskComponent],
+      })
+        .overrideComponent(DoneTaskComponent, {
+          remove: {
+            imports: [
+              CheckedDirective,
+              DateDirective,
+              TransformTaskPipe,
+              SortNamePipe,
+            ],
+          },
+          add: {
+            imports: [
+              MockCheckedDirective,
+              MockDateDirective,
+              MockTransformTaskPipe,
+              MockSortNamePipe,
+            ],
+          },
+        })
+        .compileComponents();
 
       fixture = TestBed.createComponent(DoneTaskComponent);
       component = fixture.componentInstance;

@@ -14,8 +14,6 @@ export class AddTaskComponent {
   newTask: string = '';
   private tasksService = inject(TasksService);
 
-  constructor() {}
-
   add() {
     const task: Task = {
       name: this.newTask,

@@ -11,11 +11,12 @@ import {
   standalone: true,
 })
 export class DateDirective {
-  @Input() appDate: string = '';
-  private paragraph: Renderer2;
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
-  constructor() {
+  @Input() appDate: string = '';
+  private paragraph!: Renderer2;
+
+  ngOnInit(): void {
     this.paragraph = this.renderer.createElement('p');
   }
 

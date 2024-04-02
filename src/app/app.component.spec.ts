@@ -2,18 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { TasksService } from './services/TaskService/tasks.service';
-import { HttpService } from './services/HttpService/http.service';
 import { FormsModule } from '@angular/forms';
-import {
-  MockAddTaskComponent,
-  MockCheckedDirective,
-  MockDateDirective,
-  MockDoneTaskComponent,
-  MockHttpService,
-  MockSortNamePipe,
-  MockTodoTaskComponent,
-  MockTransformTaskPipe,
-} from './shared/testKit/mockDependencies';
 
 xdescribe('AppComponent', () => {
   describe('Isolated Unit Testing', () => {
@@ -21,19 +10,9 @@ xdescribe('AppComponent', () => {
     beforeEach(async () => {
       mockTaskService = jasmine.createSpyObj('TaskService', ['add']);
       await TestBed.configureTestingModule({
-    declarations: [MockAddTaskComponent,
-        MockTodoTaskComponent,
-        MockDoneTaskComponent,
-        MockCheckedDirective,
-        MockDateDirective,
-        MockTransformTaskPipe,
-        MockSortNamePipe,],
-    providers: [
-        { provide: TasksService, useValue: mockTaskService },
-        { provide: HttpService, useClass: MockHttpService },
-    ],
-    imports: [HttpClientTestingModule, FormsModule, AppComponent],
-}).compileComponents();
+        providers: [{ provide: TasksService, useValue: mockTaskService }],
+        imports: [HttpClientTestingModule, FormsModule, AppComponent],
+      }).compileComponents();
     });
 
     it('should create the app', () => {

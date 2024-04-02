@@ -13,6 +13,9 @@ describe('HttpService', () => {
   let httpTestingController: HttpTestingController;
   let SAMPLE: API_response;
   beforeEach(() => {
+    SAMPLE = {
+      documents: dataSAMPLE,
+    };
     TestBed.configureTestingModule({
       providers: [HttpService],
       imports: [HttpClientTestingModule],
@@ -22,9 +25,6 @@ describe('HttpService', () => {
   });
   describe('getTasks()', () => {
     it('should  send expected body to get expected response from API when "getTasks()" is called', (done: DoneFn) => {
-      SAMPLE = {
-        documents: dataSAMPLE,
-      };
       const expectedBody = {
         dataSource: 'test-tasks-mongo-db-endpoints',
         database: 'AngularPractice',

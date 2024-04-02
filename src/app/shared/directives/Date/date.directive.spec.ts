@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateDirective } from './date.directive';
-import { By } from '@angular/platform-browser';
 import { Component, DebugElement } from '@angular/core';
 import { Task } from 'src/app/models/task';
+import { By } from '@angular/platform-browser';
+import { NgFor, NgIf } from '@angular/common';
 @Component({
-    selector: 'app-dummy',
-    template: `
+  selector: 'app-dummy',
+  template: `
     <ol>
       <li *ngFor="let task of tasksDone">
         <div id="testEl" *ngIf="task.end != null" [appDate]="task.end">
@@ -14,7 +15,8 @@ import { Task } from 'src/app/models/task';
       </li>
     </ol>
   `,
-    standalone: true,
+  standalone: true,
+  imports: [NgFor, NgIf, DateDirective],
 })
 class DummyComponent {
   tasksDone: Task[] = [
@@ -32,8 +34,8 @@ describe('DateDirective', () => {
   describe('Isolated Unit Testing', () => {
     beforeEach(() => {
       fixture = TestBed.configureTestingModule({
-    imports: [DummyComponent, DateDirective],
-}).createComponent(DummyComponent);
+        imports: [DateDirective, DummyComponent, NgFor, NgIf],
+      }).createComponent(DummyComponent);
 
       fixture.detectChanges();
       divDE = fixture.debugElement.query(By.css('#testEl'));
