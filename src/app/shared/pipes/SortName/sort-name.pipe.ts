@@ -2,7 +2,8 @@ import { Task } from '../../../models/task';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'sortName',
+    name: 'sortName',
+    standalone: true,
 })
 export class SortNamePipe implements PipeTransform {
   transform(value: Task[]): Task[] {

@@ -35,18 +35,15 @@ describe('TodoTaskComponent', () => {
     ]);
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [
-          TodoTaskComponent,
-          MockSortNamePipe,
-          MockTransformTaskPipe,
-          MockDateDirective,
-        ],
-        providers: [
-          { provide: TasksService, useValue: taskServiceSpyObj },
-          { provide: HttpService, useClass: MockHttpService },
-        ],
-        imports: [HttpClientTestingModule],
-      }).compileComponents();
+    declarations: [MockSortNamePipe,
+        MockTransformTaskPipe,
+        MockDateDirective,],
+    providers: [
+        { provide: TasksService, useValue: taskServiceSpyObj },
+        { provide: HttpService, useClass: MockHttpService },
+    ],
+    imports: [HttpClientTestingModule, TodoTaskComponent],
+}).compileComponents();
 
       fixture = TestBed.createComponent(TodoTaskComponent);
       component = fixture.componentInstance;

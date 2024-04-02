@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Task } from '../../models/task';
 import { environment } from 'src/environments/environment';
 import { API_response } from 'src/app/models/api_response';
@@ -11,8 +11,7 @@ export class HttpService {
   private readonly data_source = environment.DATA_SOURCE;
   private readonly database = environment.DATABASE;
   private readonly collection = environment.COLLECTION;
-
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   getTasks(): Observable<API_response> {
     const body = {

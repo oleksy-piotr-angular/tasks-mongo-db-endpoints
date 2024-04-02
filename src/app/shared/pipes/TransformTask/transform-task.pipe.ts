@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
-  name: 'transformTask',
+    name: 'transformTask',
+    standalone: true,
 })
 export class TransformTaskPipe implements PipeTransform {
   transform(value: string, args: string = ''): string {

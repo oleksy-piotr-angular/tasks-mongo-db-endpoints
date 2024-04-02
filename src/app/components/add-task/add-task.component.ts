@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Task } from '../../models/task';
 import { TasksService } from '../../services/TaskService/tasks.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.css'],
+  standalone: true,
+  imports: [FormsModule],
 })
 export class AddTaskComponent {
   newTask: string = '';
+  private tasksService = inject(TasksService);
 
-  constructor(private tasksService: TasksService) {}
+  constructor() {}
 
   add() {
     const task: Task = {

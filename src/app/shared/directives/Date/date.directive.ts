@@ -1,18 +1,21 @@
 import {
   Directive,
+  ElementRef,
   HostListener,
   Input,
-  ElementRef,
   Renderer2,
+  inject,
 } from '@angular/core';
 @Directive({
   selector: '[appDate]',
+  standalone: true,
 })
 export class DateDirective {
   @Input() appDate: string = '';
   private paragraph: Renderer2;
-
-  constructor(private el: ElementRef, private renderer: Renderer2) {
+  private el = inject(ElementRef);
+  private renderer = inject(Renderer2);
+  constructor() {
     this.paragraph = this.renderer.createElement('p');
   }
 

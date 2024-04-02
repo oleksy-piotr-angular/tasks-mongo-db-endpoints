@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Task } from '../../models/task';
 import { HttpService } from '../HttpService/http.service';
@@ -6,8 +6,8 @@ import { HttpService } from '../HttpService/http.service';
 @Injectable()
 export class TasksService {
   private tasksList$: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
-
-  constructor(private httpService: HttpService) {
+  private httpService = inject(HttpService);
+  constructor() {
     this.getTasksFromDB();
   }
 

@@ -32,19 +32,16 @@ describe('DoneTaskComponent', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [
-          DoneTaskComponent,
-          MockSortNamePipe,
-          MockTransformTaskPipe,
-          MockDateDirective,
-          MockCheckedDirective,
-        ],
-        providers: [
-          { provide: TasksService, useValue: taskServiceSpyObj },
-          { provide: HttpService, useClass: MockHttpService },
-        ],
-        imports: [HttpClientTestingModule],
-      }).compileComponents();
+    declarations: [MockSortNamePipe,
+        MockTransformTaskPipe,
+        MockDateDirective,
+        MockCheckedDirective,],
+    providers: [
+        { provide: TasksService, useValue: taskServiceSpyObj },
+        { provide: HttpService, useClass: MockHttpService },
+    ],
+    imports: [HttpClientTestingModule, DoneTaskComponent],
+}).compileComponents();
 
       fixture = TestBed.createComponent(DoneTaskComponent);
       component = fixture.componentInstance;

@@ -14,12 +14,14 @@ import { MockHttpService } from 'src/app/shared/testKit/mockDependencies';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  template: `
+    template: `
     <app-add-task>
       <h1>Default Checked!!!</h1>
       <p id="tip2">Select Checked!!!</p>
     </app-add-task>
   `,
+    standalone: true,
+    imports: [HttpClientTestingModule, FormsModule],
 })
 class TestHostComponent {}
 
@@ -33,13 +35,12 @@ describe('AddTaskComponent', () => {
     beforeEach(async () => {
       mockTaskService = jasmine.createSpyObj('TaskService', ['add']);
       await TestBed.configureTestingModule({
-        declarations: [AddTaskComponent, TestHostComponent],
-        providers: [
-          { provide: TasksService, useValue: mockTaskService },
-          { provide: HttpService, useClass: MockHttpService },
-        ],
-        imports: [HttpClientTestingModule, FormsModule],
-      }).compileComponents();
+    providers: [
+        { provide: TasksService, useValue: mockTaskService },
+        { provide: HttpService, useClass: MockHttpService },
+    ],
+    imports: [HttpClientTestingModule, FormsModule, AddTaskComponent, TestHostComponent],
+}).compileComponents();
 
       fixture = TestBed.createComponent(AddTaskComponent);
       component = fixture.componentInstance;
@@ -131,10 +132,9 @@ describe('AddTaskComponent', () => {
     let httpTestingController: HttpTestingController;
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [AddTaskComponent, TestHostComponent],
-        providers: [TasksService, HttpService],
-        imports: [HttpClientTestingModule, FormsModule],
-      }).compileComponents();
+    providers: [TasksService, HttpService],
+    imports: [HttpClientTestingModule, FormsModule, AddTaskComponent, TestHostComponent],
+}).compileComponents();
       httpTestingController = TestBed.inject(HttpTestingController);
       taskService = TestBed.inject(TasksService);
       fixture = TestBed.createComponent(AddTaskComponent);

@@ -21,22 +21,19 @@ xdescribe('AppComponent', () => {
     beforeEach(async () => {
       mockTaskService = jasmine.createSpyObj('TaskService', ['add']);
       await TestBed.configureTestingModule({
-        declarations: [
-          AppComponent,
-          MockAddTaskComponent,
-          MockTodoTaskComponent,
-          MockDoneTaskComponent,
-          MockCheckedDirective,
-          MockDateDirective,
-          MockTransformTaskPipe,
-          MockSortNamePipe,
-        ],
-        providers: [
-          { provide: TasksService, useValue: mockTaskService },
-          { provide: HttpService, useClass: MockHttpService },
-        ],
-        imports: [HttpClientTestingModule, FormsModule],
-      }).compileComponents();
+    declarations: [MockAddTaskComponent,
+        MockTodoTaskComponent,
+        MockDoneTaskComponent,
+        MockCheckedDirective,
+        MockDateDirective,
+        MockTransformTaskPipe,
+        MockSortNamePipe,],
+    providers: [
+        { provide: TasksService, useValue: mockTaskService },
+        { provide: HttpService, useClass: MockHttpService },
+    ],
+    imports: [HttpClientTestingModule, FormsModule, AppComponent],
+}).compileComponents();
     });
 
     it('should create the app', () => {
