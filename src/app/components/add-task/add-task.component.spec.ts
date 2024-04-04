@@ -98,27 +98,28 @@ describe('AddTaskComponent', () => {
         expect(inputEl.value).toBe('');
       });
 
-      it('should render <input> element with [(ngModel)] two-way data Binding with property "newTask"', fakeAsync(() => {
-        const testInputValue = 'UPDATED_Input_VALUE';
-        const testPropertyValue = 'UPDATED Property_VALUE';
+      it('should render <input> element with [(ngModel)] two-way data Binding with property "newTask"', async () => {
+        //arrange
         const inputEl: HTMLInputElement = divDE.query(
           By.css('#inputNewTaskValue')
         ).nativeElement;
 
-        component.newTask = testPropertyValue;
+        //act
+        component.newTask = 'UPDATED Property_VALUE';
         fixture.detectChanges();
-        tick();
 
-        //model->view
-        expect(inputEl.value).toEqual(testPropertyValue);
+        //assert model->view
+        await fixture.whenStable();
+        expect(inputEl.value).toEqual('UPDATED Property_VALUE');
 
-        inputEl.value = testInputValue;
+        //act
+        inputEl.value = 'UPDATED_Input_VALUE';
         inputEl.dispatchEvent(new Event('input'));
-        tick();
 
-        //view-model
-        expect(component.newTask).toEqual(testInputValue);
-      }));
+        //assert view-model
+        await fixture.whenStable();
+        expect(component.newTask).toEqual('UPDATED_Input_VALUE');
+      });
 
       it('should render button with event-binding "(click)" for method "add()"', () => {
         const buttonDE: DebugElement = divDE.query(By.css('button'));
