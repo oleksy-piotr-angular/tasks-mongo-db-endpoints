@@ -1,4 +1,5 @@
-export const dataSAMPLE = [
+import { Task } from 'src/app/models/task';
+export const dataSAMPLE: Task[] = [
   {
     _id: '65f9dc230e9a741b2f839172',
     name: 'HttpServiceSpec1',
@@ -27,7 +28,7 @@ export const dataSAMPLE = [
   },
 ];
 
-export const dataSAMPLE_done = [
+export const dataSAMPLE_done: Task[] = [
   {
     _id: '65f9dc230e9a741b2f839172',
     name: 'HttpServiceSpec1',
@@ -44,7 +45,7 @@ export const dataSAMPLE_done = [
   },
 ];
 
-export const dataNEW_TASK = {
+export const dataNEW_TASK: Task = {
   name: 'newTask',
   created: '17.03.2024, 21:10:07',
   isDone: false,

@@ -38,7 +38,7 @@ export class MockDateDirective {
 export class MockCheckedDirective {}
 @Component({
   selector: 'app-add-task',
-  template: '<div>></div>',
+  template: '<div></div>',
   standalone: true,
 })
 export class MockAddTaskComponent {}
@@ -50,7 +50,7 @@ export class MockAddTaskComponent {}
 export class MockDoneTaskComponent {}
 @Component({
   selector: 'app-todo-task',
-  template: ``,
+  template: ` <div></div> `,
   standalone: true,
 })
 export class MockTodoTaskComponent {}

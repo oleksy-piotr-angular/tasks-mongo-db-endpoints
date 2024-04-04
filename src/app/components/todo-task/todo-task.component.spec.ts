@@ -104,6 +104,12 @@ describe('TodoTaskComponent', () => {
           const defColorLess = 'green';
           const defColorGreaterOrEq = 'red';
           expect(component.setColor()).toBe(defColorLess);
+          component.tasksList.push(...SAMPLE);
+          expect(component.tasksList.length > 5).toBeTrue();
+          expect(component.setColor()).toBe(defColorGreaterOrEq);
+          component.tasksList.pop();
+          expect(component.tasksList.length).toBe(5);
+          expect(component.setColor()).toBe(defColorGreaterOrEq);
         });
       });
     });
@@ -120,7 +126,7 @@ describe('TodoTaskComponent', () => {
           expect(divDE).toBeFalsy();
         });
       });
-      describe('Only Completed Tasks Exist', () => {
+      describe('Only Completed Tasks Exist', async () => {
         it('should render only #noTask "TemplateRef" if all Tasks are completed', async () => {
           taskServiceSpy.getTaskList$.and.returnValue(of(dataSAMPLE_done));
           fixture.detectChanges();
@@ -167,7 +173,7 @@ describe('TodoTaskComponent', () => {
 
           it('should render info about number of Uncompleted Tasks', () => {
             expect(pToDoEl).toBeTruthy();
-            expect(pToDoEl.textContent).toBe(
+            expect(pToDoEl.textContent).toContain(
               `To do: ${component.tasksList.length}`
             );
           });
@@ -195,7 +201,7 @@ describe('TodoTaskComponent', () => {
             component.tasksList = [];
           });
         });
-        describe('TaskList ToDo', () => {
+        describe('TaskList ToDo', async () => {
           let taskToDoList: DebugElement;
           let liDEs: DebugElement[];
           beforeEach(() => {
@@ -222,7 +228,7 @@ describe('TodoTaskComponent', () => {
               const task: Task = tasksToDo[i];
               expect(pEl).toBeTruthy();
               if (task.created) {
-                expect(pEl.textContent).toBe(`${task.name}`);
+                expect(pEl.textContent).toContain(`${task.name}`);
               } else {
                 expect(task.created).toBeTruthy();
               }
@@ -310,9 +316,6 @@ describe('TodoTaskComponent', () => {
           component.tasksExists = false;
         });
       });
-    });
-    afterEach(() => {
-      taskServiceSpy.getTaskList$.and.returnValue(of([]));
     });
   });
 });

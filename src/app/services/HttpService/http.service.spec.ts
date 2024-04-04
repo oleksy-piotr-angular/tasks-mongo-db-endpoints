@@ -32,7 +32,7 @@ describe('HttpService', () => {
       };
 
       httpService.getTasks().subscribe((tasksData) => {
-        expect(tasksData).toBe(SAMPLE);
+        expect(tasksData).toEqual(SAMPLE);
         done();
       });
 

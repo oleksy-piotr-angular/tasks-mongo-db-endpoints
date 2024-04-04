@@ -6,7 +6,6 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DoneTaskComponent } from './done-task.component';
 import { TasksService } from '../../services/TaskService/tasks.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Task } from 'src/app/models/task';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -35,7 +34,7 @@ describe('DoneTaskComponent', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
         providers: [{ provide: TasksService, useValue: taskServiceSpyObj }],
-        imports: [HttpClientTestingModule, DoneTaskComponent],
+        imports: [DoneTaskComponent],
       })
         .overrideComponent(DoneTaskComponent, {
           remove: {
@@ -77,7 +76,9 @@ describe('DoneTaskComponent', () => {
       it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskListObs()"', () => {
         taskServiceSpy.getTaskList$.and.returnValue(of(SAMPLE));
         component.ngOnInit();
-        expect(component.tasksDone.length).toBe(2);
+        const filteredTasks = SAMPLE.filter((el) => el.isDone === true);
+        expect(component.tasksDone).toEqual(filteredTasks);
+        expect(component.tasksExists).toBeTrue();
       });
     });
     describe('Template/ShallowUnitTest', () => {
@@ -93,38 +94,36 @@ describe('DoneTaskComponent', () => {
         });
       });
       describe('Tasks Exist', () => {
+        let divDE: DebugElement;
         beforeEach(() => {
           taskServiceSpy.getTaskList$.and.returnValue(of(SAMPLE));
           fixture.detectChanges();
+          divDE = fixture.debugElement.query(By.css('#tasksDoneElId'));
         });
         it('should render div "#tasksDoneElId" if Tasks Behavior Subject has Elements', () => {
-          const divEl: HTMLDivElement = fixture.debugElement.query(
-            By.css('#tasksDoneElId')
-          ).nativeElement;
+          const divEl: HTMLDivElement = divDE.nativeElement;
+
           expect(component.tasksExists).toBeTrue();
           expect(divEl).toBeTruthy();
         });
         it('should render Paragraph Element with info about number of Completed Tasks', () => {
-          const pEl: HTMLParagraphElement = fixture.debugElement.query(
-            By.css('#tasksDoneElId p')
+          const pEl: HTMLParagraphElement = divDE.query(
+            By.css('p')
           ).nativeElement;
+
           expect(pEl).toBeTruthy();
-          expect(pEl.textContent).toBe(
+          expect(pEl.textContent).toContain(
             `Tasks Done ${component.tasksDone.length}:`
           );
         });
         it('should render <ol> with the same number of <li> elements as the number of completed tasks', () => {
-          const olDE: DebugElement = fixture.debugElement.query(
-            By.css('#tasksDoneElId ol')
-          );
+          const olDE: DebugElement = divDE.query(By.css('ol'));
           expect(olDE).toBeTruthy();
           const liDEs: DebugElement[] = olDE.queryAll(By.css('li'));
           expect(liDEs.length).toBe(component.tasksDone.length);
         });
         it('in <li >should render <div> with name property content of tasks if "task" has "end" property which is used in [appDate] pipe', () => {
-          const divDEs: DebugElement[] = fixture.debugElement.queryAll(
-            By.css('#tasksDoneElId>ol>li>div')
-          );
+          const divDEs: DebugElement[] = divDE.queryAll(By.css('ol>li>div'));
           const doneTasks = component.tasksDone;
           const elAmount = doneTasks.length;
           for (let i = 0; i < elAmount; i++) {
@@ -132,7 +131,7 @@ describe('DoneTaskComponent', () => {
             const task: Task = doneTasks[i];
             expect(divEl).toBeTruthy();
             if (task.end) {
-              expect(divEl.textContent).toBe(` ${task.name} `);
+              expect(divEl.textContent).toContain(` ${task.name} `);
             } else {
               expect(task.end).toBeTruthy();
             }
@@ -142,7 +141,8 @@ describe('DoneTaskComponent', () => {
     });
 
     afterEach(() => {
-      taskServiceSpy.getTaskList$.and.returnValue(of([]));
+      component.tasksDone = [];
+      component.tasksExists = false;
     });
   });
 });

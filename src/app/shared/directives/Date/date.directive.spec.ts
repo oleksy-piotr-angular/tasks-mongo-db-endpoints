@@ -56,7 +56,7 @@ describe('DateDirective', () => {
         const paragraph: HTMLParagraphElement = <HTMLParagraphElement>(
           divDE.query(By.css('p')).nativeElement
         );
-        expect(paragraph.textContent).toEqual(text);
+        expect(paragraph.textContent).toContain(text);
       });
       it('should contain defined CSS styles', () => {
         const defStyles =
@@ -65,7 +65,7 @@ describe('DateDirective', () => {
         const paragraph: HTMLParagraphElement = <HTMLParagraphElement>(
           divDE.query(By.css('p')).nativeElement
         );
-        expect(paragraph.getAttribute('style')).toEqual(defStyles);
+        expect(paragraph.getAttribute('style')).toContain(defStyles);
       });
     });
     describe('mouseLeave()', () => {

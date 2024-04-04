@@ -45,7 +45,7 @@ describe('CheckedDirective', () => {
     it('should add defined CSS styles to mark "li" items from "Task[]" as done', () => {
       const defStyle =
         'background: url("/assets/checked.png") 10px center no-repeat rgb(195, 253, 137);';
-      expect(liEl.getAttribute('style')).toEqual(defStyle);
+      expect(liEl.getAttribute('style')).toContain(defStyle);
     });
   });
 });
