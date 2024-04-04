@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { AddTaskComponent } from './add-task.component';
 import { TasksService } from '../../services/TaskService/tasks.service';
 import {
@@ -14,12 +19,12 @@ import { environment } from 'src/environments/environment';
 @Component({
   template: `
     <app-add-task>
-      <h1>Default Checked!!!</h1>
+      <h2>Default Checked!!!</h2>
       <p id="tip2">Select Checked!!!</p>
     </app-add-task>
   `,
   standalone: true,
-  imports: [HttpClientTestingModule, FormsModule, AddTaskComponent],
+  imports: [FormsModule, AddTaskComponent],
 })
 class TestHostComponent {}
 
@@ -34,9 +39,11 @@ describe('AddTaskComponent', () => {
       mockTaskService = jasmine.createSpyObj('TaskService', ['add']);
       await TestBed.configureTestingModule({
         providers: [{ provide: TasksService, useValue: mockTaskService }],
-        imports: [AddTaskComponent, TestHostComponent],
+        imports: [AddTaskComponent, TestHostComponent, FormsModule],
       }).compileComponents();
+    });
 
+    beforeEach(() => {
       fixture = TestBed.createComponent(AddTaskComponent);
       component = fixture.componentInstance;
       divDE = fixture.debugElement.query(By.css('div'));
@@ -44,7 +51,7 @@ describe('AddTaskComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should create Component Instance', () => {
+    it('should create Component Instance and its defined Template', () => {
       expect(component).toBeTruthy();
       expect(divDE).toBeTruthy();
     });
@@ -74,15 +81,14 @@ describe('AddTaskComponent', () => {
       it('should render multiple slots with <ng-content>', () => {
         const testFixture = TestBed.createComponent(TestHostComponent);
         const defaultTestEl: HTMLHeadingElement =
-          testFixture.debugElement.query(By.css('div>h1')).nativeElement;
+          testFixture.debugElement.query(By.css('div>h2')).nativeElement;
         const selectTestEl: HTMLParagraphElement =
           testFixture.debugElement.query(By.css('div>p#tip2')).nativeElement;
-        expect(defaultTestEl.textContent).toEqual('Default Checked!!!');
-        expect(selectTestEl.textContent).toEqual('Select Checked!!!');
+        expect(defaultTestEl.textContent).toContain('Default Checked!!!');
+        expect(selectTestEl.textContent).toContain('Select Checked!!!');
       });
 
-      it('should render properly <input> text type with two-way data binding for "newTask" property', () => {
-        const testValue = 'New Task Test UPDATED';
+      it('should render properly defined <input> element ', () => {
         const inputEl: HTMLInputElement = divDE.query(
           By.css('#inputNewTaskValue')
         ).nativeElement;
@@ -90,24 +96,29 @@ describe('AddTaskComponent', () => {
         expect(inputEl.type).toBe('text');
         expect(inputEl.placeholder).toBe('Please enter "New Task"');
         expect(inputEl.value).toBe('');
-        component.newTask = testValue;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          const updatedInputEl: HTMLInputElement = divDE.query(
-            By.css('#inputNewTaskValue')
-          ).nativeElement;
-          expect(updatedInputEl.value).toBe(testValue);
-        });
-        component.newTask = '';
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          const updatedInputEl: HTMLInputElement = divDE.query(
-            By.css('#inputNewTaskValue')
-          ).nativeElement;
-          updatedInputEl.value = testValue;
-          expect(component.newTask).toBe(testValue);
-        });
       });
+
+      it('should render <input> element with [(ngModel)] two-way data Binding with property "newTask"', fakeAsync(() => {
+        const testInputValue = 'UPDATED_Input_VALUE';
+        const testPropertyValue = 'UPDATED Property_VALUE';
+        const inputEl: HTMLInputElement = divDE.query(
+          By.css('#inputNewTaskValue')
+        ).nativeElement;
+
+        component.newTask = testPropertyValue;
+        fixture.detectChanges();
+        tick();
+
+        //model->view
+        expect(inputEl.value).toEqual(testPropertyValue);
+
+        inputEl.value = testInputValue;
+        inputEl.dispatchEvent(new Event('input'));
+        tick();
+
+        //view-model
+        expect(component.newTask).toEqual(testInputValue);
+      }));
 
       it('should render button with event-binding "(click)" for method "add()"', () => {
         const buttonDE: DebugElement = divDE.query(By.css('button'));
