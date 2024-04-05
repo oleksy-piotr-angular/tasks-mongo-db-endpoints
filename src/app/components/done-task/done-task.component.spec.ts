@@ -16,6 +16,12 @@ import { DateDirective } from 'src/app/shared/directives/Date/date.directive';
 import { TransformTaskPipe } from 'src/app/shared/pipes/TransformTask/transform-task.pipe';
 import { SortNamePipe } from 'src/app/shared/pipes/SortName/sort-name.pipe';
 import { MockCheckedDirective } from 'src/app/shared/testKit/mockDependencies';
+import { HttpService } from 'src/app/services/HttpService/http.service';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { environment } from 'src/environments/environment';
 describe('DoneTaskComponent', () => {
   let fixture: ComponentFixture<DoneTaskComponent>;
   let component: DoneTaskComponent;
@@ -73,7 +79,7 @@ describe('DoneTaskComponent', () => {
       expect(component.tasksExists).toBeFalse();
     });
     describe('ngOnInit()', () => {
-      it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskListObs()"', () => {
+      it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskList$()"', () => {
         taskServiceSpy.getTaskList$.and.returnValue(of(SAMPLE));
         component.ngOnInit();
         const filteredTasks = SAMPLE.filter((el) => el.isDone === true);
@@ -137,6 +143,84 @@ describe('DoneTaskComponent', () => {
             }
           }
         });
+      });
+    });
+
+    afterEach(() => {
+      component.tasksDone = [];
+      component.tasksExists = false;
+    });
+  });
+
+  describe('Integration Tests', () => {
+    let httpTestingController: HttpTestingController;
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [TasksService, HttpService],
+        imports: [DoneTaskComponent, HttpClientTestingModule],
+      }).compileComponents();
+
+      httpTestingController = TestBed.inject(HttpTestingController);
+      fixture = TestBed.createComponent(DoneTaskComponent);
+      component = fixture.componentInstance;
+    });
+    beforeEach(() => {
+      httpTestingController
+        .expectOne(`${environment.URL_ENDPOINT}/action/find`)
+        .flush({ documents: SAMPLE });
+      fixture.detectChanges();
+    });
+
+    describe('ngOnInit()', () => {
+      it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskList$()"', () => {
+        component.ngOnInit();
+        const filteredTasks = SAMPLE.filter((el) => el.isDone === true);
+        expect(component.tasksDone).toEqual(filteredTasks);
+        expect(component.tasksExists).toBeTrue();
+      });
+    });
+    describe('Template/ShallowUnitTest', () => {
+      let divDE: DebugElement;
+      beforeEach(() => {
+        fixture.detectChanges();
+        divDE = fixture.debugElement.query(By.css('#tasksDoneElId'));
+      });
+      it('should render div "#tasksDoneElId" if Tasks Behavior Subject has Elements', () => {
+        const divEl: HTMLDivElement = divDE.nativeElement;
+
+        expect(component.tasksExists).toBeTrue();
+        expect(divEl).toBeTruthy();
+      });
+      it('should render Paragraph Element with info about number of Completed Tasks', () => {
+        const pEl: HTMLParagraphElement = divDE.query(
+          By.css('p')
+        ).nativeElement;
+
+        expect(pEl).toBeTruthy();
+        expect(pEl.textContent).toContain(
+          `Tasks Done ${component.tasksDone.length}:`
+        );
+      });
+      it('should render <ol> with the same number of <li> elements as the number of completed tasks', () => {
+        const olDE: DebugElement = divDE.query(By.css('ol'));
+        expect(olDE).toBeTruthy();
+        const liDEs: DebugElement[] = olDE.queryAll(By.css('li'));
+        expect(liDEs.length).toBe(component.tasksDone.length);
+      });
+      it('in <li >should render <div> with name property content of tasks if "task" has "end" property which is used in [appDate] pipe', () => {
+        const divDEs: DebugElement[] = divDE.queryAll(By.css('ol>li>div'));
+        const doneTasks = component.tasksDone;
+        const elAmount = doneTasks.length;
+        for (let i = 0; i < elAmount; i++) {
+          const divEl: HTMLDivElement = divDEs[i].nativeElement;
+          const task: Task = doneTasks[i];
+          expect(divEl).toBeTruthy();
+          if (task.end) {
+            expect(divEl.textContent).toContain(` ${task.name} `);
+          } else {
+            expect(task.end).toBeTruthy();
+          }
+        }
       });
     });
 

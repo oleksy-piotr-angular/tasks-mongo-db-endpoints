@@ -81,7 +81,7 @@ describe('TodoTaskComponent', () => {
       });
 
       describe('ngOnInit()', () => {
-        it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskListObs()"', () => {
+        it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskList$()"', () => {
           component.ngOnInit();
           const filteredTasks = SAMPLE.filter((el) => el.isDone === false);
           expect(component.tasksList).toEqual(filteredTasks);
@@ -354,7 +354,7 @@ describe('TodoTaskComponent', () => {
       });
 
       describe('ngOnInit()', () => {
-        it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskListObs()"', () => {
+        it('should initialize the "Task[]" array as the value of the "tasksDone" property from the returned and filtered array from "Observable<Task[]>" when subscribing to "tasksService.getTaskList$()"', () => {
           component.ngOnInit();
           const filteredTasks = SAMPLE.filter((el) => el.isDone === false);
           expect(component.tasksList).toEqual(filteredTasks);
