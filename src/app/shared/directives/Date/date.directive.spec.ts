@@ -102,22 +102,14 @@ describe('DateDirective', () => {
           NgIf,
         ],
       }).compileComponents();
-      const httpTestingController = TestBed.inject(HttpTestingController);
-
       const fixtureToDo = TestBed.createComponent(TodoTaskComponent);
-      const compToDo = fixtureToDo.componentInstance;
-
       const fixtureDone = TestBed.createComponent(DoneTaskComponent);
-      const compDone = fixtureDone.componentInstance;
 
-      httpTestingController
-        .expectOne(environment.URL_ENDPOINT + '/action/find')
-        .flush('');
       const SAMPLE = dataSAMPLE;
-      compToDo.tasksExists = true;
-      compDone.tasksExists = true;
-      compToDo.tasksList = SAMPLE.filter((t) => t.isDone === false);
-      compDone.tasksDone = SAMPLE.filter((t) => t.isDone === true);
+      TestBed.inject(HttpTestingController)
+        .expectOne(environment.URL_ENDPOINT + '/action/find')
+        .flush({ documents: SAMPLE });
+
       fixtureDone.detectChanges();
       fixtureToDo.detectChanges();
       toDoLiDEs = fixtureToDo.debugElement.queryAll(

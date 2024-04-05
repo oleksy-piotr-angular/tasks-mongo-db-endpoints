@@ -15,6 +15,7 @@ import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Task } from './../../models/task';
 import { environment } from 'src/environments/environment';
+import { HttpService } from 'src/app/services/HttpService/http.service';
 
 @Component({
   template: `
@@ -135,12 +136,12 @@ describe('AddTaskComponent', () => {
     });
   });
 
-  xdescribe('Integration Unit Tasting', () => {
+  describe('Integration Unit Tasting', () => {
     let taskService: TasksService;
     let httpTestingController: HttpTestingController;
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        providers: [TasksService],
+        providers: [TasksService, HttpService],
         imports: [
           HttpClientTestingModule,
           FormsModule,
