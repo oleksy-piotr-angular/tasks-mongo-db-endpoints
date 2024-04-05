@@ -136,7 +136,7 @@ describe('AddTaskComponent', () => {
     });
   });
 
-  describe('Integration Unit Tasting', () => {
+  describe('Integration Tests', () => {
     let taskService: TasksService;
     let httpTestingController: HttpTestingController;
     beforeEach(async () => {
