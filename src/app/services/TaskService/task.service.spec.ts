@@ -149,7 +149,7 @@ describe('TasksService', () => {
       });
     });
   });
-  xdescribe('Deep Integration Testing', () => {
+  describe('Integration Tests', () => {
     let httpService: HttpService;
     let httpTestingController: HttpTestingController;
     let testRequest: TestRequest;
@@ -176,7 +176,7 @@ describe('TasksService', () => {
       it('should pass received Array Task into private BehaviorSubject "tasksList$"', () => {
         taskService
           .getTaskList$()
-          .subscribe((tasks) => expect(tasks).toBe(SAMPLE));
+          .subscribe((tasks) => expect(tasks).toEqual(SAMPLE));
       });
     });
     describe('getTaskList$()', () => {
@@ -247,7 +247,7 @@ describe('TasksService', () => {
       });
       it('should update the "isDone" to true for the element in "taskList$" property', () => {
         taskService.getTaskList$().subscribe((tasks) => {
-          expect(tasks[3].isDone).toBe(true);
+          expect(tasks[3].isDone).toBeTrue();
         });
       });
       it('should set string data in the "end" property for the element in "taskList$" property', () => {
