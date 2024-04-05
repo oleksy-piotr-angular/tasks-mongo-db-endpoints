@@ -20,7 +20,7 @@ describe('TasksService', () => {
     NEW_TASK = dataNEW_TASK;
     SAMPLE = dataSAMPLE;
   });
-  describe('Isolated Unit Testing', () => {
+  describe('Isolated Unit Tests', () => {
     let httpServiceSpy: jasmine.SpyObj<HttpService>;
     beforeEach(() => {
       const httpServiceSpyObj = jasmine.createSpyObj('HttpService', [

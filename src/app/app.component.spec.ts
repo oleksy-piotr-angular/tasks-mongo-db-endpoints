@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
 
-  describe('Isolated Unit Testing', () => {
+  describe('Isolated Unit Tests', () => {
     let taskServiceSpy: jasmine.SpyObj<TasksService>;
     beforeEach(async () => {
       const taskServiceSpyObj = jasmine.createSpyObj('TaskService', [

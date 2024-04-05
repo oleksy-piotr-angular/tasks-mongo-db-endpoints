@@ -26,7 +26,7 @@ describe('TodoTaskComponent', () => {
     SAMPLE = dataSAMPLE;
   });
 
-  describe('Isolated Unit Testing', () => {
+  describe('Isolated Unit Tests', () => {
     let taskServiceSpy: jasmine.SpyObj<TasksService>;
     const taskServiceSpyObj = jasmine.createSpyObj(TasksService, [
       'getTaskList$',

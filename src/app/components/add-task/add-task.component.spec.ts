@@ -32,7 +32,7 @@ describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
   let fixture: ComponentFixture<AddTaskComponent>;
   let divDE: DebugElement;
-  describe('Isolated Unit Testing', () => {
+  describe('Isolated Unit Tests', () => {
     let mockTaskService: jasmine.SpyObj<TasksService>;
 
     beforeEach(async () => {

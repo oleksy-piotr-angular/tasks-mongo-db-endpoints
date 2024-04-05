@@ -40,7 +40,7 @@ export class DateDirective {
         requiredStyles[newStyle]
       );
     }
-
+    this.renderer.setProperty(this.paragraph, 'id', 'taskDate');
     this.renderer.setProperty(
       this.paragraph,
       'innerHTML',
