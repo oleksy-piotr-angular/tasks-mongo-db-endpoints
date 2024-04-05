@@ -90,7 +90,7 @@ describe('TasksService', () => {
       });
       it('should remove element which was given in Param from "taskList$" property', () => {
         taskService.getTaskList$().subscribe((tasks) => {
-          expect(tasks).not.toEqual(jasmine.arrayContaining([SAMPLE[0]]));
+          expect(tasks).not.toContain(jasmine.arrayContaining([SAMPLE[0]]));
         });
       });
     });
