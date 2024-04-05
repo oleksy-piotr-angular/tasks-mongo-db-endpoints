@@ -8,7 +8,11 @@ import { NgFor } from '@angular/common';
 import { DoneTaskComponent } from 'src/app/components/done-task/done-task.component';
 import { TasksService } from 'src/app/services/TaskService/tasks.service';
 import { HttpService } from 'src/app/services/HttpService/http.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-test-host',
@@ -59,19 +63,13 @@ describe('CheckedDirective', () => {
     beforeEach(() => {
       const fixture = TestBed.configureTestingModule({
         providers: [TasksService, HttpService],
-        imports: [
-          HttpClientTestingModule,
-          DoneTaskComponent,
-          CheckedDirective,
-          NgFor,
-        ],
+        imports: [HttpClientTestingModule, DoneTaskComponent],
       }).createComponent(DoneTaskComponent);
 
-      fixture.detectChanges();
-      const component = fixture.componentInstance;
-      const SAMPLE = dataSAMPLE;
-      component.tasksExists = true;
-      component.tasksDone = SAMPLE.filter((el) => el.isDone === true);
+      TestBed.inject(HttpTestingController)
+        .expectOne(environment.URL_ENDPOINT + '/action/find')
+        .flush({ documents: dataSAMPLE });
+
       fixture.detectChanges();
       liDEs = fixture.debugElement.queryAll(By.css('div#tasksDoneElId>ol>li'));
     });

@@ -142,12 +142,7 @@ describe('AddTaskComponent', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
         providers: [TasksService, HttpService],
-        imports: [
-          HttpClientTestingModule,
-          FormsModule,
-          AddTaskComponent,
-          TestHostComponent,
-        ],
+        imports: [HttpClientTestingModule, AddTaskComponent],
       }).compileComponents();
       httpTestingController = TestBed.inject(HttpTestingController);
       taskService = TestBed.inject(TasksService);

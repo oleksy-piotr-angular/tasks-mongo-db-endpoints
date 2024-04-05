@@ -95,20 +95,16 @@ describe('DateDirective', () => {
         providers: [TasksService, HttpService],
         imports: [
           HttpClientTestingModule,
-          DateDirective,
           DoneTaskComponent,
           TodoTaskComponent,
-          NgFor,
-          NgIf,
         ],
       }).compileComponents();
       const fixtureToDo = TestBed.createComponent(TodoTaskComponent);
       const fixtureDone = TestBed.createComponent(DoneTaskComponent);
 
-      const SAMPLE = dataSAMPLE;
       TestBed.inject(HttpTestingController)
         .expectOne(environment.URL_ENDPOINT + '/action/find')
-        .flush({ documents: SAMPLE });
+        .flush({ documents: dataSAMPLE });
 
       fixtureDone.detectChanges();
       fixtureToDo.detectChanges();
