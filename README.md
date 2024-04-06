@@ -11,24 +11,29 @@ https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
   <li>
   <h2>AppComponent</h2>
     <ul>
-      <li>
-        *Isolated Unit Tests
-            </br>+should create the app
-            </br>+should have as title 'Tasks-list-example: Atlas Data API Endpoints(MongoDB) '
-          </br>- clear()
+      <li>Isolated Unit Tests
+        <ul>
+        <li>should create the app</li>
+        <li>should have as title 'Tasks-list-example: Atlas Data API Endpoints(MongoDB) '</li>
+        <li>clear()
             </br>+should call "taskService.clearDoneTasksInDB()" to clear the list of completed tasks
-          </br>-Template/ShallowUnitTest
+        </li>
+        <li>Template/ShallowUnitTest
             </br>+should render title
             </br>+should render "button" with defined text and click event for method "clear()"
             </br>+should render 2 elements of "div.container" with Mock Child Components
+        </li>
+        </ul>
       </li>
-      <li>
-      *Deep Integration Tests
-         </br>+clear()
-         </br>+should call "taskService.clearDoneTasksInDB()" to clear the list of completed tasks from "tasksList$"
-       </br>-Template
+      <li>Deep Integration Tests
+        <ul>
+        <li>clear()
+            </br>+should call "taskService.clearDoneTasksInDB()" to clear the list of completed tasks from "tasksList$"
+        </li>
+        <li>Template
          </br>+should render 2 elements of "div.container" with Child Components
-         </br>+should render Child Components templates content
+         </br>+should render Child Components templates content</li>
+        </ul>      
       </li>
     </ul>
   </li>
