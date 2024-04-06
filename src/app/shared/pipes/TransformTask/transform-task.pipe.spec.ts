@@ -6,11 +6,11 @@ describe('TransformTaskPipe', () => {
     pipe = new TransformTaskPipe();
   });
 
-  it('create and Instance', () => {
+  it('should create an Instance', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('Change the first letter to uppercase and append the optional string parameter to the end of the string', () => {
+  it('should change the first letter to uppercase and append the optional string parameter to the end of the string', () => {
     const text = 'this name must be Transformed';
     expect(pipe.transform(text, ' very well!')).toContain(
       'This name must be Transformed very well!'

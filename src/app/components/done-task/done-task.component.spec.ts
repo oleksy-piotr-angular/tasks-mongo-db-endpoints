@@ -128,7 +128,7 @@ describe('DoneTaskComponent', () => {
           const liDEs: DebugElement[] = olDE.queryAll(By.css('li'));
           expect(liDEs.length).toBe(component.tasksDone.length);
         });
-        it('in <li >should render <div> with name property content of tasks if "task" has "end" property which is used in [appDate] pipe', () => {
+        it('should in <li> render <div> with name property content of tasks if "task" has "end" property which is used in [appDate] pipe', () => {
           const divDEs: DebugElement[] = divDE.queryAll(By.css('ol>li>div'));
           const doneTasks = component.tasksDone;
           const elAmount = doneTasks.length;
@@ -207,7 +207,7 @@ describe('DoneTaskComponent', () => {
         const liDEs: DebugElement[] = olDE.queryAll(By.css('li'));
         expect(liDEs.length).toBe(component.tasksDone.length);
       });
-      it('in <li >should render <div> with name property content of tasks if "task" has "end" property which is used in [appDate] pipe', () => {
+      it('should in <li>render <div> with name property content of tasks if "task" has "end" property which is used in [appDate] pipe', () => {
         const divDEs: DebugElement[] = divDE.queryAll(By.css('ol>li>div'));
         const doneTasks = component.tasksDone;
         const elAmount = doneTasks.length;

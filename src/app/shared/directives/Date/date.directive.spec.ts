@@ -52,12 +52,12 @@ describe('DateDirective', () => {
       divDE = fixture.debugElement.query(By.css('#testEl'));
     });
 
-    it('Should not append the "Paragraph" if element was initialized', () => {
+    it('should not append the "Paragraph" if element was initialized', () => {
       expect(divDE.query(By.css('p'))).toBeFalsy();
     });
 
     describe('mouseEnter()', () => {
-      it('Should append a "Paragraph" child when element is hovered', () => {
+      it('should append a "Paragraph" child when element is hovered', () => {
         divDE.triggerEventHandler('mouseenter');
         expect(divDE.query(By.css('p'))).toBeTruthy();
       });
@@ -80,7 +80,7 @@ describe('DateDirective', () => {
       });
     });
     describe('mouseLeave()', () => {
-      it('Should remove a "Paragraph" child when mouse leave an element', () => {
+      it('should remove a "Paragraph" child when mouse leave an element', () => {
         divDE.triggerEventHandler('mouseenter');
         divDE.triggerEventHandler('mouseleave');
         expect(divDE.query(By.css('p'))).toBeFalsy();
@@ -116,7 +116,7 @@ describe('DateDirective', () => {
       );
     });
 
-    it('Should not append the "Paragraph" if element was initialized', () => {
+    it('should not append the "Paragraph" if element was initialized', () => {
       for (let el of toDoLiDEs) {
         expect(el.query(By.css('p#taskDate'))).toBeFalsy();
       }
@@ -126,7 +126,7 @@ describe('DateDirective', () => {
     });
 
     describe('mouseEnter()', () => {
-      it('Should append a "Paragraph" child when element is hovered', () => {
+      it('should append a "Paragraph" child when element is hovered', () => {
         for (let el of toDoLiDEs) {
           el.triggerEventHandler('mouseenter');
 
@@ -178,7 +178,7 @@ describe('DateDirective', () => {
       });
     });
     describe('mouseLeave()', () => {
-      it('Should remove a "Paragraph" child when mouse leave an element', () => {
+      it('should remove a "Paragraph" child when mouse leave an element', () => {
         for (let el of toDoLiDEs) {
           el.triggerEventHandler('mouseenter');
           el.triggerEventHandler('mouseleave');

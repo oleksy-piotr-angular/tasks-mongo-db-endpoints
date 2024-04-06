@@ -117,7 +117,7 @@ describe('TasksService', () => {
           expect(typeof tasks[3].end).toBe('string');
         });
       });
-      it('string date should be created from Date type using "toLocaleString()" method', () => {
+      it('should be string date created from Date type using "toLocaleString()" method', () => {
         taskService.getTaskList$().subscribe((tasks) => {
           jasmine.addMatchers(CustomMatchers);
           expect(tasks[3].end).toBeDateToLocaleString();
@@ -128,7 +128,7 @@ describe('TasksService', () => {
         delete SAMPLE[3].end;
       });
     });
-    describe('clearDoneTaskInDB', () => {
+    describe('clearDoneTaskInDB()', () => {
       beforeEach(() => {
         httpServiceSpy.removeDoneTasksFromDB.and.returnValue(
           of({ deletedCount: 2 })
@@ -255,7 +255,7 @@ describe('TasksService', () => {
           expect(typeof tasks[3].end).toBe('string');
         });
       });
-      it('string date should be created from Date type using "toLocaleString()" method', () => {
+      it('should be string date created from Date type using "toLocaleString()" method', () => {
         taskService.getTaskList$().subscribe((tasks) => {
           jasmine.addMatchers(CustomMatchers);
           expect(tasks[3].end).toBeDateToLocaleString();
@@ -266,7 +266,7 @@ describe('TasksService', () => {
         delete SAMPLE[3].end;
       });
     });
-    describe('clearDoneTaskInDB', () => {
+    describe('clearDoneTaskInDB()', () => {
       beforeEach(() => {
         const expectedResponse = { deletedCount: 2 };
         taskService.clearDoneTasksInDB();

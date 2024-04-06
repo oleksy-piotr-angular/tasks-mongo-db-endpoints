@@ -226,7 +226,7 @@ describe('TodoTaskComponent', () => {
               expect(liDEs.length).toBe(tasksToDo.length);
             });
           });
-          it('in <li > should render <p> with name property content of tasks if "task" has "created" property which is used in [appDate] pipe', () => {
+          it('should in <li> render <p> with name property content of tasks if "task" has "created" property which is used in [appDate] pipe', () => {
             const pDEs: DebugElement[] = taskToDoList.queryAll(By.css('li p'));
             const tasksToDo = component.tasksList;
             const elAmount = tasksToDo.length;
@@ -488,7 +488,7 @@ describe('TodoTaskComponent', () => {
               expect(liDEs.length).toBe(tasksToDo.length);
             });
           });
-          it('in <li > should render <p> with name property content of tasks if "task" has "created" property which is used in [appDate] pipe', () => {
+          it('should in <li> render <p> with name property content of tasks if "task" has "created" property which is used in [appDate] pipe', () => {
             const pDEs: DebugElement[] = taskToDoList.queryAll(By.css('li p'));
             const tasksToDo = component.tasksList;
             const elAmount = tasksToDo.length;
