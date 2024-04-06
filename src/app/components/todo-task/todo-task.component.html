@@ -1,0 +1,40 @@
+<div id="tasksToDoTemplate" *ngIf="tasksExists">
+  <p [ngStyle]="{ color: setColor() }">To do: {{ tasksList.length }}</p>
+  <ng-container
+    *ngIf="tasksList.length > 0; then taskToDoList; else noTask"
+  ></ng-container>
+  <ng-template #taskToDoList>
+    <ol id="taskToDoList">
+      <li
+        [appDate]="task.created"
+        *ngFor="let task of tasksList | sortName; let odd = odd"
+        [ngClass]="{ 'odd-li': odd, 'last-list': tasksList.length === 1 }"
+      >
+        <p>{{ task.name | transformTask : "!" }}</p>
+
+        <button
+          id="removeBtn"
+          type="button"
+          class="btn btn-danger"
+          (click)="remove(task)"
+        >
+          Remove
+        </button>
+        <button
+          id="doneBtn"
+          type="button"
+          class="btn btn-success"
+          (click)="done(task)"
+        >
+          Done
+        </button>
+      </li>
+    </ol>
+  </ng-template>
+  <ng-template #noTask>
+    <p id="noTask">
+      No tasks...<br />
+      Now you have free time to relax...
+    </p>
+  </ng-template>
+</div>

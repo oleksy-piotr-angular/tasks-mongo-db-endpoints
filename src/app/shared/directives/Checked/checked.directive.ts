@@ -1,14 +1,21 @@
-import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Renderer2,
+  OnInit,
+  inject,
+} from '@angular/core';
 
 @Directive({
   selector: '[appChecked]',
+  standalone: true,
 })
 export class CheckedDirective implements OnInit {
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  private el = inject(ElementRef);
+  private renderer = inject(Renderer2);
 
   ngOnInit(): void {
-    //we take element where this directive was implemented - thanks 'ElementRef'
-    let li = this.el.nativeElement;
+    let li: HTMLLIElement = this.el.nativeElement;
     this.renderer.setStyle(
       li,
       'background',

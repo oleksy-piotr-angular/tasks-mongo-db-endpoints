@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
-import { TasksService } from './services/tasks.service';
+import { Component, inject } from '@angular/core';
+import { TasksService } from './services/TaskService/tasks.service';
+import { DoneTaskComponent } from './components/done-task/done-task.component';
+import { TodoTaskComponent } from './components/todo-task/todo-task.component';
+import { AddTaskComponent } from './components/add-task/add-task.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [AddTaskComponent, TodoTaskComponent, DoneTaskComponent],
 })
 export class AppComponent {
   title = 'Tasks-list-example: Atlas Data API Endpoints(MongoDB) ';
-
-  constructor(private taskService: TasksService) {}
+  private taskService = inject(TasksService);
 
   clear() {
-    // we use this method to remove from DB all Tasks which was done
     this.taskService.clearDoneTasksInDB();
   }
 }
