@@ -1,6 +1,6 @@
 # # Tasks-list-example: Atlas Data API Endpoints(MongoDB)
 
-If you want to check how it works on Github Pages click link below:
+If you want to check how it works on Github Pages click here:
 https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
 
 <h1>Specification Details:</h1>
