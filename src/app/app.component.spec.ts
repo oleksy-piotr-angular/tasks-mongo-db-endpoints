@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { TasksService } from './services/TaskService/tasks.service';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,14 @@ import {
   MockTodoTaskComponent,
 } from './shared/testKit/mockDependencies';
 import { DebugElement } from '@angular/core';
+import { HttpService } from './services/HttpService/http.service';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { environment } from 'src/environments/environment';
+import { dataSAMPLE } from './shared/testKit/testDataSet';
+import { Task } from 'src/app/models/task';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -59,7 +67,7 @@ describe('AppComponent', () => {
     });
 
     describe('clear()', () => {
-      it('should call "this.taskService.clearDoneTasksInDB()" to clear the list of completed tasks ', () => {
+      it('should call "taskService.clearDoneTasksInDB()" to clear the list of completed tasks ', () => {
         component.clear();
         expect(taskServiceSpy.clearDoneTasksInDB).toHaveBeenCalledTimes(1);
       });
@@ -80,6 +88,7 @@ describe('AppComponent', () => {
         );
       });
       it('should render "button" with defined text and click event for method "clear()"', () => {
+        spyOn(component, 'clear');
         const buttonDE: DebugElement = divDE.query(By.css('button'));
         const definedText = 'Clear Completed Tasks';
 
@@ -88,7 +97,7 @@ describe('AppComponent', () => {
         expect(
           (<HTMLButtonElement>buttonDE.nativeElement).textContent
         ).toContain(definedText);
-        expect(taskServiceSpy.clearDoneTasksInDB).toHaveBeenCalledTimes(1);
+        expect(component.clear).toHaveBeenCalledTimes(1);
       });
       it('should render 2 elements of "div.container" with Mock Child Components ', () => {
         const divEls = divDE.queryAll(By.css('div.container'));
@@ -101,6 +110,81 @@ describe('AppComponent', () => {
         ).toBeTruthy();
         expect(
           divEls[1].query(By.directive(MockDoneTaskComponent))
+        ).toBeTruthy();
+      });
+    });
+  });
+
+  describe('Deep Integration Tests', () => {
+    let SAMPLE: Task[];
+    let httpTestingController: HttpTestingController;
+    let taskService: TasksService;
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [TasksService, HttpService],
+        imports: [AppComponent, HttpClientTestingModule],
+      }).compileComponents();
+
+      httpTestingController = TestBed.inject(HttpTestingController);
+      taskService = TestBed.inject(TasksService);
+      fixture = TestBed.createComponent(AppComponent);
+      component = fixture.componentInstance;
+    });
+
+    beforeEach(() => {
+      SAMPLE = dataSAMPLE;
+      httpTestingController
+        .expectOne(`${environment.URL_ENDPOINT}/action/find`)
+        .flush({ documents: SAMPLE });
+      fixture.detectChanges();
+    });
+
+    describe('clear()', () => {
+      it('should call "taskService.clearDoneTasksInDB()" to clear the list of completed tasks from "tasksList$" ', () => {
+        taskService
+          .getTaskList$()
+          .subscribe((tasks) => {
+            expect(tasks.filter((el) => el.isDone === true)).not.toHaveSize(0);
+          })
+          .unsubscribe();
+
+        component.clear();
+        httpTestingController
+          .expectOne(environment.URL_ENDPOINT + '/action/deleteMany')
+          .flush({ deletedCount: 2 });
+
+        taskService.getTaskList$().subscribe((tasks) => {
+          expect(tasks.filter((el) => el.isDone === true)).toHaveSize(0);
+        });
+      });
+    });
+    describe('Template', () => {
+      let divEls: DebugElement[];
+      beforeEach(() => {
+        divEls = fixture.debugElement.queryAll(By.css('div.container'));
+      });
+
+      it('should render 2 elements of "div.container" with Child Components ', () => {
+        expect(divEls.length).toBe(2);
+        expect(divEls[0].query(By.directive(AddTaskComponent))).toBeTruthy();
+        expect(divEls[1].query(By.directive(TodoTaskComponent))).toBeTruthy();
+        expect(divEls[1].query(By.directive(DoneTaskComponent))).toBeTruthy();
+      });
+      it('should render Child Components templates content', () => {
+        expect(
+          divEls[0]
+            .query(By.directive(AddTaskComponent))
+            .query(By.css('#addTaskTemplate'))
+        ).toBeTruthy();
+        expect(
+          divEls[1]
+            .query(By.directive(TodoTaskComponent))
+            .query(By.css('#tasksToDoTemplate'))
+        ).toBeTruthy();
+        expect(
+          divEls[1]
+            .query(By.directive(DoneTaskComponent))
+            .query(By.css('#tasksDoneTemplate'))
         ).toBeTruthy();
       });
     });
