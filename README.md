@@ -7,7 +7,8 @@ https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
 
 # <h1>Specification Details:</h1>
 
-    <ol>
+<div>
+ <ol>
       <li>AppComponent</li>
       <ul>
         <li>Isolated Unit Tests</li>
@@ -826,3 +827,4 @@ https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
         </li>
       </ul>
     </ol>
+</div>
