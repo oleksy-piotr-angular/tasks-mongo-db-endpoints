@@ -1,4 +1,4 @@
-<div id="tasksToDoElId" *ngIf="tasksExists">
+<div id="tasksToDoTemplate" *ngIf="tasksExists">
   <p [ngStyle]="{ color: setColor() }">To do: {{ tasksList.length }}</p>
   <ng-container
     *ngIf="tasksList.length > 0; then taskToDoList; else noTask"

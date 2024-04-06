@@ -89,11 +89,11 @@ describe('DoneTaskComponent', () => {
     });
     describe('Template/ShallowUnitTest', () => {
       describe('Tasks Not Exist', () => {
-        it('should not render div "#tasksDoneElId" if Tasks Behavior Subject has no Elements', () => {
+        it('should not render div "#tasksDoneTemplate" if Tasks Behavior Subject has no Elements', () => {
           taskServiceSpy.getTaskList$.and.returnValue(of([]));
           fixture.detectChanges();
           const divDE: DebugElement = fixture.debugElement.query(
-            By.css('#tasksDoneElId')
+            By.css('#tasksDoneTemplate')
           );
           expect(component.tasksExists).toBeFalse();
           expect(divDE).toBeFalsy();
@@ -104,9 +104,9 @@ describe('DoneTaskComponent', () => {
         beforeEach(() => {
           taskServiceSpy.getTaskList$.and.returnValue(of(SAMPLE));
           fixture.detectChanges();
-          divDE = fixture.debugElement.query(By.css('#tasksDoneElId'));
+          divDE = fixture.debugElement.query(By.css('#tasksDoneTemplate'));
         });
-        it('should render div "#tasksDoneElId" if Tasks Behavior Subject has Elements', () => {
+        it('should render div "#tasksDoneTemplate" if Tasks Behavior Subject has Elements', () => {
           const divEl: HTMLDivElement = divDE.nativeElement;
 
           expect(component.tasksExists).toBeTrue();
@@ -183,9 +183,9 @@ describe('DoneTaskComponent', () => {
       let divDE: DebugElement;
       beforeEach(() => {
         fixture.detectChanges();
-        divDE = fixture.debugElement.query(By.css('#tasksDoneElId'));
+        divDE = fixture.debugElement.query(By.css('#tasksDoneTemplate'));
       });
-      it('should render div "#tasksDoneElId" if Tasks Behavior Subject has Elements', () => {
+      it('should render div "#tasksDoneTemplate" if Tasks Behavior Subject has Elements', () => {
         const divEl: HTMLDivElement = divDE.nativeElement;
 
         expect(component.tasksExists).toBeTrue();

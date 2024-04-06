@@ -123,11 +123,11 @@ describe('TodoTaskComponent', () => {
 
     describe('Template/ShallowUnitTest', () => {
       describe('Tasks Not Exist', () => {
-        it('should not render div "#tasksToDoElId" if Tasks Behavior Subject has no Elements', () => {
+        it('should not render div "#tasksToDoTemplate" if Tasks Behavior Subject has no Elements', () => {
           taskServiceSpy.getTaskList$.and.returnValue(of([]));
           fixture.detectChanges();
           const divDE: DebugElement = fixture.debugElement.query(
-            By.css('#tasksToDoElId')
+            By.css('#tasksToDoTemplate')
           );
           expect(component.tasksExists).toBeFalse();
           expect(divDE).toBeFalsy();
@@ -162,9 +162,9 @@ describe('TodoTaskComponent', () => {
           fixture.detectChanges();
         });
 
-        it('should render div "#tasksToDoElId" if "tasksExists" property is true', () => {
+        it('should render div "#tasksToDoTemplate" if "tasksExists" property is true', () => {
           const divEl: HTMLDivElement = fixture.debugElement.query(
-            By.css('#tasksToDoElId')
+            By.css('#tasksToDoTemplate')
           ).nativeElement;
           expect(component.tasksExists).toBeTrue();
           expect(divEl).toBeTruthy();
@@ -174,7 +174,7 @@ describe('TodoTaskComponent', () => {
           beforeEach(() => {
             taskServiceSpy.getTaskList$.and.returnValue(of(SAMPLE));
             pToDoEl = fixture.debugElement.query(
-              By.css('#tasksToDoElId p')
+              By.css('#tasksToDoTemplate p')
             ).nativeElement;
           });
 
@@ -425,9 +425,9 @@ describe('TodoTaskComponent', () => {
       });
 
       describe('Tasks "ToDo" and "Done" Exist', () => {
-        it('should render div "#tasksToDoElId" if "tasksExists" property is true', () => {
+        it('should render div "#tasksToDoTemplate" if "tasksExists" property is true', () => {
           const divEl: HTMLDivElement = fixture.debugElement.query(
-            By.css('#tasksToDoElId')
+            By.css('#tasksToDoTemplate')
           ).nativeElement;
           expect(component.tasksExists).toBeTrue();
           expect(divEl).toBeTruthy();
@@ -436,7 +436,7 @@ describe('TodoTaskComponent', () => {
           let pToDoEl: HTMLParagraphElement;
           beforeEach(() => {
             pToDoEl = fixture.debugElement.query(
-              By.css('#tasksToDoElId p')
+              By.css('#tasksToDoTemplate p')
             ).nativeElement;
           });
 

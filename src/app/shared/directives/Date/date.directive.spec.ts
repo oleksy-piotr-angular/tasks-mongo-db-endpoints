@@ -109,10 +109,10 @@ describe('DateDirective', () => {
       fixtureDone.detectChanges();
       fixtureToDo.detectChanges();
       toDoLiDEs = fixtureToDo.debugElement.queryAll(
-        By.css('div#tasksToDoElId>ol>li')
+        By.css('div#tasksToDoTemplate>ol>li')
       );
       doneLiDEs = fixtureDone.debugElement.queryAll(
-        By.css('div#tasksDoneElId>ol>li')
+        By.css('div#tasksDoneTemplate>ol>li')
       );
     });
 

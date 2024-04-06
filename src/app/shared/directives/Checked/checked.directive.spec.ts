@@ -71,7 +71,9 @@ describe('CheckedDirective', () => {
         .flush({ documents: dataSAMPLE });
 
       fixture.detectChanges();
-      liDEs = fixture.debugElement.queryAll(By.css('div#tasksDoneElId>ol>li'));
+      liDEs = fixture.debugElement.queryAll(
+        By.css('div#tasksDoneTemplate>ol>li')
+      );
     });
 
     it('should attach the "appChecked" directive to the element as an attribute', () => {

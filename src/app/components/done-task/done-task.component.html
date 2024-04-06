@@ -1,4 +1,4 @@
-<div id="tasksDoneElId" *ngIf="tasksExists">
+<div id="tasksDoneTemplate" *ngIf="tasksExists">
   <p>Tasks Done {{ tasksDone.length }}:</p>
   <ol>
     <li appChecked *ngFor="let task of tasksDone | sortName">
