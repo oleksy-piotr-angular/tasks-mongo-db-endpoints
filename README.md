@@ -6,7 +6,7 @@ https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
 <h1>Specification Details:</h1>
 
 <div>
-  <ul>
+  <ol>
     <li>AppComponent</li>
     <ul>
       <li>Isolated Unit Tests</li>
@@ -805,5 +805,5 @@ https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
         string parameter to the end of the string
       </li>
     </ul>
-  </ul>
+  </ol>
 </div>
