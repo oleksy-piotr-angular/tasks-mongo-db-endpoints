@@ -419,7 +419,7 @@ describe('TodoTaskComponent', () => {
       });
     });
 
-    describe('Template/ShallowUnitTest', () => {
+    describe('Template', () => {
       beforeEach(() => {
         loadData();
       });

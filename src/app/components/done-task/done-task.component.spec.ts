@@ -179,7 +179,7 @@ describe('DoneTaskComponent', () => {
         expect(component.tasksExists).toBeTrue();
       });
     });
-    describe('Template/ShallowUnitTest', () => {
+    describe('Template', () => {
       let divDE: DebugElement;
       beforeEach(() => {
         fixture.detectChanges();
