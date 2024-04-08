@@ -212,7 +212,7 @@ https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
           </ul>
         </ul>
         <ul>
-          <li>Template/ShallowUnitTest</li>
+          <li>Template</li>
           <ul>
             <li>
               should render div "#tasksDoneTemplate" if Tasks Behavior Subject
@@ -415,7 +415,7 @@ https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
           </ul>
         </ul>
         <ul>
-          <li>Template/ShallowUnitTest</li>
+          <li>Template</li>
           <ul>
             <li>Tasks "ToDo" and "Done" Exist</li>
             <ul>
