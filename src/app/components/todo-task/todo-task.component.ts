@@ -26,7 +26,7 @@ export class TodoTaskComponent implements OnInit {
   tasksExists = false;
   private tasksService = inject(TasksService);
   ngOnInit(): void {
-    this.tasksService.getTaskList$().subscribe((tasks: Array<Task>) => {
+    this.tasksService.getTaskList$().subscribe((tasks: Task[]) => {
       this.tasksList = tasks.filter((t) => t.isDone === false);
       this.tasksExists = tasks.length > 0 ? true : false;
     });
