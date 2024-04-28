@@ -9,10 +9,10 @@ import { TasksService } from './services/TaskService/tasks.service';
 import { DoneTaskComponent } from './components/done-task/done-task.component';
 import { TodoTaskComponent } from './components/todo-task/todo-task.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { NotifyModalComponent } from './components/notify-modal/notify-modal.component';
 import { LoadingSpinner } from './components/loading-spinner/loading-spinner-loading-spinner.component';
-import { NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,6 +24,7 @@ import { NgIf } from '@angular/common';
     DoneTaskComponent,
     LoadingSpinner,
     NgIf,
+    AsyncPipe,
   ],
 })
 export class AppComponent implements OnInit {
@@ -32,7 +33,8 @@ export class AppComponent implements OnInit {
   closeErrorSub!: Subscription;
   @ViewChild('appPlaceHolder', { read: ViewContainerRef })
   componentHost!: ViewContainerRef;
-  isLoading = false;
+  isLoading$?: Observable<boolean>;
+  completedExists$?: Observable<boolean>;
 
   ngOnInit(): void {
     this.tasksService.getErrorMessage().subscribe((error) => {
@@ -40,9 +42,8 @@ export class AppComponent implements OnInit {
         this.showErrorAlert(error);
       }
     });
-    this.tasksService
-      .getLoadingStatus()
-      .subscribe((status) => (this.isLoading = status));
+    this.isLoading$ = this.tasksService.getLoadingStatus();
+    this.completedExists$ = this.tasksService.getCompletedStatus();
   }
 
   clear() {

@@ -28,7 +28,7 @@ describe('AppComponent', () => {
 
   describe('Isolated Unit Tests', () => {
     //TODO
-    //!Complete all test with new features
+    //!Fix all tests with new "AsyncPipe" functions and such as. Now these specs won't work
     let taskServiceSpy: jasmine.SpyObj<TasksService>;
     beforeEach(async () => {
       const taskServiceSpyObj = jasmine.createSpyObj('TaskService', [

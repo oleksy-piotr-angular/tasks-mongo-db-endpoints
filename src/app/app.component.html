@@ -1,5 +1,5 @@
 <ng-container #appPlaceHolder></ng-container>
-<div *ngIf="isLoading; then loading; else tasksAppContent"></div>
+<div *ngIf="isLoading$ | async; then loading; else tasksAppContent"></div>
 <ng-template #loading>
   <div class="text-center my-5">
     <app-loading-spinner></app-loading-spinner>
@@ -8,7 +8,7 @@
 <ng-template #tasksAppContent>
   <div>
     <h1>{{ title }}</h1>
-    <button (click)="clear()">Clear Completed Tasks</button>
+
     <div class="container">
       <app-add-task>
         <h2>Add a new task</h2>
@@ -27,6 +27,16 @@
       </div>
       <div>
         <app-done-task></app-done-task>
+        <div>
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            *ngIf="completedExists$ | async"
+            (click)="clear()"
+          >
+            Clear Completed Tasks
+          </button>
+        </div>
       </div>
     </div>
   </div>

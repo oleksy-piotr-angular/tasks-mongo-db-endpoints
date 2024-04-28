@@ -1,14 +1,19 @@
-<div id="tasksToDoTemplate" *ngIf="tasksExists">
-  <p [ngStyle]="{ color: setColor() }">To do: {{ tasksList.length }}</p>
+<div id="tasksToDoTemplate" *ngIf="tasksExists$ | async">
+  <p [ngStyle]="{ color: setColor() }">
+    To do: {{ (tasksTodo$ | async)!.length }}
+  </p>
   <ng-container
-    *ngIf="tasksList.length > 0; then taskToDoList; else noTask"
+    *ngIf="(tasksTodo$ | async)!.length > 0; then taskToDoList; else noTask"
   ></ng-container>
   <ng-template #taskToDoList>
     <ol id="taskToDoList">
       <li
         [appDate]="task.created"
-        *ngFor="let task of tasksList | sortName; let odd = odd"
-        [ngClass]="{ 'odd-li': odd, 'last-list': tasksList.length === 1 }"
+        *ngFor="let task of tasksTodo$ | async | sortName; let odd = odd"
+        [ngClass]="{
+          'odd-li': odd,
+          'last-list': (tasksTodo$ | async)!.length === 1
+        }"
       >
         <p>{{ task.name | transformTask : "!" }}</p>
 
