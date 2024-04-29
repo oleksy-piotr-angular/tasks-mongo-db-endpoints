@@ -41,3 +41,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+export {};
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject = any> {
+      seedAndVisit(seedData: string): Chainable<Element>;
+      clearAndVisit(): Chainable<Element>;
+    }
+  }
+}
+Cypress.Commands.add('seedAndVisit', (seedData) => {
+  cy.intercept('**/action/find', { fixture: seedData }).as('getCitiesStub');
+  cy.visit('/');
+});

@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input } from '@angular/core';
     <div class="backdrop"></div>
     <div class="alert-box">
       <div>
-        <p style=" font-size: xxx-large; font-weight: 900;">
+        <p style=" font-size: 2em; font-weight: 900;">
           {{ errorMessage?.name }}
         </p>
         <p>
