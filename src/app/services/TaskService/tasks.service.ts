@@ -112,6 +112,7 @@ export class TasksService {
     this.loadingStatus$.next(true);
     this.httpService.getTasks().subscribe({
       next: (response) => {
+        console.log(response);
         const areCompleted =
           response.documents.filter((task) => task.isDone === true).length > 0;
         const tasksExist = response.documents.length > 0;
