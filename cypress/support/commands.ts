@@ -1,47 +1,7 @@
-// ***********************************************
-// This example namespace declaration will help
-// with Intellisense and code completion in your
-// IDE or Text Editor.
-// ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
-//
-// function customCommand(param: any): void {
-//   console.warn(param);
-// }
-//
-// NOTE: You can use it like so:
-// Cypress.Commands.add('customCommand', customCommand);
-//
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-export {};
+import { environment } from './../../src/environments/environment';
+import { Task } from '../../src/app/models/task';
+
+export {}; //?to use "global" namespace
 declare global {
   namespace Cypress {
     interface Chainable<Subject = any> {
@@ -52,5 +12,19 @@ declare global {
 }
 Cypress.Commands.add('seedAndVisit', (seedData) => {
   cy.intercept('**/action/find', { fixture: seedData }).as('getCitiesStub');
+  cy.visit('/');
+});
+Cypress.Commands.add('clearAndVisit', () => {
+  const _body = {
+    dataSource: environment.DATA_SOURCE,
+    database: environment.DATABASE,
+    collection: environment.COLLECTION,
+    filter: {},
+  };
+  cy.request({
+    method: 'POST',
+    url: `${environment.URL_ENDPOINT}/action/deleteMany`,
+    body: _body,
+  });
   cy.visit('/');
 });
