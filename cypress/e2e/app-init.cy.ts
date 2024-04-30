@@ -5,7 +5,7 @@ describe('App initialization', () => {
       .should('have.length', 4);
   });
 
-  it('Displays an error on failure', () => {
+  it('Displays an error on failure and make it close with button "OK"', () => {
     cy.intercept(
       { url: '**/action/find', method: 'POST' },
       { statusCode: 500, body: null }
@@ -16,5 +16,8 @@ describe('App initialization', () => {
       .should('not.exist');
     cy.get('.alert-box') //
       .should('be.visible');
+    cy.contains('OK').click();
+    cy.get('.alert-box') //
+      .should('not.exist');
   });
 });
