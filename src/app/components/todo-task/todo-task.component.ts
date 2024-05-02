@@ -24,7 +24,6 @@ import { map, Observable } from 'rxjs';
   ],
 })
 export class TodoTaskComponent implements OnInit {
-  tasksList: Task[] = [];
   tasksTodo$?: Observable<Task[]>;
   tasksExists$?: Observable<boolean>;
   private tasksService = inject(TasksService);
@@ -42,6 +41,10 @@ export class TodoTaskComponent implements OnInit {
   }
 
   setColor(): string {
-    return this.tasksList.length >= 5 ? 'red' : 'green';
+    let color = '';
+    this.tasksTodo$?.subscribe(
+      (tasks) => (color = tasks.length >= 5 ? 'red' : 'green')
+    );
+    return color;
   }
 }

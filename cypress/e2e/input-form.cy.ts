@@ -16,7 +16,7 @@ context('Input AddTask form', () => {
   context('Form submission', () => {
     beforeEach(() => {
       cy.intercept({ method: 'POST', url: '**/action/insertOne' }).as(
-        'Post Request "insertOne"'
+        'PostRequest(insertOne)'
       );
     });
 
@@ -31,7 +31,7 @@ context('Input AddTask form', () => {
         .type('{enter}');
       cy.get('@inputTask') //
         .should('have.value', '');
-      cy.wait('@Post Request "insertOne"');
+      cy.wait('@PostRequest(insertOne)');
       cy.get('#taskToDoList li') //
         .should('have.length', 1)
         .and('contain', outputText); // of "transformTask"
@@ -48,7 +48,7 @@ context('Input AddTask form', () => {
       cy.get('[type="submit"]').click();
       cy.get('@inputTask') //
         .should('have.value', '');
-      cy.wait('@Post Request "insertOne"');
+      cy.wait('@PostRequest(insertOne)');
       cy.get('#taskToDoList li') //
         .should('have.length', 1)
         .and('contain', outputText); // of "transformTask"

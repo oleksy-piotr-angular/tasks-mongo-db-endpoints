@@ -1,4 +1,4 @@
-describe('App initialization', () => {
+context('App initialization', () => {
   it('Loads tasks elements in page load', () => {
     cy.seedAndVisit('tasksDB');
     cy.get('ol > li') //
