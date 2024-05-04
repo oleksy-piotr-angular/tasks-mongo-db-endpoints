@@ -7,7 +7,7 @@ context('List with loaded Tasks', () => {
     cy.seedAndVisit('tasksDB');
   });
   it('properly display name content for each task element from "Done" and "ToDo" Lists', () => {
-    cy.fixture('tasksDB.json').then((response: API_response) => {
+    cy.fixture('tasksDB').then((response: API_response) => {
       const tasksToDo = response.documents
         .filter((task) => task.isDone === false)
         .sort((a, b) => {
@@ -62,7 +62,7 @@ context('List with loaded Tasks', () => {
   });
 
   it('show correctly displayed task creation time information in ToDo', () => {
-    cy.fixture('tasksDB.json').then((response: API_response) => {
+    cy.fixture('tasksDB').then((response: API_response) => {
       const tasks = response.documents
         .filter((task) => task.isDone === false)
         .sort((a, b) => {
@@ -90,7 +90,7 @@ context('List with loaded Tasks', () => {
     });
   });
   it('show correctly displayed task end time information in Done', () => {
-    cy.fixture('tasksDB.json').then((response: API_response) => {
+    cy.fixture('tasksDB').then((response: API_response) => {
       const tasks = response.documents
         .filter((task) => task.isDone === true)
         .sort((a, b) => {
