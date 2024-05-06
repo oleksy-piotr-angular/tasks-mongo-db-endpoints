@@ -4,7 +4,8 @@ import { TasksService } from '../../services/TaskService/tasks.service';
 import { SortNamePipe } from '../../shared/pipes/SortName/sort-name.pipe';
 import { TransformTaskPipe } from '../../shared/pipes/TransformTask/transform-task.pipe';
 import { DateDirective } from '../../shared/directives/Date/date.directive';
-import { NgIf, NgStyle, NgFor, NgClass } from '@angular/common';
+import { NgIf, NgStyle, NgFor, NgClass, AsyncPipe } from '@angular/common';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todo-task',
@@ -19,17 +20,18 @@ import { NgIf, NgStyle, NgFor, NgClass } from '@angular/common';
     NgClass,
     TransformTaskPipe,
     SortNamePipe,
+    AsyncPipe,
   ],
 })
 export class TodoTaskComponent implements OnInit {
-  tasksList: Task[] = [];
-  tasksExists = false;
+  tasksTodo$?: Observable<Task[]>;
+  tasksExists$?: Observable<boolean>;
   private tasksService = inject(TasksService);
   ngOnInit(): void {
-    this.tasksService.getTaskList$().subscribe((tasks: Array<Task>) => {
-      this.tasksList = tasks.filter((t) => t.isDone === false);
-      this.tasksExists = tasks.length > 0 ? true : false;
-    });
+    this.tasksTodo$ = this.tasksService
+      .getTaskList$()
+      .pipe(map((tasks) => tasks.filter((task) => task.isDone === false)));
+    this.tasksExists$ = this.tasksService.getIsTaskStatus();
   }
   remove(task: Task) {
     this.tasksService.remove(task);
@@ -39,6 +41,10 @@ export class TodoTaskComponent implements OnInit {
   }
 
   setColor(): string {
-    return this.tasksList.length >= 5 ? 'red' : 'green';
+    let color = '';
+    this.tasksTodo$?.subscribe(
+      (tasks) => (color = tasks.length >= 5 ? 'red' : 'green')
+    );
+    return color;
   }
 }

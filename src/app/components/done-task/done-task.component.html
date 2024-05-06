@@ -1,7 +1,7 @@
-<div id="tasksDoneTemplate" *ngIf="tasksExists">
-  <p>Tasks Done {{ tasksDone.length }}:</p>
+<div id="tasksDoneTemplate" *ngIf="tasksExists$ | async">
+  <p>Tasks Done {{ (tasksDone$ | async)!.length }}:</p>
   <ol>
-    <li appChecked *ngFor="let task of tasksDone | sortName">
+    <li appChecked *ngFor="let task of tasksDone$ | async | sortName">
       <div *ngIf="task.end != null" [appDate]="task.end">
         {{ task.name | transformTask : " - well done!" }}
       </div>

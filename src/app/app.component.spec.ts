@@ -20,16 +20,20 @@ import {
 import { environment } from 'src/environments/environment';
 import { dataSAMPLE } from './shared/testKit/testDataSet';
 import { Task } from 'src/app/models/task';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
 
   describe('Isolated Unit Tests', () => {
+    //TODO
+    //!Fix all tests with new "AsyncPipe" functions and such as. Now these specs won't work
     let taskServiceSpy: jasmine.SpyObj<TasksService>;
     beforeEach(async () => {
       const taskServiceSpyObj = jasmine.createSpyObj('TaskService', [
         'clearDoneTasksInDB',
+        'getErrorMessage',
       ]);
       await TestBed.configureTestingModule({
         providers: [{ provide: TasksService, useValue: taskServiceSpyObj }],
@@ -54,6 +58,7 @@ describe('AppComponent', () => {
       taskServiceSpy = <jasmine.SpyObj<TasksService>>(
         TestBed.inject(TasksService)
       );
+      taskServiceSpy.getErrorMessage.and.returnValue(of(null));
     });
 
     it('should create the app', () => {

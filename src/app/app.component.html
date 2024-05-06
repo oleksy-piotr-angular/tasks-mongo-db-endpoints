@@ -1,24 +1,43 @@
-<div>
-  <h1>{{ title }}</h1>
-  <button (click)="clear()">Clear Completed Tasks</button>
-  <div class="container">
-    <app-add-task>
-      <h2>Add a new task</h2>
-      <p class="bg-info">
-        > If you are planning a new "Task" to do in the future, enter it below
-        and click "Add".
-      </p>
-      <p id="tip2" class="mt-3 bg-primary text-white">
-        > You can manage your "Task List" using the included buttons.
-      </p>
-    </app-add-task>
+<ng-container #appPlaceHolder></ng-container>
+<div *ngIf="isLoading; then loading; else tasksAppContent"></div>
+<ng-template #loading>
+  <div class="text-center my-5">
+    <app-loading-spinner></app-loading-spinner>
   </div>
-  <div class="container">
-    <div>
-      <app-todo-task></app-todo-task>
+</ng-template>
+<ng-template #tasksAppContent>
+  <div>
+    <h1>{{ title }}</h1>
+
+    <div class="container">
+      <app-add-task>
+        <h2>Add a new task</h2>
+        <p class="bg-info">
+          > If you are planning a new "Task" to do in the future, enter it below
+          and click "Add".
+        </p>
+        <p id="tip2" class="mt-3 bg-primary text-white">
+          > You can manage your "Task List" using the included buttons.
+        </p>
+      </app-add-task>
     </div>
-    <div>
-      <app-done-task></app-done-task>
+    <div class="container">
+      <div>
+        <app-todo-task></app-todo-task>
+      </div>
+      <div>
+        <app-done-task></app-done-task>
+        <div>
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            *ngIf="completedExists$ | async"
+            (click)="clear()"
+          >
+            Clear Completed Tasks
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</ng-template>

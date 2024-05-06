@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, input, ViewChild } from '@angular/core';
 import { Task } from '../../models/task';
 import { TasksService } from '../../services/TaskService/tasks.service';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,11 @@ import { FormsModule } from '@angular/forms';
 export class AddTaskComponent {
   newTask: string = '';
   private tasksService = inject(TasksService);
+  @ViewChild('inputTask') set input(el: ElementRef<HTMLInputElement>) {
+    if (el) {
+      el.nativeElement.focus();
+    }
+  }
 
   add() {
     const task: Task = {

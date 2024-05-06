@@ -45,3 +45,6 @@ Thumbs.db
 #MongoDB Api-key INFO
 /src/app/shared/mongo-api-key-locked.txt
 
+#Cypress Reports and Videos
+cypress/reports
+cypress/videos

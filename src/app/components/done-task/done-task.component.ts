@@ -5,7 +5,8 @@ import { SortNamePipe } from '../../shared/pipes/SortName/sort-name.pipe';
 import { TransformTaskPipe } from '../../shared/pipes/TransformTask/transform-task.pipe';
 import { DateDirective } from '../../shared/directives/Date/date.directive';
 import { CheckedDirective } from '../../shared/directives/Checked/checked.directive';
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-done-task',
@@ -19,16 +20,17 @@ import { NgIf, NgFor } from '@angular/common';
     DateDirective,
     TransformTaskPipe,
     SortNamePipe,
+    AsyncPipe,
   ],
 })
 export class DoneTaskComponent implements OnInit {
-  tasksDone: Task[] = [];
-  tasksExists = false;
+  tasksDone$?: Observable<Task[]>;
+  tasksExists$?: Observable<boolean>;
   private tasksService = inject(TasksService);
   ngOnInit(): void {
-    this.tasksService.getTaskList$().subscribe((tasks: Task[]) => {
-      this.tasksDone = tasks.filter((t) => t.isDone === true);
-      this.tasksExists = tasks.length > 0 ? true : false;
-    });
+    this.tasksDone$ = this.tasksService
+      .getTaskList$()
+      .pipe(map((tasks) => tasks.filter((task) => task.isDone === true)));
+    this.tasksExists$ = this.tasksService.getIsTaskStatus();
   }
 }
