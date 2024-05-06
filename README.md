@@ -1,10 +1,18 @@
 # # Tasks-list-example: Atlas Data API Endpoints(MongoDB)
 
 App in Angular 14.2 was updated to 17.3.2 version, with mongoDB using the Atlas Data API and
-stores the entered data and processes it thanks to internal logic. Many of the current features of this version have been used here. Specifications was verified using Jasmine 4.3.0
+stores the entered data and processes it thanks to internal logic. Many of the current features of this version have been used here.</br></br>
+
+E2E tests were performed in the latest version of Cypress framework:</br>
+html report to download and open in your browser:</br>
+https://drive.google.com/file/d/1ez7eIb20FsdQw0vSid340b8-vFdcOQQu/view?usp=sharing
+Video recorded in Cypress for each spec file while running tests:</br>
+https://drive.google.com/drive/folders/1pByXHSHOEjaGp0Y93RGN_S9YQ5Ul4gRh?usp=sharing
 
 If you want to check how it works on Github Pages click here:</br>
 https://oleksy-piotr-angular.github.io/tasks-mongo-db-endpoints/
+
+Specifications(Unit Tests + Integration Tests) was verified using Jasmine 4.3.0</br>
 
 <h1>Specification Details:</h1>
 
