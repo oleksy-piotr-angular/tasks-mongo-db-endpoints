@@ -1,23 +1,12 @@
-import { each } from 'cypress/types/bluebird';
 import { API_response } from '../../src/app/models/api_response';
 import { environment } from '../../src/environments/environment';
 
-context('All available App features', () => {
+describe('All available App features', () => {
   beforeEach(() => {
-    const _body = {
-      dataSource: environment.DATA_SOURCE,
-      database: environment.DATABASE,
-      collection: environment.COLLECTION,
-      filter: {},
-    };
-    cy.request({
-      method: 'POST',
-      url: `${environment.URL_ENDPOINT}/action/deleteMany`,
-      body: _body,
-    });
+    cy.clearDB();
   });
   context('Without tasks', () => {
-    it('Save new task', () => {
+    it('Should Save new task', () => {
       interface TestItem {
         name: string;
         expectedLength: number;
@@ -34,7 +23,6 @@ context('All available App features', () => {
         cy.focused() //
           .type(task.name)
           .type('{enter}');
-        //TODO not flaky Loading Spinner test
         cy.wait('@create');
         cy.get('#tasksToDoTemplate>ol>li').should(
           'have.length',
@@ -69,10 +57,10 @@ context('All available App features', () => {
       });
       cy.visit('/');
     });
-    it('Loads existing data from DB', () => {
+    it('Should Loads existing data from DB', () => {
       cy.get('#tasksToDoTemplate>ol>li').should('have.length', 4);
     });
-    it('Delete tasks', () => {
+    it('Should Delete tasks', () => {
       cy.intercept({ method: 'POST', url: '**/action/deleteOne' }).as('delete');
       cy.get('#tasksToDoTemplate li').as('todoTasksList');
       const clickRemoveAndWait = (_alias: string) => {
@@ -89,7 +77,7 @@ context('All available App features', () => {
         }) //
         .should('not.exist');
     });
-    it('Update all tasks to "Done" and clear completed Tasks', () => {
+    it('Should Update all tasks to "Done" and clear completed Tasks', () => {
       cy.intercept({ method: 'POST', url: '**/action/updateOne' }).as('update');
       cy.get('#tasksToDoTemplate li').as('todoTasksList');
       const clickDoneAndWait = (_alias: string) => {

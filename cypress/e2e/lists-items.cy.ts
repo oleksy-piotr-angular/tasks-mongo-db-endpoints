@@ -1,12 +1,11 @@
 import { API_response } from './../../src/app/models/api_response';
-import { Task } from './../../src/app/models/task';
-import { environment } from '../../src/environments/environment';
 
-context('List with loaded Tasks', () => {
+describe('List with loaded Tasks', () => {
   beforeEach(() => {
-    cy.seedAndVisit('tasksDB');
+    cy.seedMockData('tasksDB');
+    cy.visit('/');
   });
-  it('properly display name content for each task element from "Done" and "ToDo" Lists', () => {
+  it('Should properly display name content for each task element from "Done" and "ToDo" Lists', () => {
     cy.fixture('tasksDB').then((response: API_response) => {
       const tasksToDo = response.documents
         .filter((task) => task.isDone === false)
@@ -43,7 +42,7 @@ context('List with loaded Tasks', () => {
       });
     });
   });
-  it('properly displays completed items', () => {
+  it('Should properly displays completed items', () => {
     const styleValue =
       'rgb(195, 253, 137) url("http://localhost:4200/assets/checked.png") no-repeat scroll 10px 50% / auto padding-box border-box';
     cy.get('#tasksDoneTemplate> ol> li').as('completedTasks');
@@ -54,14 +53,14 @@ context('List with loaded Tasks', () => {
     });
   });
 
-  it('Shows number of todo and completed Tasks separately', () => {
+  it('Should shows number of todo and completed Tasks separately', () => {
     cy.get('#tasksToDoTemplate > p') //
       .should('contain.text', 'To do: 2');
     cy.get('#tasksDoneTemplate > p') //
       .should('contain.text', 'Tasks Done 2:');
   });
 
-  it('show correctly displayed task creation time information in ToDo', () => {
+  it('Should show correctly displayed task creation time information in ToDo', () => {
     cy.fixture('tasksDB').then((response: API_response) => {
       const tasks = response.documents
         .filter((task) => task.isDone === false)
@@ -89,7 +88,7 @@ context('List with loaded Tasks', () => {
       });
     });
   });
-  it('show correctly displayed task end time information in Done', () => {
+  it('Should show correctly displayed task end time information in Done', () => {
     cy.fixture('tasksDB').then((response: API_response) => {
       const tasks = response.documents
         .filter((task) => task.isDone === true)
@@ -118,7 +117,7 @@ context('List with loaded Tasks', () => {
     });
   });
   context('Todo Items buttons', () => {
-    it('removes todo', () => {
+    it('Should removes todo', () => {
       cy.intercept(
         { method: 'POST', url: '**/action/deleteOne' },
         { statusCode: 200 }
@@ -136,7 +135,7 @@ context('List with loaded Tasks', () => {
         .should('have.length', 1)
         .and('not.contain', 'Meeting with Jon on Friday');
     });
-    it('Move marked todo into completed tasks list', () => {
+    it('Should Move marked todo into completed tasks list', () => {
       cy.intercept(
         { method: 'POST', url: '**/action/updateOne' },
         { statusCode: 200 }
@@ -160,7 +159,7 @@ context('List with loaded Tasks', () => {
     });
   });
   context('Done tasks List button', () => {
-    it('clear Done Tasks List', () => {
+    it('Should clear Done Tasks List', () => {
       cy.contains('Clear Completed Tasks') //
         .click();
 
@@ -172,10 +171,11 @@ context('List with loaded Tasks', () => {
 
 context('Empty tasks list', () => {
   beforeEach(() => {
-    cy.clearAndVisit();
+    cy.clearDB();
+    cy.visit('/');
   });
 
-  it('change the color of the paragraph with the number of tasks to be performed depending on the number of tasks', () => {
+  it('Should change the color of the paragraph with the number of tasks to be performed depending on the number of tasks', () => {
     cy.get('#inputNewTaskValue') //
       .type('sampleName{enter}');
 
@@ -186,7 +186,7 @@ context('Empty tasks list', () => {
     }
     cy.contains('To do:').should('have.css', 'color', 'rgb(255, 0, 0)');
   });
-  it('change the color of <li> with task to be performed depending on the task index and their number.', () => {
+  it('Should change the color of <li> with task to be performed depending on the task index and their number.', () => {
     for (let i = 0; i < 4; i++) {
       cy.get('#inputNewTaskValue') //
         .type(`sampleName${i}{enter}`);
@@ -200,7 +200,7 @@ context('Empty tasks list', () => {
       }
     });
   });
-  it('change the color of <li> with last task', () => {
+  it('Should change the color of <li> with last task', () => {
     cy.get('#inputNewTaskValue') //
       .type(`sampleName{enter}`);
 

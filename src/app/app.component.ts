@@ -1,6 +1,7 @@
 import {
   Component,
   inject,
+  OnDestroy,
   OnInit,
   ViewChild,
   ViewContainerRef,
@@ -27,29 +28,42 @@ import { AsyncPipe, NgIf } from '@angular/common';
     AsyncPipe,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Tasks-list-example: Atlas Data API Endpoints(MongoDB) ';
   private tasksService = inject(TasksService);
   closeErrorSub!: Subscription;
   @ViewChild('appPlaceHolder', { read: ViewContainerRef })
   componentHost!: ViewContainerRef;
-  isLoading$?: Observable<boolean>;
+  isLoading: boolean = true;
+  isLoadingSub?: Subscription;
+  isErrorSub?: Subscription;
   completedExists$?: Observable<boolean>;
 
   ngOnInit(): void {
-    this.tasksService.getErrorMessage().subscribe((error) => {
+    this.isLoadingSub = this.tasksService
+      .getLoadingStatus()
+      .subscribe((status) => {
+        this.isLoading = status;
+      });
+    this.completedExists$ = this.tasksService.getCompletedStatus();
+    this.isErrorSub = this.tasksService.getErrorMessage().subscribe((error) => {
       if (error) {
         this.showErrorAlert(error);
       }
     });
-    this.isLoading$ = this.tasksService.getLoadingStatus();
-    this.completedExists$ = this.tasksService.getCompletedStatus();
   }
 
   clear() {
     this.tasksService.clearDoneTasksInDB();
   }
-
+  ngOnDestroy(): void {
+    if (this.isLoadingSub) {
+      this.isLoadingSub.unsubscribe();
+    }
+    if (this.isErrorSub) {
+      this.isErrorSub.unsubscribe();
+    }
+  }
   private showErrorAlert(_errorMessage: Error) {
     this.componentHost.clear();
     const alertRef = this.componentHost.createComponent(NotifyModalComponent);

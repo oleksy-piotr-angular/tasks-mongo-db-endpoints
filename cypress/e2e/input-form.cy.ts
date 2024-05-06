@@ -1,12 +1,14 @@
-context('Input AddTask form', () => {
+describe('Input AddTask form', () => {
   beforeEach(() => {
-    cy.clearAndVisit();
+    cy.emptyMockData();
+    cy.visit('/');
   });
-  it('focused on load', () => {
+  it('Should be input focused on load', () => {
+    cy.visit('/');
     cy.focused() //
       .should('have.id', 'inputNewTaskValue');
   });
-  it('accepts Input', () => {
+  it('Should accepts Input', () => {
     const typedText = 'buy butter';
     cy.get('#inputNewTaskValue') //
       .type(typedText)
@@ -20,7 +22,7 @@ context('Input AddTask form', () => {
       );
     });
 
-    it('Adds new task on submit when press "enter" key', () => {
+    it('Should Adds new task on submit when press "enter" key', () => {
       const inputText = 'buy bread';
       const outputText = 'Buy bread!';
 
@@ -37,7 +39,7 @@ context('Input AddTask form', () => {
         .and('contain', outputText); // of "transformTask"
     });
 
-    it('Adds new task on submit when click "Add" button', () => {
+    it('Should Adds new task on submit when click "Add" button', () => {
       const inputText = 'buy bread';
       const outputText = 'Buy bread!';
 
@@ -55,7 +57,7 @@ context('Input AddTask form', () => {
     });
 
     context('Input Form Submission Errors', () => {
-      it('Show error message on too short task name', () => {
+      it('Should Show error message on too short task name', () => {
         cy.get('#inputNewTaskValue') //
           .type('test{enter}');
         cy.get('#taskToDoList li') //
@@ -65,7 +67,7 @@ context('Input AddTask form', () => {
           .and('contain', 'Name value is too short..')
           .and('contain', 'Name value must be greater than 5 characters!');
       });
-      it('Show error message on "Internal Server Error"', () => {
+      it('Should Show error message on "Internal Server Error"', () => {
         cy.intercept(
           { method: 'POST', url: '**/action/insertOne' },
           { statusCode: 500, body: {} }

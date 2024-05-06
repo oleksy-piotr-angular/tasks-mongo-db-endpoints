@@ -1,18 +1,21 @@
-context('App initialization', () => {
-  it('Loads tasks elements in page load', () => {
-    cy.seedAndVisit('tasksDB');
+describe('App initialization', () => {
+  it('Should Loads tasks elements in page load', () => {
+    cy.seedMockData('tasksDB');
+    cy.visit('/');
     cy.get('ol > li') //
       .should('have.length', 4);
   });
 
-  it('Displays an error on failure and make it close with button "OK"', () => {
+  it('Should Displays an error on failure and make it close with button "OK"', () => {
     cy.intercept(
       { url: '**/action/find', method: 'POST' },
       { statusCode: 500, body: null }
     ).as('failureGetTasksStub');
     cy.visit('/');
     cy.wait('@failureGetTasksStub');
-    cy.get('ol > li') //
+    cy.get('#tasksToDoTemplate') //
+      .should('not.exist');
+    cy.get('#tasksDoneTemplate') //
       .should('not.exist');
     cy.get('.alert-box') //
       .should('be.visible');
