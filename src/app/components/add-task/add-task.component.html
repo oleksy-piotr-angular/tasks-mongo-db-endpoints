@@ -1,0 +1,15 @@
+<div id="addTaskTemplate">
+  <ng-content></ng-content>
+  <form (ngSubmit)="add()">
+    <input
+      type="text"
+      id="inputNewTaskValue"
+      placeholder='Please enter "New Task"'
+      [(ngModel)]="newTask"
+      name="NewTaskInput"
+      #inputTask
+    />
+    <button type="submit">Add</button>
+  </form>
+  <ng-content select="#tip2"></ng-content>
+</div>

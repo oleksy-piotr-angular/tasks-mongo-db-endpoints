@@ -41,7 +41,10 @@ testem.log
 .DS_Store
 Thumbs.db
 
-#[Repository is Public but for everything was unlocked for demonstration purposes!!!]
+#The repository is public, but everything needed has been unlocked for demonstration purposes!!!
 #MongoDB Api-key INFO
-#/src/app/shared/mongo-api-key.txt
-#/src/app/shared/atlas-data-api.ts
+/src/app/shared/mongo-api-key-locked.txt
+
+#Cypress Reports and Videos
+cypress/reports
+cypress/videos
